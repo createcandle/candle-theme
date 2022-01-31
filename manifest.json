@@ -54,6 +54,9 @@
   "version": "2.0.4",
   "web_accessible_resources": [
     "css/*.css",
-    "js/*.js"
+    "js/*.js",
+    "images/*.svg",
+    "images/*.png",
+    "images/*.jpg"
   ]
 }
