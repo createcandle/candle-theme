@@ -10,7 +10,7 @@
       ]
     }
   ],
-  "description": "the main theme for the Candle smart home",
+  "description": "The main theme for the Candle smart home",
   "gateway_specific_settings": {
     "webthings": {
       "exec": "python3 {path}/main.py",
