@@ -33,7 +33,7 @@ cd -
 
 # Make the tarball
 echo "creating archive"
-TARFILE="square-theme-${version}.tgz"
+TARFILE="candle-theme-${version}.tgz"
 tar czf ${TARFILE} package
 
 shasum --algorithm 256 ${TARFILE} > ${TARFILE}.sha256sum
