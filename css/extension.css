@@ -12,9 +12,9 @@ body{
 
 
 #menu-wordmark{
-    width: 16rem;
-    top: 1rem;
-    left: 6.5rem;
+    width: 9rem;
+    top: 2rem;
+    left: 9rem;
 }
 
 /*
@@ -35,12 +35,20 @@ body{
 
 /*  Menu buttons  */
 
-/*
+
 #menu-button{
-    background: no-repeat center/100% url(/images/menu.svg);
-    background-color: rgba(255,255,255,.2);
+    z-index:2;
 }
-*/
+
+
+#rule-view > .back-button,
+#add-thing-back-button,
+#create-log-back-button,
+#settings-back-button,
+#back-button{
+    z-index:10000;
+}
+
 
 .icon-button{
     cursor:pointer;
@@ -280,6 +288,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 	transform:none;
 	top:0;
 	height:auto;
+    min-height: 50px;
 	max-height: none;
 	/*align-content: center; causes issues */
     
@@ -421,6 +430,14 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 	box-shadow: 6px 6px teal;
 }
 */
+
+.dialog{
+    z-index:2;
+}
+
+#add-thing-cancel-button{
+    margin-bottom:4rem;
+}
 
 .media-modal-video{
     background-color:black;

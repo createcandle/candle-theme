@@ -149,7 +149,7 @@
       
       
       // Change logo
-      document.getElementById('menu-wordmark').src = '/extensions/candle-theme/images/candle_gateway_logo.svg';
+      document.getElementById('menu-wordmark').src = '/extensions/candle-theme/images/candle-logo.svg';
       document.getElementById('menu-wordmark').alt = "Candle, built on WebThings Gateway";
       document.getElementById('menu-wordmark').classList.add("extension-candle-theme-candle-logo");
       
