@@ -1,4 +1,4 @@
-/*  Square theme CSS  */
+/*  candle theme CSS  */
 
 
 h1,h2,h3,h4,h5,h6{
@@ -11,7 +11,11 @@ body{
 }
 
 
-
+#menu-wordmark{
+    width: 16rem;
+    top: 1rem;
+    left: 6.5rem;
+}
 
 /*
 p{
@@ -42,7 +46,7 @@ body{
     cursor:pointer;
 }
 
-.square-theme-top-right-icon{
+.candle-theme-top-right-icon{
     position:fixed;
     top:2rem;
     right:2rem;
@@ -121,23 +125,23 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 
 /*  Things search field  */
 
-#square-theme-things-search-container{
+#candle-theme-things-search-container{
     position: fixed;
     top: 3.5rem;
     right: 2rem;
     z-index: 10;
 }
-#square-theme-things-search-input{
+#candle-theme-things-search-input{
     border:none;
     padding:.5rem;
     border-radius:.5rem;
     width:5.8rem;
 }
 
-#square-theme-things-search-input::placeholder {
+#candle-theme-things-search-input::placeholder {
      color: transparent;
 }
-#square-theme-things-search-input:focus::placeholder {
+#candle-theme-things-search-input:focus::placeholder {
      color: inherit;
 }
 
@@ -244,7 +248,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 }
 
 
-#square-theme-remove-group-question{
+#candle-theme-remove-group-question{
     padding:4rem;
     max-width:60rem;
     margin: 0 auto;
@@ -282,7 +286,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 }
 
 
-#things-view.square-theme-things-mutated #things{
+#things-view.candle-theme-things-mutated #things{
     display: flex!important;
     opacity:1;
     transition: opacity .2s;
@@ -522,7 +526,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 #onboarding-hint,
 #create-things-hint,
 #create-thing-hint{
-	animation: extension-square-theme-fadeIn 1s linear;
+	animation: extension-candle-theme-fadeIn 1s linear;
 }
 
 
@@ -543,7 +547,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     transition: opacity .6s;  
 }
 */
-@keyframes extension-square-theme-fadeIn {
+@keyframes extension-candle-theme-fadeIn {
    0% {opacity: 0;}
    66% {opacity: 0;}
    100% {opacity: 1;} 
@@ -702,7 +706,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     -moz-animation: hideThenFadeIn 1s ease-out;
     -o-animation: hideThenFadeIn 1s ease-out;
     animation: hideThenFadeIn 1s ease-out;*/
-    animation: extension-square-theme-fadeIn 1s linear;
+    animation: extension-candle-theme-fadeIn 1s linear;
 }
 
 #things.single-thing .component::part(button){
@@ -843,7 +847,7 @@ webthing-light-capability::part(label){
 
 
 
-#extension-square-theme-view {
+#extension-candle-theme-view {
     height: 100%; /*calc(100% - 7.6rem);*/
     box-sizing: border-box;
     /*overflow: auto;*/
@@ -853,7 +857,7 @@ webthing-light-capability::part(label){
 }
 
 
-#extension-square-theme-content {
+#extension-candle-theme-content {
 	display:flex;
 	flex-direction: column;
     align-items: center;
@@ -869,7 +873,7 @@ webthing-light-capability::part(label){
 	height:100vh; 
 }
 
-#extension-square-theme-content-container{
+#extension-candle-theme-content-container{
 	height:100%;
 	max-height: 100%;
 }
@@ -1022,7 +1026,7 @@ webthing-light-capability::part(label){
     display:none;
 }
 
-#logs-view:not(.solo-view) #square-theme-log-filter-container{
+#logs-view:not(.solo-view) #candle-theme-log-filter-container{
 	display:flex;
     flex-direction:column;
 	position: fixed;
@@ -1036,53 +1040,53 @@ webthing-light-capability::part(label){
     overflow:hidden;
 }
 
-#logs-view.solo-view #square-theme-log-filter-container{
+#logs-view.solo-view #candle-theme-log-filter-container{
 	display:none;
 }
 
 
-#logs-view #square-theme-log-filter-container.square-theme-log-filter-container-hidden{
+#logs-view #candle-theme-log-filter-container.candle-theme-log-filter-container-hidden{
     display:none;
 }
 
 
 
-#square-theme-log-collections-container{
+#candle-theme-log-collections-container{
     flex-shrink:0;
 }
 
-#square-theme-log-collections-container > div{
+#candle-theme-log-collections-container > div{
     display:flex;
 }
 
 
-.square-theme-logs-collection-button{
+.candle-theme-logs-collection-button{
     flex-grow: 1;
     text-align: left;
     color:white;
 }
 
-.square-theme-logs-collection-button-container.square-theme-logs-collection-button{
+.candle-theme-logs-collection-button-container.candle-theme-logs-collection-button{
     margin-right:0;
 }
 
-.square-theme-logs-collection-delete-button.square-theme-logs-small-button{
+.candle-theme-logs-collection-delete-button.candle-theme-logs-small-button{
     margin-left:0;
 }
-.square-theme-logs-collection-delete-button.square-theme-logs-small-button:hover{
+.candle-theme-logs-collection-delete-button.candle-theme-logs-small-button:hover{
     background-color:#e91919;
     color:inherit;
 }
 /*
-.square-theme-logs-collection-delete-button{
+.candle-theme-logs-collection-delete-button{
     background-color:red;
     color:white;
 }
 */
 
 
-#square-theme-log-collections-container,
-#square-theme-log-list-container{
+#candle-theme-log-collections-container,
+#candle-theme-log-list-container{
 	background-color:#5288af;
 	max-width: 100%;
 	max-height:calc(100vh - 20rem);
@@ -1090,43 +1094,43 @@ webthing-light-capability::part(label){
 	transition: transform 0.25s ease;
 }
 
-#square-theme-log-filter-container .icon-button{
+#candle-theme-log-filter-container .icon-button{
 	position:relative;
 }
 
-#square-theme-log-list-container{
+#candle-theme-log-list-container{
     overflow:scroll;
     padding-bottom:4rem;
 }
 
-#square-theme-log-list-container li{
+#candle-theme-log-list-container li{
 	border-bottom:1px solid rgba(0,0,0,.1);
 	cursor:pointer;
 }
 
-#square-theme-log-list-container li:hover{
+#candle-theme-log-list-container li:hover{
 	background-color:rgba(0,0,0,.1);
 }
 
-#square-theme-log-list-container li input{
+#candle-theme-log-list-container li input{
     margin-right:.7rem;
     cursor:pointer;
 }
 
-#square-theme-log-list-container li label{
+#candle-theme-log-list-container li label{
 	display:flex;
 	padding:.5rem;
     cursor:pointer;
 }
 
-#square-theme-log-list-ul{
+#candle-theme-log-list-ul{
 	list-style: none;
 	list-style-type: none;
 	padding-left: 0;
 }
 
 
-.square-theme-log-filter-button{
+.candle-theme-log-filter-button{
 	background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='white' d='M16 0c-8.837 0-16 2.239-16 5v3l12 12v10c0 1.105 1.791 2 4 2s4-0.895 4-2v-10l12-12v-3c0-2.761-7.163-5-16-5zM2.95 4.338c0.748-0.427 1.799-0.832 3.040-1.171 2.748-0.752 6.303-1.167 10.011-1.167s7.262 0.414 10.011 1.167c1.241 0.34 2.292 0.745 3.040 1.171 0.494 0.281 0.76 0.519 0.884 0.662-0.124 0.142-0.391 0.38-0.884 0.662-0.748 0.427-1.8 0.832-3.040 1.171-2.748 0.752-6.303 1.167-10.011 1.167s-7.262-0.414-10.011-1.167c-1.24-0.34-2.292-0.745-3.040-1.171-0.494-0.282-0.76-0.519-0.884-0.662 0.124-0.142 0.391-0.38 0.884-0.662z'%3E%3C/path%3E%3C/svg%3E");    
 	background-repeat: no-repeat;
     /*background-attachment: fixed;*/
@@ -1136,7 +1140,7 @@ webthing-light-capability::part(label){
 
 }
 
-.square-theme-log-icon-button{
+.candle-theme-log-icon-button{
     background: no-repeat center/100% url("/images/logs-icon.svg");
     background-position: center;
 	background-size:50%;
@@ -1146,12 +1150,12 @@ webthing-light-capability::part(label){
 
 
 
-#square-theme-log-filter-container span{
+#candle-theme-log-filter-container span{
 	font-size:1.3rem;
 }
 
 
-#square-theme-log-list-buttons{
+#candle-theme-log-list-buttons{
     position:absolute;
     bottom:0;
     background-color:#5288af;
@@ -1160,55 +1164,55 @@ webthing-light-capability::part(label){
 
 
 .logs-log-container{
-    animation: extension-square-theme-fadeIn 1s linear;
+    animation: extension-candle-theme-fadeIn 1s linear;
 }
 
 
 /*  logs overlaying on top of each other  */
-.square-theme-logs-overlay .logs-log-container{
+.candle-theme-logs-overlay .logs-log-container{
 	position:absolute;
 	pointer-events: none;
 	
 }
 
-.square-theme-logs-overlay .logs-log-info{
+.candle-theme-logs-overlay .logs-log-info{
 	display:none;
 }
-.square-theme-logs-overlay .logs-log-container:hover .logs-log-info{
+.candle-theme-logs-overlay .logs-log-container:hover .logs-log-info{
 	display:inline-block;
 	position:absolute;
 }
 
-.square-theme-logs-overlay .logs-graph-label,
-.square-theme-logs-overlay .logs-graph-tick{
+.candle-theme-logs-overlay .logs-graph-label,
+.candle-theme-logs-overlay .logs-graph-tick{
 	display:none;
 }
 
 
 
-.square-theme-logs-overlay .logs-graph{
+.candle-theme-logs-overlay .logs-graph{
 	margin-top: 5rem;
 }
 
 
-.square-theme-logs-overlay .logs-graph-line{
+.candle-theme-logs-overlay .logs-graph-line{
 	pointer-events: auto;
 }
 
-.square-theme-logs-overlay .logs-graph-fill{
+.candle-theme-logs-overlay .logs-graph-fill{
 	opacity:.2;
 }
 
-.square-theme-logs-overlay .logs-log-container:hover .logs-graph-line{
+.candle-theme-logs-overlay .logs-log-container:hover .logs-graph-line{
 	stroke:#305067;
 }
 
-.square-theme-logs-overlay .logs-log-container:hover .logs-graph-label,
-.square-theme-logs-overlay .logs-log-container:hover .logs-graph-tick{
+.candle-theme-logs-overlay .logs-log-container:hover .logs-graph-label,
+.candle-theme-logs-overlay .logs-log-container:hover .logs-graph-tick{
 	display:initial;
 }
 
-.square-theme-logs-small-button{
+.candle-theme-logs-small-button{
 	/*height: 2.6rem;*/
     color: white;
     margin: .5rem;
@@ -1220,13 +1224,13 @@ webthing-light-capability::part(label){
 	border-radius:.5rem;
     cursor:pointer;
 }
-.square-theme-logs-small-button:hover{
+.candle-theme-logs-small-button:hover{
     /*background-color:#3a607a;*/
     background-color: rgba(0,0,0,.1);
 }
 
 
-#square-theme-logs-overlay-button:hover{
+#candle-theme-logs-overlay-button:hover{
 	opacity:1;
 }
 
@@ -1262,11 +1266,11 @@ webthing-light-capability::part(label){
     text-align:left;
 }
 
-.square-theme-message-addon{
+.candle-theme-message-addon{
 }
-.square-theme-message-device{
+.candle-theme-message-device{
 }
-.square-theme-message-message{
+.candle-theme-message-message{
     font-size:125%;
     display:block;
     margin-top:1.5rem;
@@ -1396,7 +1400,7 @@ webthing-light-capability::part(label){
 	}
 	*/
 	
-    .square-theme-logs-small-button{
+    .candle-theme-logs-small-button{
         padding: .5rem
     }
     
@@ -1457,11 +1461,11 @@ webthing-light-capability::part(label){
     }
     
     
-    #square-theme-log-collections-container, #square-theme-log-list-container{
+    #candle-theme-log-collections-container, #candle-theme-log-list-container{
         background-color: #1f5174;
         background-color: #0c2a40;
     }
-	#square-theme-log-list-buttons{
+	#candle-theme-log-list-buttons{
 		background-color: #092134;
 	}
     

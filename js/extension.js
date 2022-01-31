@@ -1,7 +1,7 @@
 (function() {
-  class SquareTheme extends window.Extension {
+  class candleTheme extends window.Extension {
     constructor() {
-      super('square-theme');
+      super('candle-theme');
       
       console.log("API: ", API);
       this.check_properties_scheduled == false;
@@ -85,7 +85,7 @@
       */
       
       var remove_group_question = document.createElement('div');
-      remove_group_question.setAttribute("id", "square-theme-remove-group-question");
+      remove_group_question.setAttribute("id", "candle-theme-remove-group-question");
       remove_group_question.innerHTML = "Are you sure you want to move things out of this group and then remove it?";
       
       
@@ -147,7 +147,13 @@
           
       });
       
-      //localStorage.setItem("square_theme_log_collections", JSON.stringify({}));
+      
+      // Change logo
+      document.getElementById('menu-wordmark').src = '/extensions/candle-theme/images/candle_gateway_logo.svg';
+      document.getElementById('menu-wordmark').alt = "Candle, built on WebThings Gateway";
+      document.getElementById('menu-wordmark').classList.add("extension-candle-theme-candle-logo");
+      
+      //localStorage.setItem("candle_theme_log_collections", JSON.stringify({}));
       
 
       /*
@@ -199,7 +205,7 @@
             {'action':'init'}
 
         ).then((body) => {
-			console.log("Square theme Init API result: ", body);
+			console.log("Candle theme Init API result: ", body);
             
             if(typeof body.background_color != 'undefined'){
                 if(body.background_color != ""){
@@ -218,7 +224,7 @@
             if(typeof body.debug != 'undefined'){
                 if(body.debug){
                     this.debug = body.debug;
-                    document.getElementById('extension-square-theme-debug-warning').style.display = 'block';
+                    document.getElementById('extension-candle-theme-debug-warning').style.display = 'block';
                 }
             }
             */
@@ -255,14 +261,14 @@
                 console.log("at /things");
                 
                 // hide link to logs
-                if(document.getElementById('square-theme-link-to-logs-container') != null){
-                    document.getElementById('square-theme-link-to-logs-container').style.display = 'none';
+                if(document.getElementById('candle-theme-link-to-logs-container') != null){
+                    document.getElementById('candle-theme-link-to-logs-container').style.display = 'none';
                 }
                 
                 // show search input
-                if(document.getElementById('square-theme-things-search-container') != null){
-                    document.getElementById('square-theme-things-search-input').value = '';
-                    document.getElementById('square-theme-things-search-container').style.display = 'block';
+                if(document.getElementById('candle-theme-things-search-container') != null){
+                    document.getElementById('candle-theme-things-search-input').value = '';
+                    document.getElementById('candle-theme-things-search-container').style.display = 'block';
                 }
                 else if(document.getElementById("things").children.length > 10){
                     this.addThingsSearch();
@@ -287,9 +293,9 @@
                     this.add_link_to_logs();
                 }
                 
-                if(document.getElementById('square-theme-things-search-container') != null){
+                if(document.getElementById('candle-theme-things-search-container') != null){
                     console.log("hiding search container");
-                    document.getElementById('square-theme-things-search-container').style.display = 'none';
+                    document.getElementById('candle-theme-things-search-container').style.display = 'none';
                 }
             }
             
@@ -372,21 +378,21 @@
         device_id = this.get_device_id_from_url(device_id);
         if( this.devices_with_logs.includes(device_id)){
             //console.log(device_id + " has logs, adding direct link to them");
-            if(document.getElementById('square-theme-link-to-logs-container') == null){
+            if(document.getElementById('candle-theme-link-to-logs-container') == null){
     			const thing_view = document.getElementById("thing-view");
             
     			var new_log_link_container = document.createElement("div");
-    			new_log_link_container.setAttribute("id", "square-theme-link-to-logs-container");
-                new_log_link_container.setAttribute("class", "square-theme-link-to-logs-container-hidden square-theme-top-right-icon");
+    			new_log_link_container.setAttribute("id", "candle-theme-link-to-logs-container");
+                new_log_link_container.setAttribute("class", "candle-theme-link-to-logs-container-hidden candle-theme-top-right-icon");
 			    
     			// Create log list toggle button
                 //let log_link = document.createElement('div');
-                //log_link.setAttribute("id", "square-theme-link-to-logs-container");
-    			new_log_link_container.innerHTML = '<a href="/logs#' + this.get_device_id_from_url() + '"><button id="square-theme-link-to-logs-button" class="icon-button square-theme-log-icon-button" data-l10n-id="menu-button" aria-label="View logs"></button>';
+                //log_link.setAttribute("id", "candle-theme-link-to-logs-container");
+    			new_log_link_container.innerHTML = '<a href="/logs#' + this.get_device_id_from_url() + '"><button id="candle-theme-link-to-logs-button" class="icon-button candle-theme-log-icon-button" data-l10n-id="menu-button" aria-label="View logs"></button>';
     			//new_log_filter_container.append(toggle);
     			document.getElementById("things-view").append(new_log_link_container);
                 
-                document.getElementById('square-theme-link-to-logs-button').addEventListener('click', () => {
+                document.getElementById('candle-theme-link-to-logs-button').addEventListener('click', () => {
               		//console.log("clicked on link to logs button. This:", this);
                     
                     document.getElementById('back-button').classList.add("hidden");
@@ -401,7 +407,7 @@
                 
             }
             else{
-                document.getElementById('square-theme-link-to-logs-container').style.display = 'block';
+                document.getElementById('candle-theme-link-to-logs-container').style.display = 'block';
 
             }
         }
@@ -411,32 +417,32 @@
     add_log_filter_button(){
         //console.log("in add_log_filter_button");
 		// Create log filter container
-		var log_filter_container = document.getElementById("square-theme-log-filter-container");
+		var log_filter_container = document.getElementById("candle-theme-log-filter-container");
 		if(!log_filter_container){
 			//console.log("creating logs filter container");
             
 			const logs_view = document.getElementById("logs-view");
             
 			var new_log_filter_container = document.createElement("div");
-			new_log_filter_container.setAttribute("id", "square-theme-log-filter-container");
-            new_log_filter_container.setAttribute("class", "square-theme-log-filter-container-hidden");
+			new_log_filter_container.setAttribute("id", "candle-theme-log-filter-container");
+            new_log_filter_container.setAttribute("class", "candle-theme-log-filter-container-hidden");
 			
 			// Create log list toggle button
             let toggle = document.createElement('div');
-            toggle.setAttribute("id", "square-theme-log-list-toggle-container");
-            toggle.setAttribute("class", "square-theme-top-right-icon");
-			toggle.innerHTML = '<button id="square-theme-log-filter-button" class="icon-button square-theme-log-filter-button" data-l10n-id="menu-button" aria-label="Log Filter"></button>';
+            toggle.setAttribute("id", "candle-theme-log-list-toggle-container");
+            toggle.setAttribute("class", "candle-theme-top-right-icon");
+			toggle.innerHTML = '<button id="candle-theme-log-filter-button" class="icon-button candle-theme-log-filter-button" data-l10n-id="menu-button" aria-label="Log Filter"></button>';
 			//new_log_filter_container.append(toggle);
 			logs_view.append(toggle);
             
 			// Create empty container that will hold the collections
             var new_collections_container = document.createElement("div");
-            new_collections_container.setAttribute("id", "square-theme-log-collections-container");
+            new_collections_container.setAttribute("id", "candle-theme-log-collections-container");
 			new_log_filter_container.append(new_collections_container);
             
 			// Create empty container that will hold the filter list
             var new_log_list_container = document.createElement("div");
-            new_log_list_container.setAttribute("id", "square-theme-log-list-container");
+            new_log_list_container.setAttribute("id", "candle-theme-log-list-container");
 			new_log_filter_container.append(new_log_list_container);
 			
 			
@@ -444,7 +450,7 @@
 			logs_view.append(new_log_filter_container);
 			
             
-			log_filter_container = document.getElementById("square-theme-log-filter-container");
+			log_filter_container = document.getElementById("candle-theme-log-filter-container");
             
             this.showLogCollections(); // adds the collection buttons at the top
 			
@@ -463,20 +469,20 @@
     		//console.log(log_filter_container);
 	
     		//Check if log filter toggle button is clicked
-    		const log_filter_button = document.getElementById('square-theme-log-filter-button');
+    		const log_filter_button = document.getElementById('candle-theme-log-filter-button');
           	log_filter_button.addEventListener('click', () => {
           		//console.log("clicked on log filter toggle button. This:", this);
             
-    	        if (log_filter_container.classList.contains('square-theme-log-filter-container-hidden')) {
-    				log_filter_container.classList.remove('square-theme-log-filter-container-hidden');
+    	        if (log_filter_container.classList.contains('candle-theme-log-filter-container-hidden')) {
+    				log_filter_container.classList.remove('candle-theme-log-filter-container-hidden');
     		  	}
     			else{
-    				log_filter_container.classList.add('square-theme-log-filter-container-hidden');
+    				log_filter_container.classList.add('candle-theme-log-filter-container-hidden');
                 
     			}
             
-    			const list = document.getElementById('square-theme-log-list-ul');
-    			//const buttons = document.getElementById('square-theme-log-list-buttons');
+    			const list = document.getElementById('candle-theme-log-list-ul');
+    			//const buttons = document.getElementById('candle-theme-log-list-buttons');
     			if(list != null){
                     if(list.querySelectorAll("li").length == 0){
                         //console.log("there were no checkboxes yet");
@@ -793,9 +799,9 @@
                 const message_array = document.getElementById('message-area').innerText.split(":", 3);
                 //console.log(message_array);
                 if(message_array.length > 2){
-                    var upgraded_message = '<span class="square-theme-message-addon">' + message_array[0] + '</span>';
-                    upgraded_message += '<span class="square-theme-message-device">' + message_array[1] + '</span>';
-                    upgraded_message += '<span class="square-theme-message-message">' + message_array[2] + '</span>';
+                    var upgraded_message = '<span class="candle-theme-message-addon">' + message_array[0] + '</span>';
+                    upgraded_message += '<span class="candle-theme-message-device">' + message_array[1] + '</span>';
+                    upgraded_message += '<span class="candle-theme-message-message">' + message_array[2] + '</span>';
                     //console.log(upgraded_message);
                     document.getElementById('message-area').innerHTML = upgraded_message;
                 }
@@ -851,7 +857,7 @@
       //console.log("listItems.length in addParts: " + listItems.length);
       if(listItems.length){
           //console.log("adding mutation indicator class");
-          document.getElementById('things-view').classList.add("square-theme-things-mutated");
+          document.getElementById('things-view').classList.add("candle-theme-things-mutated");
       }
     }
 
@@ -872,13 +878,13 @@
         const logs_view = document.getElementById("logs-view");
 
 		// Clear the log list
-		const log_list_container = document.getElementById("square-theme-log-list-container");
+		const log_list_container = document.getElementById("candle-theme-log-list-container");
 		
 		log_list_container.innerHTML = "";
 
         // Create checkbox list
         let ul = document.createElement('ul');
-        ul.setAttribute("id", "square-theme-log-list-ul");
+        ul.setAttribute("id", "candle-theme-log-list-ul");
 
 
         log_names.forEach( spaced_log_name => {
@@ -920,26 +926,26 @@
 		
 		
 		let filter_buttons = document.createElement('div');
-		filter_buttons.setAttribute("id", "square-theme-log-list-buttons");
+		filter_buttons.setAttribute("id", "candle-theme-log-list-buttons");
 		
         // Clear button
 		let clear_button = document.createElement('button');
-		clear_button.setAttribute("id", "square-theme-logs-clear-button");
-        clear_button.setAttribute("class", "square-theme-logs-small-button");
+		clear_button.setAttribute("id", "candle-theme-logs-clear-button");
+        clear_button.setAttribute("class", "candle-theme-logs-small-button");
 		clear_button.textContent = "Clear";
 		filter_buttons.appendChild(clear_button)
         
 		// Overlay button
 		let overlay_button = document.createElement('button');
-		overlay_button.setAttribute("id", "square-theme-logs-overlay-button");
-        overlay_button.setAttribute("class", "square-theme-logs-small-button");
+		overlay_button.setAttribute("id", "candle-theme-logs-overlay-button");
+        overlay_button.setAttribute("class", "candle-theme-logs-small-button");
 		overlay_button.textContent = "Overlay";
 		filter_buttons.appendChild(overlay_button)
         
         // Add collection button
 		let collection_button = document.createElement('button');
-		collection_button.setAttribute("id", "square-theme-logs-add-collection-button");
-        collection_button.setAttribute("class", "square-theme-logs-small-button");
+		collection_button.setAttribute("id", "candle-theme-logs-add-collection-button");
+        collection_button.setAttribute("class", "candle-theme-logs-small-button");
 		collection_button.textContent = "Add collection";
 		filter_buttons.appendChild(collection_button)
         
@@ -949,30 +955,30 @@
 		log_list_container.appendChild(filter_buttons)
 		
         
-		document.getElementById("square-theme-logs-clear-button").onclick = (event) => {
+		document.getElementById("candle-theme-logs-clear-button").onclick = (event) => {
   		    //console.log("Clear button clicked");
             this.addLogSelector();
             this.filterLogs();
 		}
         
         
-		document.getElementById("square-theme-logs-overlay-button").onclick = (event) => {
+		document.getElementById("candle-theme-logs-overlay-button").onclick = (event) => {
   		    //console.log("Overlay button clicked");
 			
-	        if (logs_view.classList.contains('square-theme-logs-overlay')) {
-				logs_view.classList.remove('square-theme-logs-overlay');
+	        if (logs_view.classList.contains('candle-theme-logs-overlay')) {
+				logs_view.classList.remove('candle-theme-logs-overlay');
 		  	}
 			else{
-				logs_view.classList.add('square-theme-logs-overlay');
+				logs_view.classList.add('candle-theme-logs-overlay');
 			}
 		}
 
         
-        if (localStorage.getItem("square_theme_log_collections") !== null) {
+        if (localStorage.getItem("candle_theme_log_collections") !== null) {
             this.showLogCollections();
         }
         
-		document.getElementById("square-theme-logs-add-collection-button").onclick = (event) => {//.onclick = function(event){
+		document.getElementById("candle-theme-logs-add-collection-button").onclick = (event) => {//.onclick = function(event){
             this.addLogCollection();
 		}
         
@@ -995,7 +1001,7 @@
 		//console.log("all log item names = " + all_log_names);
 		
 		// get list of selected log names
-        const selected_logs = document.querySelectorAll(' #logs-view #square-theme-log-list-ul input:checked');
+        const selected_logs = document.querySelectorAll(' #logs-view #candle-theme-log-list-ul input:checked');
         //console.log("selected_logs: ", selected_logs);
         var selected_log_names = [];
         for (const selected_log of selected_logs) {
@@ -1031,11 +1037,11 @@
     addLogCollection(){
         //let self = this;
         //var log_collections = {};
-        //if (localStorage.getItem("square_theme_log_collections") !== null) {
-        //    log_collections = JSON.parse( localStorage.getItem("square_theme_log_collections") );
+        //if (localStorage.getItem("candle_theme_log_collections") !== null) {
+        //    log_collections = JSON.parse( localStorage.getItem("candle_theme_log_collections") );
         //}
         
-        const selected_logs = document.querySelectorAll(' #logs-view #square-theme-log-list-ul input:checked');
+        const selected_logs = document.querySelectorAll(' #logs-view #candle-theme-log-list-ul input:checked');
         var selected_log_names = [];
         for (const selected_log of selected_logs) {
             selected_log_names.push(selected_log.name);
@@ -1057,7 +1063,7 @@
                 */
                 this.log_collections[collection_name] = selected_log_names; //.push({'name':collection_name,'logs':selected_log_names});
         
-                localStorage.setItem("square_theme_log_collections", JSON.stringify(this.log_collections));
+                localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
                 
                 //console.log('going to save: ', this.log_collections);
           
@@ -1105,14 +1111,14 @@
             if(typeof body.collections != 'undefined'){
                 //console.log("body.collections existed: ", body.collections);
                 this.log_collections = body.collections;
-                localStorage.setItem("square_theme_log_collections", JSON.stringify(this.log_collections));
+                localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
             }
         }).catch((e) => {
   			console.log("Error getting log collections data: ", e);
             
-            if (localStorage.getItem("square_theme_log_collections") !== null) {
-                //console.log("localStorage had log collection data:", localStorage.getItem("square_theme_log_collections") );
-                this.log_collections = JSON.parse( localStorage.getItem("square_theme_log_collections") );
+            if (localStorage.getItem("candle_theme_log_collections") !== null) {
+                //console.log("localStorage had log collection data:", localStorage.getItem("candle_theme_log_collections") );
+                this.log_collections = JSON.parse( localStorage.getItem("candle_theme_log_collections") );
             }
             else{
                 console.log("browser local storage had no collections backup");
@@ -1124,13 +1130,13 @@
             
             const collection_names = Object.keys(this.log_collections);
             //console.log("collection_names: ", collection_names);
-            document.getElementById('square-theme-log-collections-container').innerHTML = "";
+            document.getElementById('candle-theme-log-collections-container').innerHTML = "";
         
             collection_names.forEach((collection_name, index) => {
                 //console.log(`${collection_name}: ${this.log_collections[collection_name]}`);
             
         		let new_collection_button = document.createElement('button');
-        		new_collection_button.setAttribute("class", "square-theme-logs-collection-button square-theme-logs-small-button");
+        		new_collection_button.setAttribute("class", "candle-theme-logs-collection-button candle-theme-logs-small-button");
         		new_collection_button.textContent = collection_name;
             
                 // on a click, set the checkboxes to the correct position
@@ -1145,14 +1151,14 @@
                 
                     // remove sidebar when collection button is clicked
                     //this.hideLogMenu();
-                    //document.getElementById('square-theme-log-collections-container').innerHTML = "";
-                    document.getElementById('square-theme-log-filter-container').classList.add('square-theme-log-filter-container-hidden');
+                    //document.getElementById('candle-theme-log-collections-container').innerHTML = "";
+                    document.getElementById('candle-theme-log-filter-container').classList.add('candle-theme-log-filter-container-hidden');
                 
                 };
             
             
         		let new_collection_delete_button = document.createElement('button');
-        		new_collection_delete_button.setAttribute("class", "square-theme-logs-collection-delete-button square-theme-logs-small-button");
+        		new_collection_delete_button.setAttribute("class", "candle-theme-logs-collection-delete-button candle-theme-logs-small-button");
         		//new_collection_delete_button.textContent = "✖";
                 new_collection_delete_button.innerHTML = '&#10006;';
                 new_collection_delete_button.onclick = (event) => {
@@ -1172,7 +1178,7 @@
 
                         ).then((body) => {
                 			console.log("Save collections API result: ", body);
-                            localStorage.setItem("square_theme_log_collections", JSON.stringify(this.log_collections));
+                            localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
             
                         }).catch((e) => {
                   			console.log("Error saving log collections after deleting a collection: " + e.toString());
@@ -1184,12 +1190,12 @@
             
             
                 let new_collection_button_container = document.createElement('div');
-                new_collection_button_container.setAttribute("class", "square-theme-logs-collection-button-container");
+                new_collection_button_container.setAttribute("class", "candle-theme-logs-collection-button-container");
             
                 new_collection_button_container.appendChild(new_collection_button);
                 new_collection_button_container.appendChild(new_collection_delete_button);
             
-        		document.getElementById('square-theme-log-collections-container').appendChild(new_collection_button_container);
+        		document.getElementById('candle-theme-log-collections-container').appendChild(new_collection_button_container);
             
             });
             
@@ -1199,7 +1205,7 @@
 
     // Toggles the correct checkboxes, and then calls filterLogs.
     filter_these_logs(should_check){
-        const log_checkboxes = document.querySelectorAll(' #logs-view #square-theme-log-list-ul input');
+        const log_checkboxes = document.querySelectorAll(' #logs-view #candle-theme-log-list-ul input');
 
         //console.log("log_checkboxes: ", log_checkboxes);
         for (const checkbox of log_checkboxes) {
@@ -1315,15 +1321,15 @@
 
     hideLogMenu(){
         //console.log("in hideLogMenu");
-		const list = document.getElementById('square-theme-log-list-ul');
-		const buttons = document.getElementById('square-theme-log-list-buttons');
+		const list = document.getElementById('candle-theme-log-list-ul');
+		const buttons = document.getElementById('candle-theme-log-list-buttons');
         
 		list.parentNode.removeChild(list);
 		buttons.parentNode.removeChild(buttons);
-        //let collection_button_container = document.getElementById('square-theme-log-collections-container');
+        //let collection_button_container = document.getElementById('candle-theme-log-collections-container');
         //collection_button_container.parentNode.removeChild(collection_button_container);
-        document.getElementById('square-theme-log-collections-container').innerHTML = "";
-        //document.getElementById('logs-view').classList.remove('square-theme-logs-overlay');
+        document.getElementById('candle-theme-log-collections-container').innerHTML = "";
+        //document.getElementById('logs-view').classList.remove('candle-theme-logs-overlay');
     }
 
 
@@ -1403,20 +1409,20 @@
     addThingsSearch() {
         //console.log("in addThingsSearch");
         
-        if(document.getElementById('square-theme-things-search-container') == null){
+        if(document.getElementById('candle-theme-things-search-container') == null){
             let search_container = document.createElement('div');
-            search_container.setAttribute("id", "square-theme-things-search-container");
+            search_container.setAttribute("id", "candle-theme-things-search-container");
             let search_input = document.createElement('input');
-            search_input.setAttribute("id", "square-theme-things-search-input");
+            search_input.setAttribute("id", "candle-theme-things-search-input");
             search_input.setAttribute("type", "search");
-            search_input.setAttribute("name", "square-theme-search-input");
+            search_input.setAttribute("name", "candle-theme-search-input");
             search_input.setAttribute("placeholder", "search");
 
             search_container.appendChild(search_input);
             document.getElementById("things-view").appendChild(search_container);
         }
         
-        const search_input = document.getElementById('square-theme-things-search-input');
+        const search_input = document.getElementById('candle-theme-things-search-input');
         if(search_input != null){
             if(document.activeElement !== search_input){
                 console.log("giving focus");
@@ -1448,7 +1454,7 @@
     
     
     things_overview_search(code){
-        const search_input_element = document.getElementById("square-theme-things-search-input");
+        const search_input_element = document.getElementById("candle-theme-things-search-input");
         const things = document.getElementById("things");
         const groups = document.getElementById("groups");
         
@@ -1558,7 +1564,7 @@
     
   }
 
-  new SquareTheme();
+  new candleTheme();
 
 })();
  
