@@ -1,5 +1,5 @@
 {
-  "author": "Flatsiedatsie",
+  "author": "CandleSmartHome.com",
   "content_scripts": [
     {
       "css": [
@@ -10,25 +10,25 @@
       ]
     }
   ],
-  "description": "A theme that removes the octopus view, and adds setpoint buttons",
+  "description": "the main theme for the Candle smart home",
   "gateway_specific_settings": {
     "webthings": {
-	  "exec": "python3 {path}/main.py",
+      "exec": "python3 {path}/main.py",
       "primary_type": "extension",
       "strict_max_version": "*",
       "strict_min_version": "0.10.0",
-	  "enabled": true
+      "enabled": true
     }
   },
-  "homepage_url": "https://github.com/flatsiedatsie/square-theme",
-  "id": "square-theme",
+  "homepage_url": "https://github.com/createcandle/candle-theme",
+  "id": "candle-theme",
   "license": "MPL-2.0",
   "manifest_version": 1,
-  "name": "Square Theme",
+  "name": "Candle Theme",
   "options": {
     "default": {
-	  "Background color": "",
-	  "Hide floorplan": false,
+      "Background color": "",
+      "Hide floorplan": false,
       "Debugging": false
     },
     "schema": {
@@ -50,8 +50,8 @@
       "type": "object"
     }
   },
-  "short_name": "Square",
-  "version": "2.0.2",
+  "short_name": "ctheme",
+  "version": "2.0.3",
   "web_accessible_resources": [
     "css/*.css",
     "js/*.js"
