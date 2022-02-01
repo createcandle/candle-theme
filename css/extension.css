@@ -288,7 +288,6 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 	transform:none;
 	top:0;
 	height:auto;
-    min-height: 50px;
 	max-height: none;
 	/*align-content: center; causes issues */
     
@@ -1302,6 +1301,11 @@ webthing-light-capability::part(label){
 
 /*  RULES OVERVIEW  */
 
+
+
+.rule{
+    max-width:100vw;
+}
 .drag-hint-container{
     background-color:rgba(255,255,255,.4);
     padding: 1rem 2rem;
