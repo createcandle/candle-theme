@@ -3,7 +3,7 @@
     constructor() {
       super('candle-theme');
       
-      console.log("API: ", API);
+      //console.log("API: ", API);
       this.check_properties_scheduled == false;
 	  this.devices_with_logs = [];
       this.api_logs = [];
@@ -50,37 +50,37 @@
     
       /*
       API.getThings().then((things) => {
-          console.log('things: ', things);
+          //console.log('things: ', things);
       });
       try{
           if(typeof API.getGroups === 'function') {
               API.getGroups().then((groups) => {
-                  console.log('groups: ', groups);
+                  //console.log('groups: ', groups);
               });
           }
       }
       catch(e){
-          console.log("Api test error: ", e);
+          //console.log("Api test error: ", e);
       }
 
       
       API.getAddonsInfo().then((addons) => {
-          console.log('addons: ', addons);
+          //console.log('addons: ', addons);
       });
       
       
       API.getInstalledAddons().then((addons) => {
-          console.log('addons: ', addons);
+          //console.log('addons: ', addons);
       });
       
       
       API.getExtensions().then((extensions) => {
-          console.log('extensions: ', extensions);
+          //console.log('extensions: ', extensions);
       });
       
       
       API.getAllUserInfo().then((user_info) => {
-          console.log('user_info: ', user_info);
+          //console.log('user_info: ', user_info);
       });
       */
       
@@ -159,16 +159,16 @@
       /*
       // Listen for changes in dropdowns
       const message_area = document.getElementById('message-area');
-      console.log(message_area);
+      //console.log(message_area);
       message_area.addEventListener("DOMCharacterDataModified", function (event) {
       //message_area.addEventListener('change', function(event) {
-          console.log(event);
-          console.log("message changed to: " + message_area.innerText);
+          //console.log(event);
+          //console.log("message changed to: " + message_area.innerText);
           message_area.innertext = message_area.innerText + " ola";
       }, false);
       
       var mutato = new MutationObserver(function (e) {
-        if (e[0].removedNodes) console.log(1);
+        if (e[0].removedNodes) //console.log(1);
       });
 
       mutato.observe(document.getElementById('parent'), { childList: true });
@@ -205,7 +205,7 @@
             {'action':'init'}
 
         ).then((body) => {
-			console.log("Candle theme Init API result: ", body);
+			//console.log("Candle theme Init API result: ", body);
             
             if(typeof body.background_color != 'undefined'){
                 if(body.background_color != ""){
@@ -231,7 +231,7 @@
 			
 		
         }).catch((e) => {
-  			console.log("Error getting theme init data: " + e.toString());
+  			//console.log("Error getting theme init data: " + e.toString());
         });	
         
         
@@ -250,15 +250,15 @@
     
     
     on_new_page(just_arrived=false){
-        console.log("ON NEW PAGE:" + window.location.pathname);
+        //console.log("ON NEW PAGE:" + window.location.pathname);
         
         if(window.location.pathname.startsWith('/things')){
-            console.log("at /things or a sub-page" );
+            //console.log("at /things or a sub-page" );
             
             this.addParts();
             
             if(window.location.pathname == '/things'){
-                console.log("at /things");
+                //console.log("at /things");
                 
                 // hide link to logs
                 if(document.getElementById('candle-theme-link-to-logs-container') != null){
@@ -276,25 +276,25 @@
                 
             }
             else{
-                console.log("ON A THING DETAIL PAGE");
+                //console.log("ON A THING DETAIL PAGE");
 
                 this.checkProperties(null, true);
                 this.addThermostatButtons();
                 //this.addShadowMutationsListener();
                 if(just_arrived){
-                    console.log("using promise");
+                    //console.log("using promise");
                     this.update_logs_list().then(() => {
-                        console.log("then add links to logs:");
+                        //console.log("then add links to logs:");
                         this.add_link_to_logs();
                     });
                 }
                 else{
-                    console.log("no promise");
+                    //console.log("no promise");
                     this.add_link_to_logs();
                 }
                 
                 if(document.getElementById('candle-theme-things-search-container') != null){
-                    console.log("hiding search container");
+                    //console.log("hiding search container");
                     document.getElementById('candle-theme-things-search-container').style.display = 'none';
                 }
             }
@@ -302,10 +302,10 @@
         }
         /*
         else if(window.location.pathname == ('/logs')){
-            console.log("on /logs");
+            //console.log("on /logs");
         }
         else{
-            console.log("ON SOME OTHER PAGE");
+            //console.log("ON SOME OTHER PAGE");
             //console.log(document.location.href);
             
         }
@@ -315,19 +315,19 @@
     
     
     shadowMutationCallback(mutations){
-        console.log("in shadowMutationCallback. Mutations: ", mutations);
+        //console.log("in shadowMutationCallback. Mutations: ", mutations);
         if(Date.now() - 100 > this.last_mutation_activation_time){
             this.last_mutation_activation_time = Date.now();
-            console.log(this.shadow_mutation_counter);
+            //console.log(this.shadow_mutation_counter);
             this.shadow_mutation_counter++;
             window.setTimeout(() => {
-                console.log("50ms have passed, calling check_properties");
+                //console.log("50ms have passed, calling check_properties");
                 this.checkProperties();
             }, 50);
             
         }
         else{
-            console.log(" - ignoring shadow mutation callback.");
+            //console.log(" - ignoring shadow mutation callback.");
         }
     }
     
@@ -496,7 +496,7 @@
             
 		}
 		else{
-		    console.log("log_filter_button already existed");
+		    //console.log("log_filter_button already existed");
 		}
 		
     }
@@ -534,7 +534,7 @@
             //console.log("Ignoring request to checkProperties since the last request was "  + (Date.now - this.last_check_properties) + " millisecond ago.");
             if(this.check_properties_scheduled == false){
                 // But no extra check was scheduled either. Doing that now.
-                console.log("scheduling another properties upgrade for a bit later");
+                //console.log("scheduling another properties upgrade for a bit later");
                 this.check_properties_scheduled = true;
                  window.setTimeout(() => { 
                      this.checkProperties();
@@ -545,7 +545,7 @@
         
         
         if(window.location.pathname == '/things'){
-            console.log("check_properties was called on /things, stopping");
+            //console.log("check_properties was called on /things, stopping");
             return;
         }
         else{
@@ -554,7 +554,7 @@
         }
         
         if(on_new_page){
-            console.log("check_properties: on_new_page was true. Attaching listeners.");
+            //console.log("check_properties: on_new_page was true. Attaching listeners.");
         }
         
         //console.log("check_properties: looping over device: " + device_id);
@@ -577,14 +577,14 @@
                     try{
                         /*
                         API.getThing(device_id + '/' + property_name).then((prop) => {
-                            console.log("prop1", prop);
+                            //console.log("prop1", prop);
                         });
                         */
                         
                         API.getJson('/things/' + device_id + '/properties/' + property_name)
                         .then((prop2) => {
                             this.last_mutation_activation_time = Date.now();
-                            console.log("checkProperties: API property result for :" + property_name + ": ", prop2);
+                            //console.log("checkProperties: API property result for :" + property_name + ": ", prop2);
                             
                             //const read_only = readOnly;
                             
@@ -609,14 +609,14 @@
                                 
                                         var value_element = shadow_to_observe.querySelector('.webthing-numeric-label-property-value');
                                         if(value_element != null){
-                                            console.log("value element existed: " + property_name);
+                                            //console.log("value element existed: " + property_name);
                                             //value_element.addEventListener('change', this.shadowMutationCallback);
                                         }
                                         else{
-                                            console.log("adding value element change listener failed, value element doesn't exist (yet): " + property_name);
+                                            //console.log("adding value element change listener failed, value element doesn't exist (yet): " + property_name);
                                             /*
                                             setTimeout(() =>{
-                                                console.log("trying again: " + property_name);
+                                                //console.log("trying again: " + property_name);
                                                 var value_element2 = shadow_to_observe.querySelector('.webthing-numeric-label-property-value');
                                                 value_element2.addEventListener('change', this.shadowMutationCallback);
                                             }, 100);
@@ -630,13 +630,13 @@
                                     
                                     }
                                     else{
-                                        console.log("property to observe didn't exist yet: " + property_name);
+                                        //console.log("property to observe didn't exist yet: " + property_name);
                                     }
                                 }
                                
                             }
                             catch(e){
-                                console.log("error adding value observer: ", e);
+                                //console.log("error adding value observer: ", e);
                             }
                             
                             
@@ -644,14 +644,14 @@
                             
                             
                             if(Object.keys(prop2).length === 0){
-                                console.log(property_name + " was Undefined");
+                                //console.log(property_name + " was Undefined");
                                 
                                 this.modify_property_ui(property_name, false); //
                                 
                                 
                             }
                             else if(prop2[property_name] == null){
-                                console.log(property_name + " WAS NULL");
+                                //console.log(property_name + " WAS NULL");
                                 this.modify_property_ui(property_name, false); //
                             }
                             /*
@@ -662,38 +662,38 @@
                                 var good_element = document.querySelector('[id$="' + property_name + '"]');
                                 //console.log(bad_element);
                                 if(good_element == null){
-                                    console.log("trying: alt: " + capitalised_property_name);
+                                    //console.log("trying: alt: " + capitalised_property_name);
                                     good_element = document.querySelector('[data-name="' + capitalised_property_name + '"]');
                                 }
                                 
                                 if(good_element == null){
-                                    console.log("ERROR good element still not spotted..");
+                                    //console.log("ERROR good element still not spotted..");
                                     //continue;
                                 }
                                 else{
-                                    console.log("hello there: ", good_element);
+                                    //console.log("hello there: ", good_element);
                                     
                                     const shadow = good_element.shadowRoot;
-                                    console.log('shadow: ', shadow);
+                                    //console.log('shadow: ', shadow);
                                 }
                             }*/
                         })
                         .catch((err) => {
-                            console.log("API error: ", err);
+                            //console.log("API error: ", err);
                             this.modify_property_ui(property_name, false); //
                         });
                     }
                     catch(e){
-                        console.log("Error: ", e);
+                        //console.log("Error: ", e);
                     }
                     
                     
                     /*
                     if(typeof thing.properties[property_name].value != 'undefined'){
-                        console.log(thing.properties[property_name].value);
+                        //console.log(thing.properties[property_name].value);
                     }
                     else{
-                        console.log("no value!");
+                        //console.log("no value!");
                     }
                     */
                 }
@@ -713,13 +713,13 @@
         //console.log(bad_element);
         /*
         if(bad_element == null){
-            console.log("trying: alt: " + capitalised_property_name);
+            //console.log("trying: alt: " + capitalised_property_name);
             bad_element = document.querySelector('[data-name="' + capitalised_property_name + '"]');
         }
         */
         
         if(bad_element == null){
-            console.log("ERROR bad element still not spotted..");
+            //console.log("ERROR bad element still not spotted..");
             //continue;
         }
         else{
@@ -746,7 +746,7 @@
 
     // reacts to changes to things overview and detail pages
     thingsMutationCallback(mutations) {
-        console.log("new mutations:", mutations.length);
+        //console.log("new mutations:", mutations.length);
         
         const mutationRecords = this.observer.takeRecords()
         //console.log("mutation records: ", mutationRecords);
@@ -760,7 +760,7 @@
         }
       //console.log("mutations, should_upgrade = " + should_upgrade);
       if(should_upgrade && window.location.pathname.startsWith('/things')){
-          console.log("mutation: nodes added on path starting with /things");
+          //console.log("mutation: nodes added on path starting with /things");
           //console.log("mutation: should add parts and thermostat buttons");
           this.addParts();
           
@@ -776,7 +776,7 @@
       try{
           if(window.location.pathname != this.previous_document_location){
               if(this.previous_document_location == '/logs'){
-                  console.log("DOES THE MUTATION LISTENER WORK ON LOGS? APPARENTLY SO");
+                  //console.log("DOES THE MUTATION LISTENER WORK ON LOGS? APPARENTLY SO");
                   this.update_logs_list();
               }
               this.previous_document_location = window.location.pathname;
@@ -1057,7 +1057,7 @@
                 //console.log("selected: ", selected_log_names);
                 /*
                 if(typeof this.log_collections == 'string'){
-                    console.log("log collections was string? fixing.");
+                    //console.log("log collections was string? fixing.");
                     this.log_collections = JSON.parse(this.log_collections);
                 }
                 */
@@ -1075,12 +1075,12 @@
                     {'action':'save_collections','collections':this.log_collections}
 
                 ).then((body) => {
-        			console.log("save_collections API result:");
-        			console.log(body);
+        			//console.log("save_collections API result:");
+        			//console.log(body);
                     this.showLogCollections();
             
                 }).catch((e) => {
-          			console.log("Error saving collections after adding a collection: " + e.toString());
+          			//console.log("Error saving collections after adding a collection: " + e.toString());
                 });	
                 
             }
@@ -1114,14 +1114,14 @@
                 localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
             }
         }).catch((e) => {
-  			console.log("Error getting log collections data: ", e);
+  			//console.log("Error getting log collections data: ", e);
             
             if (localStorage.getItem("candle_theme_log_collections") !== null) {
                 //console.log("localStorage had log collection data:", localStorage.getItem("candle_theme_log_collections") );
                 this.log_collections = JSON.parse( localStorage.getItem("candle_theme_log_collections") );
             }
             else{
-                console.log("browser local storage had no collections backup");
+                //console.log("browser local storage had no collections backup");
                 return;
             }
         }).then(() => {
@@ -1177,11 +1177,11 @@
                             {'action':'save_collections','collections':this.log_collections}
 
                         ).then((body) => {
-                			console.log("Save collections API result: ", body);
+                			//console.log("Save collections API result: ", body);
                             localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
             
                         }).catch((e) => {
-                  			console.log("Error saving log collections after deleting a collection: " + e.toString());
+                  			//console.log("Error saving log collections after deleting a collection: " + e.toString());
                         });	
                         
                     }
@@ -1250,7 +1250,7 @@
             return;
         }
         if(log_elements.length < this.api_logs.length){
-            console.log('Logs are not ALL there yet');
+            //console.log('Logs are not ALL there yet');
             setTimeout(() => {
                 this.filter_logs_by_device(device_id);
             }, 100);
@@ -1289,12 +1289,12 @@
 			//console.log("comparing to:", all_log_names[log_counter]);
 			// If the current corresponding name is in the selected arrays name
 			if( selected_log_names.indexOf(all_log_names[log_counter]) > -1 || selected_log_names.length == 0 ){
-				console.log("do not hide " + all_log_names[log_counter]);
+				//console.log("do not hide " + all_log_names[log_counter]);
 				//log_container.style.visibility = 'visible';
 				
 			}
 			else{
-				console.log("hiding log container: " + all_log_names[log_counter]);
+				//console.log("hiding log container: " + all_log_names[log_counter]);
 				//console.log(log_container);
 				//log_container.style.visibility = 'hidden';
 				log_container.style.display = 'none';
@@ -1305,7 +1305,7 @@
         
         /*
         const log_links = .getElementsByClassName('logs-log-info');
-        console.log("log_links: ", log_links);
+        //console.log("log_links: ", log_links);
         for (var j=0;j<log_elements.length;j++){
             
         }
@@ -1425,13 +1425,13 @@
         const search_input = document.getElementById('candle-theme-things-search-input');
         if(search_input != null){
             if(document.activeElement !== search_input){
-                console.log("giving focus");
+                //console.log("giving focus");
                 search_input.focus();
             }
             
             // This listener seems to sometimes disappear...
             search_input.onsearch = () => {
-                console.log("on-search");
+                //console.log("on-search");
                 this.things_overview_search(8); // simulate backspace
             };
         }
@@ -1439,7 +1439,7 @@
             setTimeout(() => {
                 if(search_input != null){
                     if(document.activeElement !== search_input){
-                        console.log("giving focus");
+                        //console.log("giving focus");
                         search_input.focus();
                     }
                 }
@@ -1463,11 +1463,11 @@
         const all_things = document.querySelectorAll('#things-view .thing');
         
         if(all_things == null){
-            console.log("no things found");
+            //console.log("no things found");
             return;
         }
         
-        console.log("all_things: ", all_things );
+        //console.log("all_things: ", all_things );
         const things_count = all_things.length;
 
 
@@ -1504,9 +1504,9 @@
     
                 }
                 
-                console.log("shown_count = " + shown_count);
+                //console.log("shown_count = " + shown_count);
                 if(last_element != null && shown_count == 1 && code == 13){
-                    console.log("enter key press spotted when one device was shown");
+                    //console.log("enter key press spotted when one device was shown");
                     last_element.click();
                 }
                 
@@ -1527,10 +1527,10 @@
     // Press letter on the keyboard and it will filter the rule parts
     filter_rule_parts_list(code){
         
-        console.log("in filter_rule_parts_list. key code: ", code);
+        //console.log("in filter_rule_parts_list. key code: ", code);
         
         if (document.activeElement.tagName === "INPUT"){
-            console.log("An input is already focused");
+            //console.log("An input is already focused");
         }
         else{
             if( code == 8 || code == 27 || code == 32){ // backspace, escape, space
