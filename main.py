@@ -1,4 +1,4 @@
-"""Square theme for Mozilla WebThings Gateway."""
+"""Candle theme for WebThings Gateway."""
 
 from os import path
 import functools
@@ -9,7 +9,7 @@ import time
 
 sys.path.append(path.join(path.dirname(path.abspath(__file__)), 'lib'))
 try:
-    from pkg.square_theme import SquareThemeAPIHandler  # noqa
+    from pkg.candle_theme import CandleThemeAPIHandler  # noqa
 except Exception as ex:
     print(ex)
 
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, cleanup)
     signal.signal(signal.SIGTERM, cleanup)
     #_HANDLER = PowerSettingsAdapter(verbose=True)
-    _HANDLER = SquareThemeAPIHandler(verbose=True)
+    _HANDLER = CandleThemeAPIHandler(verbose=True)
     
 
     # Wait until the proxy stops running, indicating that the gateway shut us
