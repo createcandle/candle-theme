@@ -1299,30 +1299,8 @@ webthing-light-capability::part(label){
 
 
 
+
 /*  RULES OVERVIEW  */
-
-
-.rule{
-	height:30rem;
-}
-
-.rule-preview,
-.rule-edit-overlay{
-	height:50%;
-}
-
-.rule-info{
-	height:40%;
-}
-
-#rule-parts-list-container{
-    width:100%;
-}
-
-.rule-part-container.open .property-select-option select{
-    max-width:50%;
-}
-
 
 .drag-hint-container{
     background-color:rgba(255,255,255,.4);
@@ -1330,9 +1308,34 @@ webthing-light-capability::part(label){
     border-radius:.5rem;
 }
 
-/*  RULE CREATION  */
+
 
 @media only screen and (min-width: 1025px) {
+    
+    /*  RULES OVERVIEW  */
+
+
+    .rule{
+    	height:30rem;
+    }
+
+    .rule-preview,
+    .rule-edit-overlay{
+    	height:50%;
+    }
+
+    .rule-info{
+    	height:40%;
+    }
+
+    #rule-parts-list-container{
+        width:100%;
+    }
+
+    .rule-part-container.open .property-select-option select{
+        max-width:50%;
+    }
+    
     
     #rule-area{
         height: calc(80% - 9.6rem);
@@ -1512,7 +1515,7 @@ webthing-light-capability::part(label){
     }
 	.rule-preview{
         background-image:none;
-	    background-color:rgba(0,0,0,.7);
+	    background-color:rgba(0,0,0,.2);
 	}
     	
     .logs-scroll-control{

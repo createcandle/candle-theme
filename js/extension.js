@@ -137,8 +137,8 @@
           }
           else if(document.location.href.indexOf('/rules/') !== -1){
               //console.log('keypress at rules:', event);
-              
-              this.filter_rule_parts_list(event);
+              const code = event.keyCode || event.charCode;
+              this.filter_rule_parts_list(code);
               
           }
           
@@ -1525,8 +1525,8 @@
     
     
     // Press letter on the keyboard and it will filter the rule parts
-    filter_rule_parts_list(event){
-        const code = key_press.keyCode || key_press.charCode;
+    filter_rule_parts_list(code){
+        
         console.log("in filter_rule_parts_list. key code: ", code);
         
         if (document.activeElement.tagName === "INPUT"){
