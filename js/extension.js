@@ -415,6 +415,16 @@
 
 
     add_log_filter_button(){
+        
+        
+        const log_elements = document.querySelectorAll('.logs-log-container');
+        if(log_elements.length == 0){
+            console.log("no logs exist yet, so not showing filter button");
+            return;
+        }
+        
+        
+        
         //console.log("in add_log_filter_button");
 		// Create log filter container
 		var log_filter_container = document.getElementById("candle-theme-log-filter-container");
