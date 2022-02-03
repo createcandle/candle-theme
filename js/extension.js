@@ -416,14 +416,10 @@
 
     add_log_filter_button(){
         
-        
         const log_elements = document.querySelectorAll('.logs-log-container');
-        if(log_elements.length == 0){
-            console.log("no logs exist yet, so not showing filter button");
+        if(log_elements.length < 7){
             return;
         }
-        
-        
         
         //console.log("in add_log_filter_button");
 		// Create log filter container

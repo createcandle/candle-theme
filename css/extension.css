@@ -1049,7 +1049,7 @@ webthing-light-capability::part(label){
     top: 10rem;
     right: 2rem;
 	width:auto;
-	min-width:200px;
+	min-width:28rem;
     max-width:calc(100vw - 4rem);
     max-height:calc(100vh - 20rem);
     border-radius:10px;
@@ -1176,6 +1176,7 @@ webthing-light-capability::part(label){
     bottom:0;
     background-color:#5288af;
     width:100%;
+    display:flex;
 }
 
 
