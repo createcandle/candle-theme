@@ -3,7 +3,7 @@
     constructor() {
       super('candle-theme');
       
-      //console.log("API: ", API);
+      console.log("API: ", API);
       this.check_properties_scheduled == false;
 	  this.devices_with_logs = [];
       this.api_logs = [];
@@ -50,37 +50,37 @@
     
       /*
       API.getThings().then((things) => {
-          //console.log('things: ', things);
+          console.log('things: ', things);
       });
       try{
           if(typeof API.getGroups === 'function') {
               API.getGroups().then((groups) => {
-                  //console.log('groups: ', groups);
+                  console.log('groups: ', groups);
               });
           }
       }
       catch(e){
-          //console.log("Api test error: ", e);
+          console.log("Api test error: ", e);
       }
 
       
       API.getAddonsInfo().then((addons) => {
-          //console.log('addons: ', addons);
+          console.log('addons: ', addons);
       });
       
       
       API.getInstalledAddons().then((addons) => {
-          //console.log('addons: ', addons);
+          console.log('addons: ', addons);
       });
       
       
       API.getExtensions().then((extensions) => {
-          //console.log('extensions: ', extensions);
+          console.log('extensions: ', extensions);
       });
       
       
       API.getAllUserInfo().then((user_info) => {
-          //console.log('user_info: ', user_info);
+          console.log('user_info: ', user_info);
       });
       */
       
@@ -101,10 +101,10 @@
               return;
           }
           */
-          //console.log("keyboard UP: ", event);
+          console.log("keyboard UP: ", event);
           const code = event.keyCode || event.charCode;
-          //console.log("up code: " + code);
-          //console.log("document.activeElement.tagName: ", document.activeElement.tagName);
+          console.log("up code: " + code);
+          console.log("document.activeElement.tagName: ", document.activeElement.tagName);
           
           if(document.location.href.endsWith("/things") && document.getElementById('add-thing-screen').classList.contains('hidden')){
               this.things_overview_search(code);
@@ -120,23 +120,23 @@
               return;
           }
           */
-          //console.log("keyboard DOWN: ", event);
-          //console.log("document.activeElement.tagName: " + document.activeElement.tagName);
+          console.log("keyboard DOWN: ", event);
+          console.log("document.activeElement.tagName: " + document.activeElement.tagName);
           
           if(document.location.href.endsWith("/things") && document.getElementById('add-thing-screen').classList.contains('hidden')){
-              //console.log("keyboard 2");
+              console.log("keyboard 2");
               this.addThingsSearch();
           }
           else if(document.location.href.endsWith('/settings/addons/discovered')){
-              //console.log('keypress at addons discovery:', event);
+              console.log('keypress at addons discovery:', event);
               if(document.activeElement !== document.getElementById('discovered-addons-search')){
-                  //console.log("giving focus");
+                  console.log("giving focus");
                   document.getElementById('discovered-addons-search').focus();
               }
               
           }
           else if(document.location.href.indexOf('/rules/') !== -1){
-              //console.log('keypress at rules:', event);
+              console.log('keypress at rules:', event);
               const code = event.keyCode || event.charCode;
               this.filter_rule_parts_list(code);
               
@@ -159,16 +159,16 @@
       /*
       // Listen for changes in dropdowns
       const message_area = document.getElementById('message-area');
-      //console.log(message_area);
+      console.log(message_area);
       message_area.addEventListener("DOMCharacterDataModified", function (event) {
       //message_area.addEventListener('change', function(event) {
-          //console.log(event);
-          //console.log("message changed to: " + message_area.innerText);
+          console.log(event);
+          console.log("message changed to: " + message_area.innerText);
           message_area.innertext = message_area.innerText + " ola";
       }, false);
       
       var mutato = new MutationObserver(function (e) {
-        if (e[0].removedNodes) //console.log(1);
+        if (e[0].removedNodes) console.log(1);
       });
 
       mutato.observe(document.getElementById('parent'), { childList: true });
@@ -187,7 +187,7 @@
           this.add_log_filter_button();
           
           if(window.location.href.indexOf('/logs#') !== -1){
-              //console.log("spotted a device id in the URL");
+              console.log("spotted a device id in the URL");
               const paths = window.location.href.split("#").filter(entry => entry !== "");
               const device_id = paths[paths.length - 1];
               this.filter_logs_by_device(device_id);
@@ -205,7 +205,7 @@
             {'action':'init'}
 
         ).then((body) => {
-			//console.log("Candle theme Init API result: ", body);
+			console.log("Candle theme Init API result: ", body);
             
             if(typeof body.background_color != 'undefined'){
                 if(body.background_color != ""){
@@ -231,12 +231,12 @@
 			
 		
         }).catch((e) => {
-  			//console.log("Error getting theme init data: " + e.toString());
+  			console.log("Error getting theme init data: " + e.toString());
         });	
         
         
 
-        //console.log("this.id: ", this.id);
+        console.log("this.id: ", this.id);
         
     }
     
@@ -250,15 +250,15 @@
     
     
     on_new_page(just_arrived=false){
-        //console.log("ON NEW PAGE:" + window.location.pathname);
+        console.log("ON NEW PAGE:" + window.location.pathname);
         
         if(window.location.pathname.startsWith('/things')){
-            //console.log("at /things or a sub-page" );
+            console.log("at /things or a sub-page" );
             
             this.addParts();
             
             if(window.location.pathname == '/things'){
-                //console.log("at /things");
+                console.log("at /things");
                 
                 // hide link to logs
                 if(document.getElementById('candle-theme-link-to-logs-container') != null){
@@ -276,25 +276,25 @@
                 
             }
             else{
-                //console.log("ON A THING DETAIL PAGE");
+                console.log("ON A THING DETAIL PAGE");
 
                 this.checkProperties(null, true);
                 this.addThermostatButtons();
                 //this.addShadowMutationsListener();
                 if(just_arrived){
-                    //console.log("using promise");
+                    console.log("using promise");
                     this.update_logs_list().then(() => {
-                        //console.log("then add links to logs:");
+                        console.log("then add links to logs:");
                         this.add_link_to_logs();
                     });
                 }
                 else{
-                    //console.log("no promise");
+                    console.log("no promise");
                     this.add_link_to_logs();
                 }
                 
                 if(document.getElementById('candle-theme-things-search-container') != null){
-                    //console.log("hiding search container");
+                    console.log("hiding search container");
                     document.getElementById('candle-theme-things-search-container').style.display = 'none';
                 }
             }
@@ -302,11 +302,11 @@
         }
         /*
         else if(window.location.pathname == ('/logs')){
-            //console.log("on /logs");
+            console.log("on /logs");
         }
         else{
-            //console.log("ON SOME OTHER PAGE");
-            //console.log(document.location.href);
+            console.log("ON SOME OTHER PAGE");
+            console.log(document.location.href);
             
         }
         */
@@ -315,19 +315,19 @@
     
     
     shadowMutationCallback(mutations){
-        //console.log("in shadowMutationCallback. Mutations: ", mutations);
+        console.log("in shadowMutationCallback. Mutations: ", mutations);
         if(Date.now() - 100 > this.last_mutation_activation_time){
             this.last_mutation_activation_time = Date.now();
-            //console.log(this.shadow_mutation_counter);
+            console.log(this.shadow_mutation_counter);
             this.shadow_mutation_counter++;
             window.setTimeout(() => {
-                //console.log("50ms have passed, calling check_properties");
+                console.log("50ms have passed, calling check_properties");
                 this.checkProperties();
             }, 50);
             
         }
         else{
-            //console.log(" - ignoring shadow mutation callback.");
+            console.log(" - ignoring shadow mutation callback.");
         }
     }
     
@@ -347,26 +347,26 @@
         return new Promise((resolve, reject) => {
 
             API.getLogs().then((logs) => {
-                //console.log("API.getlogs: ", logs);
+                console.log("API.getlogs: ", logs);
                 this.api_logs = logs;
                 this.devices_with_logs = [];
             
                 for (var i=0;i<logs.length;i++){
-                    //console.log( logs[i] );
-                    //console.log( logs[i].thing);
+                    console.log( logs[i] );
+                    console.log( logs[i].thing);
                     this.devices_with_logs.push(logs[i].thing);
                 }
-                //console.log("updated list of devices with logs: ", this.devices_with_logs);
+                console.log("updated list of devices with logs: ", this.devices_with_logs);
                 //window.location.pathname = '/logs';
             
                 resolve();
             })
             .catch(() => {
-                //console.log("error doing API.getLogs");
+                console.log("error doing API.getLogs");
                 reject();
             })
             .finally(() => {
-                //console.log("API.getLogs finally");
+                console.log("API.getLogs finally");
             });
         
         });
@@ -377,7 +377,7 @@
     add_link_to_logs(device_id){
         device_id = this.get_device_id_from_url(device_id);
         if( this.devices_with_logs.includes(device_id)){
-            //console.log(device_id + " has logs, adding direct link to them");
+            console.log(device_id + " has logs, adding direct link to them");
             if(document.getElementById('candle-theme-link-to-logs-container') == null){
     			const thing_view = document.getElementById("thing-view");
             
@@ -393,7 +393,7 @@
     			document.getElementById("things-view").append(new_log_link_container);
                 
                 document.getElementById('candle-theme-link-to-logs-button').addEventListener('click', () => {
-              		//console.log("clicked on link to logs button. This:", this);
+              		console.log("clicked on link to logs button. This:", this);
                     
                     document.getElementById('back-button').classList.add("hidden");
                     const device_id2 = this.get_device_id_from_url();
@@ -421,11 +421,11 @@
             return;
         }
         
-        //console.log("in add_log_filter_button");
+        console.log("in add_log_filter_button");
 		// Create log filter container
 		var log_filter_container = document.getElementById("candle-theme-log-filter-container");
 		if(!log_filter_container){
-			//console.log("creating logs filter container");
+			console.log("creating logs filter container");
             
 			const logs_view = document.getElementById("logs-view");
             
@@ -452,7 +452,7 @@
 			new_log_filter_container.append(new_log_list_container);
 			
 			
-			//console.log("appending to logs-view");
+			console.log("appending to logs-view");
 			logs_view.append(new_log_filter_container);
 			
             
@@ -471,13 +471,13 @@
             
             
             
-    		//console.log("log_filter_container is now:");
-    		//console.log(log_filter_container);
+    		console.log("log_filter_container is now:");
+    		console.log(log_filter_container);
 	
     		//Check if log filter toggle button is clicked
     		const log_filter_button = document.getElementById('candle-theme-log-filter-button');
           	log_filter_button.addEventListener('click', () => {
-          		//console.log("clicked on log filter toggle button. This:", this);
+          		console.log("clicked on log filter toggle button. This:", this);
             
     	        if (log_filter_container.classList.contains('candle-theme-log-filter-container-hidden')) {
     				log_filter_container.classList.remove('candle-theme-log-filter-container-hidden');
@@ -491,7 +491,7 @@
     			//const buttons = document.getElementById('candle-theme-log-list-buttons');
     			if(list != null){
                     if(list.querySelectorAll("li").length == 0){
-                        //console.log("there were no checkboxes yet");
+                        console.log("there were no checkboxes yet");
                         //this.showLogCollections(); // adds the collection buttons at the top
         				this.addLogSelector(); // adds the checkbox list
         			}
@@ -502,7 +502,7 @@
             
 		}
 		else{
-		    //console.log("log_filter_button already existed");
+		    console.log("log_filter_button already existed");
 		}
 		
     }
@@ -510,20 +510,20 @@
 
     // helper function to guarantee there is always a device name. If not provided it will be taken from the URL
     get_device_id_from_url(device_id){
-        //console.log("checking device_id: " + device_id);
-        //console.log(typeof device_id);
+        console.log("checking device_id: " + device_id);
+        console.log(typeof device_id);
         
         if(typeof device_id == 'undefined' || device_id == null){
             
             const { pathname } = window.location;
             
             if(pathname.indexOf('/things/') == -1){
-                //console.log("check_properties was called on url without /things/, stopping");
+                console.log("check_properties was called on url without /things/, stopping");
                 return;
             }
             const paths = pathname.split("/").filter(entry => entry !== "");
             device_id = paths[paths.length - 1];
-            //console.log('missing device_id, got it from url: ', device_id);
+            console.log('missing device_id, got it from url: ', device_id);
         }
         return device_id;
     }
@@ -537,10 +537,10 @@
         /*
         if(Date.now < this.last_check_properties + 100){
             // not enough time has passed.
-            //console.log("Ignoring request to checkProperties since the last request was "  + (Date.now - this.last_check_properties) + " millisecond ago.");
+            console.log("Ignoring request to checkProperties since the last request was "  + (Date.now - this.last_check_properties) + " millisecond ago.");
             if(this.check_properties_scheduled == false){
                 // But no extra check was scheduled either. Doing that now.
-                //console.log("scheduling another properties upgrade for a bit later");
+                console.log("scheduling another properties upgrade for a bit later");
                 this.check_properties_scheduled = true;
                  window.setTimeout(() => { 
                      this.checkProperties();
@@ -551,26 +551,26 @@
         
         
         if(window.location.pathname == '/things'){
-            //console.log("check_properties was called on /things, stopping");
+            console.log("check_properties was called on /things, stopping");
             return;
         }
         else{
             device_id = this.get_device_id_from_url(device_id);
-            //console.log("checking device properties for: " + device_id );
+            console.log("checking device properties for: " + device_id );
         }
         
         if(on_new_page){
-            //console.log("check_properties: on_new_page was true. Attaching listeners.");
+            console.log("check_properties: on_new_page was true. Attaching listeners.");
         }
         
-        //console.log("check_properties: looping over device: " + device_id);
+        console.log("check_properties: looping over device: " + device_id);
         API.getThing(device_id).then((thing) => {
-            //console.log("check_properties: single thing: ", thing );
+            console.log("check_properties: single thing: ", thing );
             
             for (const property_name in thing.properties) {
                 if (thing.properties.hasOwnProperty(property_name)) {
-                    //console.log("_");
-                    //console.log(property_name + " -> ", thing.properties[property_name]);
+                    console.log("_");
+                    console.log(property_name + " -> ", thing.properties[property_name]);
                     
                     var readOnly = false;
                     if(typeof thing.properties[property_name].readOnly != 'undefined'){
@@ -578,32 +578,30 @@
                             readOnly = true;
                         }
                     }
-                    //console.log("readOnly: " + readOnly);
+                    console.log("readOnly: " + readOnly);
                     
                     try{
                         /*
                         API.getThing(device_id + '/' + property_name).then((prop) => {
-                            //console.log("prop1", prop);
+                            console.log("prop1", prop);
                         });
                         */
                         
                         API.getJson('/things/' + device_id + '/properties/' + property_name)
                         .then((prop2) => {
                             this.last_mutation_activation_time = Date.now();
-                            //console.log("checkProperties: API property result for :" + property_name + ": ", prop2);
+                            console.log("checkProperties: API property result for :" + property_name + ": ", prop2);
                             
                             //const read_only = readOnly;
                             
-                            //console.log(typeof prop2);
-                            //console.log("count: ", Object.keys(prop2).length );
+                            console.log(typeof prop2);
+                            console.log("count: ", Object.keys(prop2).length );
                             
-                            //var components = document.getElementsByClassName('component');
-                            //console.log("components: ", components);
                             const capitalised_property_name = property_name.charAt(0).toUpperCase() + property_name.slice(1);
                             
                             try{
                                 if(on_new_page){
-                                    //console.log("check_properties: on_new_page was true. Attaching listeners.");
+                                    console.log("check_properties: on_new_page was true. Attaching listeners.");
                                     var element_to_observe = document.querySelector('[id$="' + property_name + '"]');
                                     if(element_to_observe != null){
                                     
@@ -615,14 +613,14 @@
                                 
                                         var value_element = shadow_to_observe.querySelector('.webthing-numeric-label-property-value');
                                         if(value_element != null){
-                                            //console.log("value element existed: " + property_name);
+                                            console.log("value element existed: " + property_name);
                                             //value_element.addEventListener('change', this.shadowMutationCallback);
                                         }
                                         else{
-                                            //console.log("adding value element change listener failed, value element doesn't exist (yet): " + property_name);
+                                            console.log("adding value element change listener failed, value element doesn't exist (yet): " + property_name);
                                             /*
                                             setTimeout(() =>{
-                                                //console.log("trying again: " + property_name);
+                                                console.log("trying again: " + property_name);
                                                 var value_element2 = shadow_to_observe.querySelector('.webthing-numeric-label-property-value');
                                                 value_element2.addEventListener('change', this.shadowMutationCallback);
                                             }, 100);
@@ -631,75 +629,84 @@
                                 
                                 
                                 
-                                        //console.log("adding an observer to: ", shadow_to_observe);
+                                        console.log("adding an observer to: ", shadow_to_observe);
                                         // Add an observer
                                     
                                     }
                                     else{
-                                        //console.log("property to observe didn't exist yet: " + property_name);
+                                        console.log("property to observe didn't exist yet: " + property_name);
                                     }
                                 }
                                
                             }
                             catch(e){
-                                //console.log("error adding value observer: ", e);
+                                console.log("error adding value observer: ", e);
                             }
                             
                             
                             
                             
+                            if(typeof prop2 == 'object'){
+                                // gateway 1.0.0
+                                if(Object.keys(prop2).length === 0){
+                                    console.log(property_name + " was Undefined");
+                                
+                                    this.modify_property_ui(property_name, false); //
+                                
+                                
+                                }
+                                else if(prop2[property_name] == null){
+                                    console.log(property_name + " WAS NULL");
+                                    this.modify_property_ui(property_name, false); //
+                                }
+                            }
+                            else{
+                                if(prop2 == null){
+                                    console.log(property_name + " WAS NULL: ", prop2);
+                                    this.modify_property_ui(property_name, false); //
+                                }
+                            }
                             
-                            if(Object.keys(prop2).length === 0){
-                                //console.log(property_name + " was Undefined");
-                                
-                                this.modify_property_ui(property_name, false); //
-                                
-                                
-                            }
-                            else if(prop2[property_name] == null){
-                                //console.log(property_name + " WAS NULL");
-                                this.modify_property_ui(property_name, false); //
-                            }
                             /*
                             else{
                                 // good property. Fix if need be?
                                 
                                 //var bad_element = document.querySelector('[data-name="' + property_name + '"]');
                                 var good_element = document.querySelector('[id$="' + property_name + '"]');
-                                //console.log(bad_element);
+                                console.log(bad_element);
                                 if(good_element == null){
-                                    //console.log("trying: alt: " + capitalised_property_name);
+                                    console.log("trying: alt: " + capitalised_property_name);
                                     good_element = document.querySelector('[data-name="' + capitalised_property_name + '"]');
                                 }
                                 
                                 if(good_element == null){
-                                    //console.log("ERROR good element still not spotted..");
+                                    console.log("ERROR good element still not spotted..");
                                     //continue;
                                 }
                                 else{
-                                    //console.log("hello there: ", good_element);
+                                    console.log("hello there: ", good_element);
                                     
                                     const shadow = good_element.shadowRoot;
-                                    //console.log('shadow: ', shadow);
+                                    console.log('shadow: ', shadow);
                                 }
                             }*/
                         })
                         .catch((err) => {
-                            //console.log("API error: ", err);
+                            console.log("API error: ", err);
                             this.modify_property_ui(property_name, false); //
                         });
                     }
                     catch(e){
-                        //console.log("Error: ", e);
+                        console.log("Error: ", e);
                     }
                     
                     
                     /*
                     if(typeof thing.properties[property_name].value != 'undefined'){
-                        //console.log(thing.properties[property_name].value);
+                        console.log(thing.properties[property_name].value);
                     }
                     else{
-                        //console.log("no value!");
+                        console.log("no value!");
                     }
                     */
                 }
@@ -713,26 +720,26 @@
 
     // helper function for checkProperties that set the target to ...
     modify_property_ui(property_name, desire=false){
-        //console.log("in modify_property_ui. property_name: " + property_name);
+        console.log("in modify_property_ui. property_name: " + property_name);
         //var bad_element = document.querySelector('[data-name="' + property_name + '"]');
         var bad_element = document.querySelector('[id$="' + property_name + '"]');
-        //console.log(bad_element);
+        console.log(bad_element);
         /*
         if(bad_element == null){
-            //console.log("trying: alt: " + capitalised_property_name);
+            console.log("trying: alt: " + capitalised_property_name);
             bad_element = document.querySelector('[data-name="' + capitalised_property_name + '"]');
         }
         */
         
         if(bad_element == null){
-            //console.log("ERROR bad element still not spotted..");
+            console.log("ERROR bad element still not spotted..");
             //continue;
         }
         else{
-            //console.log("we got em: ", bad_element);
+            console.log("we got em: ", bad_element);
             
             const shadow = bad_element.shadowRoot;
-            //console.log('shadow: ', shadow);
+            console.log('shadow: ', shadow);
             
             const value_element = shadow.querySelector('[id^="value-"]');
             if(value_element != null){
@@ -752,10 +759,10 @@
 
     // reacts to changes to things overview and detail pages
     thingsMutationCallback(mutations) {
-        //console.log("new mutations:", mutations.length);
+        console.log("new mutations:", mutations.length);
         
         const mutationRecords = this.observer.takeRecords()
-        //console.log("mutation records: ", mutationRecords);
+        console.log("mutation records: ", mutationRecords);
         var should_upgrade = false;
         for (const mutation of mutations) {
             if (mutation.addedNodes.length > 0) {
@@ -764,15 +771,15 @@
                 //this.addThermostatButtons();
             }
         }
-      //console.log("mutations, should_upgrade = " + should_upgrade);
+      console.log("mutations, should_upgrade = " + should_upgrade);
       if(should_upgrade && window.location.pathname.startsWith('/things')){
-          //console.log("mutation: nodes added on path starting with /things");
-          //console.log("mutation: should add parts and thermostat buttons");
+          console.log("mutation: nodes added on path starting with /things");
+          console.log("mutation: should add parts and thermostat buttons");
           this.addParts();
           
       }
       if(window.location.pathname.startsWith('/things/')){
-          //console.log("mutation: should add parts and thermostat buttons");
+          console.log("mutation: should add parts and thermostat buttons");
           //this.checkProperties(null,true);
           if(should_upgrade){
               this.addThermostatButtons();
@@ -782,7 +789,7 @@
       try{
           if(window.location.pathname != this.previous_document_location){
               if(this.previous_document_location == '/logs'){
-                  //console.log("DOES THE MUTATION LISTENER WORK ON LOGS? APPARENTLY SO");
+                  console.log("DOES THE MUTATION LISTENER WORK ON LOGS? APPARENTLY SO");
                   this.update_logs_list();
               }
               this.previous_document_location = window.location.pathname;
@@ -803,12 +810,12 @@
             //setTimeout(function(){ 
             window.setTimeout(() => { 
                 const message_array = document.getElementById('message-area').innerText.split(":", 3);
-                //console.log(message_array);
+                console.log(message_array);
                 if(message_array.length > 2){
                     var upgraded_message = '<span class="candle-theme-message-addon">' + message_array[0] + '</span>';
                     upgraded_message += '<span class="candle-theme-message-device">' + message_array[1] + '</span>';
                     upgraded_message += '<span class="candle-theme-message-message">' + message_array[2] + '</span>';
-                    //console.log(upgraded_message);
+                    console.log(upgraded_message);
                     document.getElementById('message-area').innerHTML = upgraded_message;
                 }
             
@@ -816,17 +823,17 @@
         }
         
         for (const mutation of mutations) {
-            //console.log(mutation);
+            console.log(mutation);
             if(mutation.removedNodes !== undefined){
                 if (mutation.removedNodes.length == 1){
-                    //console.log("removed 1 node");
+                    console.log("removed 1 node");
                     upgrade();
                 }
             }
             //if(mutation.hasOwnProperty(addedNodes)){
             if(mutation.addedNodes !== undefined){
                 if (mutation.addedNodes.length == 1){
-                    //console.log("added one node");
+                    console.log("added one node");
                     upgrade();
                 }
             }
@@ -860,9 +867,9 @@
           this.updateStyle(item);
         }
       }
-      //console.log("listItems.length in addParts: " + listItems.length);
+      console.log("listItems.length in addParts: " + listItems.length);
       if(listItems.length){
-          //console.log("adding mutation indicator class");
+          console.log("adding mutation indicator class");
           document.getElementById('things-view').classList.add("candle-theme-things-mutated");
       }
     }
@@ -874,7 +881,7 @@
         const listItems = document.querySelectorAll(' #logs-view .logs-log-name');
         var log_names = [];
         for (const item of listItems) {
-            //console.log(item.innerHTML);
+            console.log(item.innerHTML);
             if(item.innerHTML != ""){
                 log_names.push(item.innerHTML);
             }
@@ -896,7 +903,7 @@
         log_names.forEach( spaced_log_name => {
             
             const log_name = spaced_log_name.replace(/\s+/g, '-');
-            //console.log("log_name = " + log_name);
+            console.log("log_name = " + log_name);
             let li = document.createElement('li');
 
             //li.innerHTML += log_name;
@@ -920,7 +927,7 @@
             li.appendChild(label);
 			
 	  	    li.onclick = (event) => {//function(element_name){
-				//console.log("filter item clicked");
+				console.log("filter item clicked");
                 this.filterLogs();
 	  	  	}
 			
@@ -962,14 +969,14 @@
 		
         
 		document.getElementById("candle-theme-logs-clear-button").onclick = (event) => {
-  		    //console.log("Clear button clicked");
+  		    console.log("Clear button clicked");
             this.addLogSelector();
             this.filterLogs();
 		}
         
         
 		document.getElementById("candle-theme-logs-overlay-button").onclick = (event) => {
-  		    //console.log("Overlay button clicked");
+  		    console.log("Overlay button clicked");
 			
 	        if (logs_view.classList.contains('candle-theme-logs-overlay')) {
 				logs_view.classList.remove('candle-theme-logs-overlay');
@@ -995,43 +1002,43 @@
 
     // Goes over all the ticked checkboxes, and based on that shows or hides logs
     filterLogs(){
-        //console.log("in filterLogs");
+        console.log("in filterLogs");
 		// get list of all log names
 		const all_log_name_elements = document.querySelectorAll('#logs-view .logs-log-name');
         var all_log_names = [];
         for (const log_name_element of all_log_name_elements) {
             all_log_names.push(log_name_element.innerHTML.replace(/\s+/g, '-'));
-			//console.log(log_name_element);
-			//console.log(log_name_element.innerHTML);
+			console.log(log_name_element);
+			console.log(log_name_element.innerHTML);
         }
-		//console.log("all log item names = " + all_log_names);
+		console.log("all log item names = " + all_log_names);
 		
 		// get list of selected log names
         const selected_logs = document.querySelectorAll(' #logs-view #candle-theme-log-list-ul input:checked');
-        //console.log("selected_logs: ", selected_logs);
+        console.log("selected_logs: ", selected_logs);
         var selected_log_names = [];
         for (const selected_log of selected_logs) {
             selected_log_names.push(selected_log.name);
-			//console.log(selected_log);
+			console.log(selected_log);
         }
-        //console.log("selected log item names = " + selected_log_names);
+        console.log("selected log item names = " + selected_log_names);
 		
 		const all_logs = document.querySelectorAll(' #logs-view .logs-log-container');
-		//console.log(all_logs);
+		console.log(all_logs);
         
 		var log_counter = 0;
 		for (const log_container of all_logs) {
-            //console.log("comparing:", log_container);
-			//console.log("comparing to:", all_log_names[log_counter]);
+            console.log("comparing:", log_container);
+			console.log("comparing to:", all_log_names[log_counter]);
 			// If the current corresponding name is in the selected arrays name
 			if( selected_log_names.indexOf(all_log_names[log_counter]) > -1 || selected_log_names.length == 0 ){
-				//console.log("do not hide " + all_log_names[log_counter]);
+				console.log("do not hide " + all_log_names[log_counter]);
 				//log_container.style.visibility = 'visible';
 				log_container.style.display = 'block';
 			}
 			else{
-				//console.log("hiding log container: " + all_log_names[log_counter]);
-				//console.log(log_container);
+				console.log("hiding log container: " + all_log_names[log_counter]);
+				console.log(log_container);
 				//log_container.style.visibility = 'hidden';
 				log_container.style.display = 'none';
 			}
@@ -1051,7 +1058,7 @@
         var selected_log_names = [];
         for (const selected_log of selected_logs) {
             selected_log_names.push(selected_log.name);
-			//console.log(selected_log);
+			console.log(selected_log);
         }
         
         if( selected_logs.length > 0){
@@ -1059,11 +1066,11 @@
             let collection_name = prompt("What should this collection be called?");
         
             if(collection_name != ""){
-                //console.log("collection_name = " + collection_name);
-                //console.log("selected: ", selected_log_names);
+                console.log("collection_name = " + collection_name);
+                console.log("selected: ", selected_log_names);
                 /*
                 if(typeof this.log_collections == 'string'){
-                    //console.log("log collections was string? fixing.");
+                    console.log("log collections was string? fixing.");
                     this.log_collections = JSON.parse(this.log_collections);
                 }
                 */
@@ -1071,7 +1078,7 @@
         
                 localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
                 
-                //console.log('going to save: ', this.log_collections);
+                console.log('going to save: ', this.log_collections);
           
                 
           
@@ -1081,12 +1088,12 @@
                     {'action':'save_collections','collections':this.log_collections}
 
                 ).then((body) => {
-        			//console.log("save_collections API result:");
-        			//console.log(body);
+        			console.log("save_collections API result:");
+        			console.log(body);
                     this.showLogCollections();
             
                 }).catch((e) => {
-          			//console.log("Error saving collections after adding a collection: " + e.toString());
+          			console.log("Error saving collections after adding a collection: " + e.toString());
                 });	
                 
             }
@@ -1101,7 +1108,7 @@
 
     // Creates collection buttons
     showLogCollections(){
-        //console.log("in showLogCollections");
+        console.log("in showLogCollections");
         
         //var log_collections = {};
         
@@ -1112,34 +1119,34 @@
             {'action':'get_collections'}
 
         ).then((body) => {
-			//console.log("get_collections API result:");
-			//console.log(body);
+			console.log("get_collections API result:");
+			console.log(body);
             if(typeof body.collections != 'undefined'){
-                //console.log("body.collections existed: ", body.collections);
+                console.log("body.collections existed: ", body.collections);
                 this.log_collections = body.collections;
                 localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
             }
         }).catch((e) => {
-  			//console.log("Error getting log collections data: ", e);
+  			console.log("Error getting log collections data: ", e);
             
             if (localStorage.getItem("candle_theme_log_collections") !== null) {
-                //console.log("localStorage had log collection data:", localStorage.getItem("candle_theme_log_collections") );
+                console.log("localStorage had log collection data:", localStorage.getItem("candle_theme_log_collections") );
                 this.log_collections = JSON.parse( localStorage.getItem("candle_theme_log_collections") );
             }
             else{
-                //console.log("browser local storage had no collections backup");
+                console.log("browser local storage had no collections backup");
                 return;
             }
         }).then(() => {
-            //console.log('Do this, no matter what happened before. log_collections type: ', typeof this.log_collections);
-            //console.log(this.log_collections);
+            console.log('Do this, no matter what happened before. log_collections type: ', typeof this.log_collections);
+            console.log(this.log_collections);
             
             const collection_names = Object.keys(this.log_collections);
-            //console.log("collection_names: ", collection_names);
+            console.log("collection_names: ", collection_names);
             document.getElementById('candle-theme-log-collections-container').innerHTML = "";
         
             collection_names.forEach((collection_name, index) => {
-                //console.log(`${collection_name}: ${this.log_collections[collection_name]}`);
+                console.log(`${collection_name}: ${this.log_collections[collection_name]}`);
             
         		let new_collection_button = document.createElement('button');
         		new_collection_button.setAttribute("class", "candle-theme-logs-collection-button candle-theme-logs-small-button");
@@ -1147,12 +1154,12 @@
             
                 // on a click, set the checkboxes to the correct position
                 new_collection_button.onclick = (event) => { //function(element_name){
-                    //console.log("collection button clicked", event.target.innerText);
-                    //console.log(this);
-                    //console.log("log_collections: ", log_collections);
-                    //console.log("log_collection: ", log_collections[event.target.innerText]);
+                    console.log("collection button clicked", event.target.innerText);
+                    console.log(this);
+                    console.log("log_collections: ", log_collections);
+                    console.log("log_collection: ", log_collections[event.target.innerText]);
                     let should_check = this.log_collections[event.target.innerText];
-                    //console.log("should_check: " + should_check);
+                    console.log("should_check: " + should_check);
                     this.filter_these_logs(should_check);
                 
                     // remove sidebar when collection button is clicked
@@ -1168,8 +1175,8 @@
         		//new_collection_delete_button.textContent = "✖";
                 new_collection_delete_button.innerHTML = '&#10006;';
                 new_collection_delete_button.onclick = (event) => {
-                    //console.log(collection_name);
-                    //console.log(event);
+                    console.log(collection_name);
+                    console.log(event);
                     if(confirm('Are you sure you want to remove the "' + collection_name + '" collection?')){
                         let parent = event.target.parentElement;
                         parent.parentNode.removeChild(parent);
@@ -1183,11 +1190,11 @@
                             {'action':'save_collections','collections':this.log_collections}
 
                         ).then((body) => {
-                			//console.log("Save collections API result: ", body);
+                			console.log("Save collections API result: ", body);
                             localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
             
                         }).catch((e) => {
-                  			//console.log("Error saving log collections after deleting a collection: " + e.toString());
+                  			console.log("Error saving log collections after deleting a collection: " + e.toString());
                         });	
                         
                     }
@@ -1213,15 +1220,15 @@
     filter_these_logs(should_check){
         const log_checkboxes = document.querySelectorAll(' #logs-view #candle-theme-log-list-ul input');
 
-        //console.log("log_checkboxes: ", log_checkboxes);
+        console.log("log_checkboxes: ", log_checkboxes);
         for (const checkbox of log_checkboxes) {
             
             if(should_check.indexOf(checkbox.name) == -1){
-                //console.log("should not check");
+                console.log("should not check");
                 checkbox.checked = false;
             }
             else{
-                //console.log("should check: " + checkbox.name);
+                console.log("should check: " + checkbox.name);
                 checkbox.checked = true;
             }
         }
@@ -1232,20 +1239,20 @@
 
 
     filter_logs_by_device(device_id){
-        //console.log("filter logs by device: " + device_id);
-        //console.log(this.api_logs);
+        console.log("filter logs by device: " + device_id);
+        console.log(this.api_logs);
         
         var properties_to_show = [];
     
         for (var i=0;i<this.api_logs.length;i++){
             if(this.api_logs[i].thing == device_id){
-                //console.log("adding property: ", this.api_logs[i].property);
+                console.log("adding property: ", this.api_logs[i].property);
                 properties_to_show.push( '/logs/things/' + device_id + '/properties/' + this.api_logs[i].property );
             }
         }
         
         const log_elements = document.getElementsByClassName('logs-log-container');
-        //console.log("log_elements: ", log_elements);
+        console.log("log_elements: ", log_elements);
         
         if(log_elements == null){
             
@@ -1256,30 +1263,30 @@
             return;
         }
         if(log_elements.length < this.api_logs.length){
-            //console.log('Logs are not ALL there yet');
+            console.log('Logs are not ALL there yet');
             setTimeout(() => {
                 this.filter_logs_by_device(device_id);
             }, 100);
             return;
         }
-        //console.log("The logs are there!");
-        //console.log("log_elements: ", log_elements);
+        console.log("The logs are there!");
+        console.log("log_elements: ", log_elements);
         
 		//const all_logs = document.querySelectorAll(' #logs-view .logs-log-container');
-		//console.log(all_logs);
+		console.log(all_logs);
         
-        //console.log("properties_to_show: ", properties_to_show);
+        console.log("properties_to_show: ", properties_to_show);
         
 		var log_counter = 0;
 		for (const log_container of log_elements) {
             
             const href = log_container.getElementsByClassName('logs-log-info')[0].href;
-            //console.log(href);
+            console.log(href);
             
             var spotted = false;
             for (var j=0;j<properties_to_show.length;j++){
                 if(href.endsWith(properties_to_show[j])){
-                    //console.log("should be hidden");
+                    console.log("should be hidden");
                     spotted = true;
                 }
             }
@@ -1291,17 +1298,17 @@
 
             }
             /*
-            //console.log("comparing:", log_container);
-			//console.log("comparing to:", all_log_names[log_counter]);
+            console.log("comparing:", log_container);
+			console.log("comparing to:", all_log_names[log_counter]);
 			// If the current corresponding name is in the selected arrays name
 			if( selected_log_names.indexOf(all_log_names[log_counter]) > -1 || selected_log_names.length == 0 ){
-				//console.log("do not hide " + all_log_names[log_counter]);
+				console.log("do not hide " + all_log_names[log_counter]);
 				//log_container.style.visibility = 'visible';
 				
 			}
 			else{
-				//console.log("hiding log container: " + all_log_names[log_counter]);
-				//console.log(log_container);
+				console.log("hiding log container: " + all_log_names[log_counter]);
+				console.log(log_container);
 				//log_container.style.visibility = 'hidden';
 				log_container.style.display = 'none';
 			}
@@ -1311,14 +1318,14 @@
         
         /*
         const log_links = .getElementsByClassName('logs-log-info');
-        //console.log("log_links: ", log_links);
+        console.log("log_links: ", log_links);
         for (var j=0;j<log_elements.length;j++){
             
         }
         */
 
         
-        //console.log("properties_to_show:", properties_to_show);
+        console.log("properties_to_show:", properties_to_show);
         //this.filter_these_logs(properties_to_show);
     }
     
@@ -1326,7 +1333,7 @@
 
 
     hideLogMenu(){
-        //console.log("in hideLogMenu");
+        console.log("in hideLogMenu");
 		const list = document.getElementById('candle-theme-log-list-ul');
 		const buttons = document.getElementById('candle-theme-log-list-buttons');
         
@@ -1413,7 +1420,7 @@
     
     
     addThingsSearch() {
-        //console.log("in addThingsSearch");
+        console.log("in addThingsSearch");
         
         if(document.getElementById('candle-theme-things-search-container') == null){
             let search_container = document.createElement('div');
@@ -1431,13 +1438,13 @@
         const search_input = document.getElementById('candle-theme-things-search-input');
         if(search_input != null){
             if(document.activeElement !== search_input){
-                //console.log("giving focus");
+                console.log("giving focus");
                 search_input.focus();
             }
             
             // This listener seems to sometimes disappear...
             search_input.onsearch = () => {
-                //console.log("on-search");
+                console.log("on-search");
                 this.things_overview_search(8); // simulate backspace
             };
         }
@@ -1445,7 +1452,7 @@
             setTimeout(() => {
                 if(search_input != null){
                     if(document.activeElement !== search_input){
-                        //console.log("giving focus");
+                        console.log("giving focus");
                         search_input.focus();
                     }
                 }
@@ -1464,24 +1471,24 @@
         const things = document.getElementById("things");
         const groups = document.getElementById("groups");
         
-        //console.log("things_count: " + things_count);
+        console.log("things_count: " + things_count);
 
         const all_things = document.querySelectorAll('#things-view .thing');
         
         if(all_things == null){
-            //console.log("no things found");
+            console.log("no things found");
             return;
         }
         
-        //console.log("all_things: ", all_things );
+        console.log("all_things: ", all_things );
         const things_count = all_things.length;
 
 
         if(search_input_element != null){
             
             const search_string = search_input_element.value.toLowerCase();
-            //console.log("onkeyup search_string = " + search_string);
-            //console.log("search_input_element. search_string: " + search_string + ", and things_count: " + things_count);
+            console.log("onkeyup search_string = " + search_string);
+            console.log("search_input_element. search_string: " + search_string + ", and things_count: " + things_count);
 
             
             if(search_string.length > 0){
@@ -1510,9 +1517,9 @@
     
                 }
                 
-                //console.log("shown_count = " + shown_count);
+                console.log("shown_count = " + shown_count);
                 if(last_element != null && shown_count == 1 && code == 13){
-                    //console.log("enter key press spotted when one device was shown");
+                    console.log("enter key press spotted when one device was shown");
                     last_element.click();
                 }
                 
@@ -1533,10 +1540,10 @@
     // Press letter on the keyboard and it will filter the rule parts
     filter_rule_parts_list(code){
         
-        //console.log("in filter_rule_parts_list. key code: ", code);
+        console.log("in filter_rule_parts_list. key code: ", code);
         
         if (document.activeElement.tagName === "INPUT"){
-            //console.log("An input is already focused");
+            console.log("An input is already focused");
         }
         else{
             if( code == 8 || code == 27 || code == 32){ // backspace, escape, space
@@ -1550,8 +1557,8 @@
                 for (var i = 0; i < parts.length; ++i) {
                     
                     const p_text = parts[i].getElementsByTagName('p')[0].innerText.toLowerCase();
-                    //console.log("p_text: " + p_text);
-                    //console.log(event.key + " =?= " + p_text.charAt(0));
+                    console.log("p_text: " + p_text);
+                    console.log(event.key + " =?= " + p_text.charAt(0));
                     if( event.key != p_text.charAt(0) ){
                         parts[i].style.display = 'none';
                     }
