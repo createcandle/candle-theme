@@ -1449,8 +1449,8 @@ webthing-light-capability::part(label){
 }
 
 
-@media only screen and (min-width: 1200px) {
-/*@media (prefers-color-scheme: dark) {*/
+/*@media only screen and (min-width: 1200px) {*/
+@media (prefers-color-scheme: dark) {
     body{
         /*background-color: #003f6c;*/
         background-color: #0c3b5c;
