@@ -1471,7 +1471,7 @@
         const things = document.getElementById("things");
         const groups = document.getElementById("groups");
         
-        console.log("things_count: " + things_count);
+        
 
         const all_things = document.querySelectorAll('#things-view .thing');
         
@@ -1481,8 +1481,9 @@
         }
         
         console.log("all_things: ", all_things );
+        
         const things_count = all_things.length;
-
+        console.log("things_count: " + things_count);
 
         if(search_input_element != null){
             
