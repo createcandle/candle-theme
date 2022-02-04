@@ -83,7 +83,8 @@ class CandleThemeAPIHandler(APIHandler):
 
         if not 'collections' in self.persistent_data:
             self.persistent_data['collections'] = {}
-            
+        if not 'developer' in self.persistent_data:
+            self.persistent_data['developer'] = False
 
         # LOAD CONFIG
         try:
@@ -160,6 +161,10 @@ class CandleThemeAPIHandler(APIHandler):
             if self.DEBUG:
                 print("-Hide floorplan preference was in config: " + str(self.persistent_data['hide_floorplan']))
         
+        if 'Show developer options' in config:
+            self.persistent_data['developer'] = bool(config['Show developer options'])
+            if self.DEBUG:
+                print("-Show developer options preference was in config: " + str(self.persistent_data['developer']))
         
         # Background color
         try:
@@ -221,7 +226,7 @@ class CandleThemeAPIHandler(APIHandler):
                         return APIResponse(
                           status=200,
                           content_type='application/json',
-                          content=json.dumps({'debug': self.DEBUG, 'background_color':self.persistent_data['background_color'], 'hide_floorplan':self.persistent_data['hide_floorplan']}),
+                          content=json.dumps({'debug': self.DEBUG, 'background_color':self.persistent_data['background_color'], 'hide_floorplan':self.persistent_data['hide_floorplan'], 'developer': self.persistent_data['developer']}),
                         )
                         
                     elif action == 'get_collections':

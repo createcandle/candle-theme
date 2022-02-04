@@ -220,6 +220,13 @@
                 }
             }
             
+            if(typeof body.developer != 'undefined'){
+                if(body.developer){
+                    document.getElementById('authorization-settings-link').style.display = 'block';
+                    document.getElementById('experiment-settings-link').style.display = 'block';
+                    document.getElementById('developer-settings-link').style.display = 'block';
+                }
+            }
             /*
             if(typeof body.debug != 'undefined'){
                 if(body.debug){

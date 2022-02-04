@@ -1294,9 +1294,13 @@ webthing-light-capability::part(label){
 }
 
 
+/*  hide developer options  */
 
-
-
+#authorization-settings-link,
+#experiment-settings-link,
+#developer-settings-link{
+    display:none;
+}
 
 
 
@@ -1312,7 +1316,6 @@ webthing-light-capability::part(label){
     padding: 1rem 2rem;
     border-radius:.5rem;
 }
-
 
 
 @media only screen and (min-width: 1025px) {
