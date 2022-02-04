@@ -56,7 +56,7 @@
     }
   },
   "short_name": "ctheme",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "web_accessible_resources": [
     "css/*.css",
     "js/*.js",
