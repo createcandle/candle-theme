@@ -44,6 +44,7 @@
       
       this.last_mutation_activation_time = 0;
       this.shadow_mutation_counter = 0;
+      this.developer_clicks = 0;
       
       //this.check_keyboard = false;
       this.previous_document_location = window.location.pathname;
@@ -126,6 +127,11 @@
           if(document.location.href.endsWith("/things") && document.getElementById('add-thing-screen').classList.contains('hidden')){
               //console.log("keyboard 2");
               this.addThingsSearch();
+              const search_input = document.getElementById('candle-theme-things-search-input');
+              if(document.activeElement !== search_input){
+                  //console.log("giving focus");
+                  search_input.focus();
+              }
           }
           else if(document.location.href.endsWith('/settings/addons/discovered')){
               //console.log('keypress at addons discovery:', event);
@@ -146,6 +152,19 @@
           
           
       });
+      
+      document.querySelector('#settings-menu .section-title-icon').addEventListener('click', () => {
+                    		//console.log("clicked on link to logs button. This:", this);
+                            this.developer_clicks++;
+                            if(this.developer_clicks > 3){
+                                document.getElementById('authorization-settings-link').style.display = 'block';
+                                document.getElementById('experiment-settings-link').style.display = 'block';
+                                document.getElementById('developer-settings-link').style.display = 'block';
+                            }
+                            
+        });
+      
+      
       
       
       // Change logo
@@ -1474,6 +1493,7 @@
                 this.things_overview_search(8); // simulate backspace
             };
         }
+        /*
         else{
             setTimeout(() => {
                 if(search_input != null){
@@ -1484,7 +1504,7 @@
                 }
             }, 100);
         }
-        
+        */
         
 
         
