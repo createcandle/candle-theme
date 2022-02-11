@@ -44,7 +44,7 @@
         },
         "Show developer options": {
           "type": "boolean",
-          "description": "Advanced. If you are a developer (programmer) working on Candle or just need more control, then you can show the developer options."
+          "description": "Advanced. If you are a developer (programmer) working on Candle or just need more control, then you can show the developer options. You can also make them visible by going to the settings page and clicking on the gear icon 4 times."
         },
         "Debugging": {
           "type": "boolean",

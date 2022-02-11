@@ -17,6 +17,8 @@ body{
     left: 9rem;
 }
 
+
+
 /*
 p{
     text-align: justify
@@ -128,6 +130,11 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 }
 
 
+
+
+#virtualKeyboardChromeExtension #settingsButton{
+    display:none;
+}
 
 
 
@@ -563,9 +570,9 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     transition: opacity .6s;  
 }
 */
-@keyframes extension-candle-theme-fadeIn {
+@keyframes candle-fadeIn {
    0% {opacity: 0;}
-   66% {opacity: 0;}
+   80% {opacity: 0;}
    100% {opacity: 1;} 
 } 
 
@@ -1449,11 +1456,26 @@ webthing-light-capability::part(label){
 		min-height:200px;
 	}
 	
+    .thing{
+        margin:1.5rem;
+    }
+
+}
+
+@media only screen and (min-width: 1400px) {
+   
+   .thing{
+       margin:1.7rem;
+   }
 
 }
 
 
-/*@media only screen and (min-width: 1200px) {*/
+
+/*@media only screen and (min-width: 1200px) {
+
+
+*/
 @media (prefers-color-scheme: dark) {
     body{
         /*background-color: #003f6c;*/

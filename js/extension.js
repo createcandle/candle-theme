@@ -12,10 +12,25 @@
       // Background color is also stored in browser local storage, since it's faster
       document.addEventListener('DOMContentLoaded', function GetFavColor() {
           var color = localStorage.getItem('background_color');
+          console.log('background color from local storage: ', color);
           if (color != '') {
               document.body.style.backgroundColor = color;
           }
       });
+      
+      /*
+      if (localStorage.getItem("smallKeyboard") === null) {
+          console.log('no smallKeyboard in local storage');
+      }
+      else{
+          document.body.style.backgroundColor = "orange";
+      }
+      */
+      
+      if(document.getElementById('virtualKeyboardChromeExtension') != null){
+          document.body.classList.add('kiosk');
+      }
+      
       
       
       // Create observers for the things overview
@@ -931,7 +946,7 @@
        
 		// Clear the log list
         if(listItems.length == 0){
-            log_list_container.innerHTML = "<p>Once you have created some logs you can filter them here.</p>";
+            log_list_container.innerHTML = '<p style="font-size:1.6rem;padding:1rem">Once you have created some logs you can filter them here.</p>';
         }
         else{
             log_list_container.innerHTML = "";
