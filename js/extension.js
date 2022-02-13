@@ -175,8 +175,8 @@
                                 document.getElementById('authorization-settings-link').style.display = 'block';
                                 document.getElementById('experiment-settings-link').style.display = 'block';
                                 document.getElementById('developer-settings-link').style.display = 'block';
+                                document.body.classList.add('developer');
                             }
-                            
         });
       
       
@@ -253,28 +253,9 @@
                     document.getElementById('floorplan-menu-item').style.display = 'none';
                 }
             }
-            
-            if(typeof body.developer != 'undefined'){
-                if(body.developer){
-                    document.getElementById('authorization-settings-link').style.display = 'block';
-                    document.getElementById('experiment-settings-link').style.display = 'block';
-                    document.getElementById('developer-settings-link').style.display = 'block';
-                }
-            }
-            
-            
-            /*
-            if(typeof body.debug != 'undefined'){
-                if(body.debug){
-                    this.debug = body.debug;
-                    document.getElementById('extension-candle-theme-debug-warning').style.display = 'block';
-                }
-            }
-            */
-			
 		
         }).catch((e) => {
-  			//console.log("Error getting theme init data: " + e.toString());
+  			console.log("Error getting theme init data: " + e.toString());
         });	
         
         

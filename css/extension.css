@@ -43,6 +43,7 @@ body{
 }
 
 
+#floorplan-back-button,
 #rule-view > .back-button,
 #add-thing-back-button,
 #create-log-back-button,
@@ -50,6 +51,11 @@ body{
 #back-button{
     z-index:10000;
 }
+
+#floorplan-back-button{
+    background-color: #5d9bc7;
+}
+
 
 
 .icon-button{
@@ -190,6 +196,10 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     /*box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;*/
     background-color:transparent;
     padding-bottom:1rem;
+}
+
+.group.open .bar{
+    border-bottom:1px solid rgba(255,255,255,.2);
 }
 
 .group:not(.open){
@@ -416,6 +426,14 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 #things.single-thing > .thing .component::part(webthing-boolean-property-label):not([value]){
     box-shadow: 5px 5px;
 }
+
+
+
+#edit-thing-custom-icon-label{
+    height: auto;
+}
+
+
 /*
 #things.single-thing > .thing .component::part(webthing-boolean-property-label):not([value]):after{
     content:"?";
@@ -1301,14 +1319,7 @@ webthing-light-capability::part(label){
 }
 
 
-/*  hide developer options  */
 
-#update-settings-link,
-#authorization-settings-link,
-#experiment-settings-link,
-#developer-settings-link{
-    display:none;
-}
 
 
 

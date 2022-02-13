@@ -29,7 +29,6 @@
     "default": {
       "Background color": "",
       "Hide floorplan": false,
-	  "Show developer options": false,
       "Debugging": false
     },
     "schema": {
@@ -42,10 +41,6 @@
           "type": "boolean",
           "description": "If you nevery use it, then you might want to hide the floorplan."
         },
-        "Show developer options": {
-          "type": "boolean",
-          "description": "Advanced. If you are a developer (programmer) working on Candle or just need more control, then you can show the developer options. You can also make them visible by going to the settings page and clicking on the gear icon 4 times."
-        },
         "Debugging": {
           "type": "boolean",
           "description": "Advanced. Debugging allows you to diagnose any issues with the add-on. If enabled it will result in a lot more debug data in the internal log (which can be found under settings -> developer -> view internal logs)."
@@ -56,7 +51,7 @@
     }
   },
   "short_name": "ctheme",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "web_accessible_resources": [
     "css/*.css",
     "js/*.js",
