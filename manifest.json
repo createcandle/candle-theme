@@ -29,6 +29,7 @@
     "default": {
       "Background color": "",
       "Hide floorplan": false,
+	  "Zoom": "100%",
       "Debugging": false
     },
     "schema": {
@@ -47,7 +48,7 @@
               "100%",
               "120%",
               "140%",
-			  "160%",
+			  "160%"
           ],
           "type": "string"
         },
@@ -61,7 +62,7 @@
     }
   },
   "short_name": "ctheme",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "web_accessible_resources": [
     "css/*.css",
     "js/*.js",
