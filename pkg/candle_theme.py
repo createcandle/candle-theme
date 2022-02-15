@@ -45,7 +45,7 @@ class CandleThemeAPIHandler(APIHandler):
         self.server = 'http://127.0.0.1:8080'
         self.DEBUG = False
             
-        self.persistent_data = {'background_color':"",'hide_floorplan':False, 'collections':{}}
+        self.persistent_data = {'background_color':"",'hide_floorplan':False, 'zoom':'100%', 'collections':{}}
             
 
         # Paths
@@ -84,6 +84,10 @@ class CandleThemeAPIHandler(APIHandler):
 
         if not 'collections' in self.persistent_data:
             self.persistent_data['collections'] = {}
+            
+        if not 'zoom' in self.persistent_data:
+            self.persistent_data['zoom'] = '100%'
+            
         if not 'developer' in self.persistent_data:
             self.persistent_data['developer'] = False
 
@@ -162,6 +166,11 @@ class CandleThemeAPIHandler(APIHandler):
             if self.DEBUG:
                 print("-Hide floorplan preference was in config: " + str(self.persistent_data['hide_floorplan']))
         
+        if 'Zoom' in config:
+            self.persistent_data['zoom'] = str(config['Zoom'])
+            if self.DEBUG:
+                print("-Zoom preference was in config: " + str(self.persistent_data['zoom']))
+                
         if 'Show developer options' in config:
             self.persistent_data['developer'] = bool(config['Show developer options'])
             if self.DEBUG:
@@ -227,7 +236,7 @@ class CandleThemeAPIHandler(APIHandler):
                         return APIResponse(
                           status=200,
                           content_type='application/json',
-                          content=json.dumps({'debug': self.DEBUG, 'background_color':self.persistent_data['background_color'], 'hide_floorplan':self.persistent_data['hide_floorplan'], 'developer': self.persistent_data['developer']}),
+                          content=json.dumps({'debug': self.DEBUG, 'background_color':self.persistent_data['background_color'], 'hide_floorplan':self.persistent_data['hide_floorplan'], 'zoom':self.persistent_data['zoom'], 'developer':self.persistent_data['developer']}),
                         )
                         
                     elif action == 'get_collections':

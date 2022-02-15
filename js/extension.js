@@ -3,20 +3,40 @@
     constructor() {
       super('candle-theme');
       
-      //console.log("API: ", API);
+      console.log("window: ", window);
+      console.log("API: ", API);
+      //console.log("models: ", models);
+      //console.log("APP: ", app);
+      
+      console.log("addon seetings: ", window.API.getAddonConfig("candleappstore"));
+      
       this.check_properties_scheduled == false;
 	  this.devices_with_logs = [];
       this.api_logs = [];
       this.log_collections = {};
       
+      /*
+      console.log("attempting window resize");
+      window.resizeBy(-200, -200);
+      var evt = document.createEvent('UIEvents');
+      evt.initUIEvent('resize', true, false,window,0);
+      window.dispatchEvent(evt);
+      //window.resizeBy(200, 200);
+      */
+      
+      //console.log(localStorage.getItem('background_color'));
+      
       // Background color is also stored in browser local storage, since it's faster
-      document.addEventListener('DOMContentLoaded', function GetFavColor() {
-          var color = localStorage.getItem('background_color');
-          console.log('background color from local storage: ', color);
-          if (color != '') {
-              document.body.style.backgroundColor = color;
-          }
-      });
+      //document.addEventListener('DOMContentLoaded', function GetFavColor() {
+      //    console.log("document loaded");
+      //});
+      
+      var color = localStorage.getItem('background_color');
+      //console.log('background color from local storage: ', color);
+      if (color != '' && color != null) {
+          document.body.style.backgroundColor = color;
+      }
+      
       
       /*
       if (localStorage.getItem("smallKeyboard") === null) {
@@ -29,6 +49,12 @@
       
       if(document.getElementById('virtualKeyboardChromeExtension') != null){
           document.body.classList.add('kiosk');
+          const viewport = document.querySelector("meta[name=viewport]");
+          if(viewport != null){
+              viewport.setAttribute('content', 'width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;');
+              document.getElementById('virtualKeyboardChromeExtension').style.width = '100vw';
+          }
+          
       }
       
       
@@ -63,11 +89,23 @@
       
       //this.check_keyboard = false;
       this.previous_document_location = window.location.pathname;
-    
-      /*
-      API.getThings().then((things) => {
-          //console.log('things: ', things);
+  
+  
+      API.getPlatform().then((platform) => {
+          console.log('API: platform: ', platform);
       });
+  
+  
+      
+      API.getThings().then((things) => {
+          console.log('API: things: ', things);
+      });
+      
+      API.getThing('z2m-0xa4c1385e69337d2a').then((thing) => {
+          console.log('API: thing: ', thing);
+      });
+      
+      /*
       try{
           if(typeof API.getGroups === 'function') {
               API.getGroups().then((groups) => {
@@ -242,15 +280,47 @@
 			//console.log("Candle theme Init API result: ", body);
             
             if(typeof body.background_color != 'undefined'){
-                if(body.background_color != ""){
+                if(body.background_color == ""){
+                    body.background_color = 'transparent';
+                    try{
+                        localStorage.removeItem('background_color');
+                    }
+                    catch(e){}
+                    
+                }
+                else{
                     document.body.style.backgroundColor = body.background_color;
                     localStorage.setItem('background_color', body.background_color);
                 }
+                
             }
             
             if(typeof body.hide_floorplan != 'undefined'){
                 if(body.hide_floorplan){
                     document.getElementById('floorplan-menu-item').style.display = 'none';
+                }
+            }
+            
+            if(typeof body.zoom != 'undefined'){
+                if(body.zoom == '100%'){
+                    document.body.classList.remove('zoom1');
+                    document.body.classList.remove('zoom2');
+                    document.body.classList.remove('zoom3');
+                }
+                else if(body.zoom == '120%'){
+                    document.body.classList.remove('zoom2');
+                    document.body.classList.remove('zoom3');
+                    document.body.classList.add('zoom1');
+                }
+                else if(body.zoom == '140%'){
+                    document.body.classList.remove('zoom1');
+                    document.body.classList.remove('zoom3');
+                    document.body.classList.add('zoom2');
+                }
+                else if(body.zoom == '160%'){
+                    document.body.classList.remove('zoom1');
+                    document.body.classList.remove('zoom2');
+                    document.body.classList.add('zoom3');
                 }
             }
 		

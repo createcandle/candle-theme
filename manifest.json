@@ -34,12 +34,22 @@
     "schema": {
       "properties": {
         "Background color": {
-          "description": "You can override the default background colors with your own. Since the text color remains white, it's recommended to choose a darker color. It must be provided as a 'hex value', or a standard HTML color name. For example: #641364 is a deep purple. Using 'black' will make it black. Set is to empty to use the defaults.",
+          "description": "You can override the default background colors with your own. Since the text color remains white, it's recommended to choose a darker color.",
           "type": "string"
         },
         "Hide floorplan": {
           "type": "boolean",
           "description": "If you nevery use it, then you might want to hide the floorplan."
+        },
+        "Zoom": {
+          "description": "This allows you to make certain parts of the interface larger. It doesn't affect logs and the floorplan. It cannot be guaranteed to work correctly with all addons.",
+          "enum": [
+              "100%",
+              "120%",
+              "140%",
+			  "160%",
+          ],
+          "type": "string"
         },
         "Debugging": {
           "type": "boolean",
@@ -51,7 +61,7 @@
     }
   },
   "short_name": "ctheme",
-  "version": "2.1.8",
+  "version": "2.2.0",
   "web_accessible_resources": [
     "css/*.css",
     "js/*.js",
