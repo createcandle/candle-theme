@@ -56,14 +56,17 @@
           
           // Block all outgoing links on the kiosk
           document.addEventListener(`click`, e => {
-              //const origin = e.target.closest("a");
+              const origin = e.target.closest("a");
               //console.log(e);
-              //if (origin) {
-                  //console.clear();
-                  //console.log(`You clicked ${origin.href}`);
-              //}
+              
           
-              if(event.target.tagName.toLowerCase() === 'a'){
+              if(event.target.classList.contains('addon-settings-license')){
+                  //console.log("clicked on a license link on the settings page");
+                  e.preventDefault();
+                  alert("Sorry, you cannot open links to other websites here. Connect with a browser on your phone, tablet or computer instead.");
+              }
+              
+              else if(event.target.tagName.toLowerCase() === 'a'){
                   //console.log("click on an A tag");
                   if( event.target.getAttribute("target") == "_blank"){
                       e.preventDefault();
@@ -71,13 +74,15 @@
                       alert("Sorry, you cannot open links to other websites here. Connect with a browser on your phone, tablet or computer instead.");
                   }
               }
-          
-              if(event.target.classList.contains('addon-settings-license')){
-                  //console.log("clicked on a license link on the settings page");
-                  e.preventDefault();
-                  alert("Sorry, you cannot open links to other websites here. Connect with a browser on your phone, tablet or computer instead.");
+              else if (origin) {
+                  if( origin.getAttribute("target") == "_blank"){
+                      e.preventDefault();
+                      //console.log("Blocking external link from opening since kiosk mode is active");
+                      alert("Sorry, you cannot open links to other websites here. Connect with a browser on your phone, tablet or computer instead.");
+                  }
+                  //console.clear();
+                  //console.log(`You clicked ${origin.href}`);
               }
-          
           });
       }
       
