@@ -83,6 +83,14 @@ body.hide-virtual-keyboard > .ha{
 
 
 
+/*  Changes for specific addons  */
+
+.extension-zigbee2mqtt-adapter-zigbee-id{display:none;}
+
+.developer .extension-zigbee2mqtt-adapter-zigbee-id{display:block;}
+
+
+
 /*
 #logs-view > .logs{
     width:80vw;
