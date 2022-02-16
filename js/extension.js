@@ -3,12 +3,12 @@
     constructor() {
       super('candle-theme');
       
-      console.log("window: ", window);
-      console.log("API: ", API);
+      //console.log("window: ", window);
+      //console.log("API: ", API);
       //console.log("models: ", models);
       //console.log("APP: ", app);
       
-      console.log("addon settings: ", window.API.getAddonConfig("candleappstore"));
+      //console.log("addon settings: ", window.API.getAddonConfig("candleappstore"));
       
       this.check_properties_scheduled == false;
 	  this.devices_with_logs = [];
@@ -56,24 +56,24 @@
           
           // Block all outgoing links on the kiosk
           document.addEventListener(`click`, e => {
-              const origin = e.target.closest("a");
-              console.log(e);
-              if (origin) {
-                  console.clear();
-                  console.log(`You clicked ${origin.href}`);
-              }
+              //const origin = e.target.closest("a");
+              //console.log(e);
+              //if (origin) {
+                  //console.clear();
+                  //console.log(`You clicked ${origin.href}`);
+              //}
           
               if(event.target.tagName.toLowerCase() === 'a'){
-                  console.log("click on an A tag");
+                  //console.log("click on an A tag");
                   if( event.target.getAttribute("target") == "_blank"){
                       e.preventDefault();
-                      console.log("Blocking external link from opening since kiosk mode is active");
+                      //console.log("Blocking external link from opening since kiosk mode is active");
                       alert("Sorry, you cannot open links to other websites here. Connect with a browser on your phone, tablet or computer instead.");
                   }
               }
           
               if(event.target.classList.contains('addon-settings-license')){
-                  console.log("clicked on a license link on the settings page");
+                  //console.log("clicked on a license link on the settings page");
                   e.preventDefault();
                   alert("Sorry, you cannot open links to other websites here. Connect with a browser on your phone, tablet or computer instead.");
               }
@@ -118,11 +118,10 @@
       this.previous_document_location = window.location.pathname;
   
   
+       /*
       API.getPlatform().then((platform) => {
           console.log('API: platform: ', platform);
       });
-  
-  
       
       API.getThings().then((things) => {
           console.log('API: things: ', things);
@@ -132,7 +131,6 @@
           console.log('API: thing: ', thing);
       });
       
-      /*
       try{
           if(typeof API.getGroups === 'function') {
               API.getGroups().then((groups) => {
@@ -362,8 +360,8 @@
                 if(body.allow_pinch_to_zoom == false){
                     const viewport = document.querySelector("meta[name=viewport]");
                     if(viewport != null){
-                        console.log('disabling pinch-to-zoom');
-                        viewport.setAttribute('content', 'width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;');
+                        //console.log('disabling pinch-to-zoom');
+                        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
                     }
                 }
             }
@@ -372,7 +370,7 @@
                 if(body.hide_virtual_keyboard){
                     const viewport = document.querySelector("meta[name=viewport]");
                     if(viewport != null){
-                        console.log('hiding virtual keyboard');
+                        //console.log('hiding virtual keyboard');
                         document.body.classList.add('hide-virtual-keyboard');
                         //document.getElementById('virtualKeyboardChromeExtension').style.display = 'none!important';
                     }

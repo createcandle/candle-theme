@@ -14,50 +14,53 @@ body{
 /*  ZOOM  */
 
 
-body.zoom1 #rule-parts-list p,
-body.zoom1 #logs-view .create-log-button,
-body.zoom1 #candle-theme-log-list-toggle-container,
-body.zoom1 > button,
-body.zoom1 > nav,
-body.zoom1 > section:not(#logs-view):not(#floorplan-view):not(#rule-view){
-    zoom:1.2;
-}
+@media only screen and (min-width: 768px) {
 
-body.zoom2 #rule-parts-list p,
-body.zoom2 #logs-view .create-log-button,
-body.zoom2 #candle-theme-log-list-toggle-container,
-body.zoom2 > button,
-body.zoom2 > nav,
-body.zoom2 > section:not(#logs-view):not(#floorplan-view):not(#rule-view){
-    zoom:1.4;
-}
+    body.zoom1 #rule-parts-list p,
+    body.zoom1 #logs-view .create-log-button,
+    body.zoom1 #candle-theme-log-list-toggle-container,
+    body.zoom1 > button,
+    body.zoom1 > nav,
+    body.zoom1 > section:not(#logs-view):not(#floorplan-view):not(#rule-view){
+        zoom:1.2;
+    }
 
-body.zoom3 #rule-parts-list p,
-body.zoom3 #logs-view .create-log-button,
-body.zoom3 #candle-theme-log-list-toggle-container,
-body.zoom3 > button,
-body.zoom3 > nav,
-body.zoom3 > section:not(#logs-view):not(#floorplan-view):not(#rule-view){
-    zoom:1.6;
-}
+    body.zoom2 #rule-parts-list p,
+    body.zoom2 #logs-view .create-log-button,
+    body.zoom2 #candle-theme-log-list-toggle-container,
+    body.zoom2 > button,
+    body.zoom2 > nav,
+    body.zoom2 > section:not(#logs-view):not(#floorplan-view):not(#rule-view){
+        zoom:1.4;
+    }
+
+    body.zoom3 #rule-parts-list p,
+    body.zoom3 #logs-view .create-log-button,
+    body.zoom3 #candle-theme-log-list-toggle-container,
+    body.zoom3 > button,
+    body.zoom3 > nav,
+    body.zoom3 > section:not(#logs-view):not(#floorplan-view):not(#rule-view){
+        zoom:1.6;
+    }
 
 
-body.zoom1 .candle-theme-logs-small-button,
-body.zoom1 .logs-graph-label,
-body.zoom1 #extension-privacy-manager-view{
-    zoom:1.1;
-}
+    body.zoom1 .candle-theme-logs-small-button,
+    body.zoom1 .logs-graph-label,
+    body.zoom1 #extension-privacy-manager-view{
+        zoom:1.1;
+    }
 
-body.zoom2 .candle-theme-logs-small-button,
-body.zoom2 .logs-graph-label,
-body.zoom2 #extension-privacy-manager-view{
-    zoom:1.2;
-}
+    body.zoom2 .candle-theme-logs-small-button,
+    body.zoom2 .logs-graph-label,
+    body.zoom2 #extension-privacy-manager-view{
+        zoom:1.2;
+    }
 
-body.zoom3 .candle-theme-logs-small-button,
-body.zoom3 .logs-graph-label,
-body.zoom3 #extension-privacy-manager-view{
-    zoom:1.3;
+    body.zoom3 .candle-theme-logs-small-button,
+    body.zoom3 .logs-graph-label,
+    body.zoom3 #extension-privacy-manager-view{
+        zoom:1.3;
+    }
 }
 
 
@@ -1697,7 +1700,7 @@ body.zoom3 #logs-view .arrow-select{
     
     
     #candle-theme-log-collections-container, #candle-theme-log-list-container{
-        background-color: #1f5174;
+        /*background-color: #1f5174;*/
         background-color: #0c2a40;
     }
 	#candle-theme-log-list-buttons{
@@ -1716,6 +1719,14 @@ body.zoom3 #logs-view .arrow-select{
         
         
     }
+    
+    .zoom2 #rule-view.selected,
+    .zoom3 #rule-view.selected{
+        background: #0c3b5c;
+        z-index: 3;
+    }
+    
+    
     #rule-parts-list-container{
         background: #46769c;
     }
