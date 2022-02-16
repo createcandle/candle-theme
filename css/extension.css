@@ -61,6 +61,23 @@ body.zoom3 #extension-privacy-manager-view{
 }
 
 
+/*  Remove gutters now that this theme has changed the z-index of the menu button to be above the content  */
+
+body > section[id^='extension-']{
+    top:0!important;
+    left:0!important;
+    width:100%!important;
+    height:100%!important;
+}
+
+
+
+/*  Hide virtual keyboard  */
+
+body.hide-virtual-keyboard > .ha{
+    display:none!important;
+}
+
 
 
 /*
@@ -1622,6 +1639,11 @@ body.zoom3 #logs-view .arrow-select{
     #rules{
         padding: 0 7.6rem;
     }
+    
+    body > section[id^='extension-']{
+        padding-left:9.6rem!important;
+    }
+    
 }
 
 @media only screen and (min-width: 1400px) {

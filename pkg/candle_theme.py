@@ -91,6 +91,13 @@ class CandleThemeAPIHandler(APIHandler):
         if not 'developer' in self.persistent_data:
             self.persistent_data['developer'] = False
 
+        if not 'allow_pinch_to_zoom' in self.persistent_data:
+            self.persistent_data['allow_pinch_to_zoom'] = False
+            
+        if not 'hide_virtual_keyboard' in self.persistent_data:
+            self.persistent_data['hide_virtual_keyboard'] = False       
+            
+
         # LOAD CONFIG
         try:
             self.add_from_config()
@@ -171,6 +178,17 @@ class CandleThemeAPIHandler(APIHandler):
             if self.DEBUG:
                 print("-Zoom preference was in config: " + str(self.persistent_data['zoom']))
                 
+        if 'Allow pinch-to-zoom' in config:
+            self.persistent_data['allow_pinch_to_zoom'] = bool(config['Allow pinch-to-zoom'])
+            if self.DEBUG:
+                print("-Pinch to zoom preference was in config: " + str(self.persistent_data['allow_pinch_to_zoom']))
+                
+        if 'Hide virtual keyboard' in config:
+            self.persistent_data['hide_virtual_keyboard'] = str(config['Hide virtual keyboard'])
+            if self.DEBUG:
+                print("-Hide virtual keyboard preference was in config: " + str(self.persistent_data['hide_virtual_keyboard']))
+        
+                
         if 'Show developer options' in config:
             self.persistent_data['developer'] = bool(config['Show developer options'])
             if self.DEBUG:
@@ -236,7 +254,7 @@ class CandleThemeAPIHandler(APIHandler):
                         return APIResponse(
                           status=200,
                           content_type='application/json',
-                          content=json.dumps({'debug': self.DEBUG, 'background_color':self.persistent_data['background_color'], 'hide_floorplan':self.persistent_data['hide_floorplan'], 'zoom':self.persistent_data['zoom'], 'developer':self.persistent_data['developer']}),
+                          content=json.dumps({'debug': self.DEBUG, 'background_color':self.persistent_data['background_color'], 'hide_floorplan':self.persistent_data['hide_floorplan'], 'zoom':self.persistent_data['zoom'], 'allow_pinch_to_zoom':self.persistent_data['allow_pinch_to_zoom'], 'hide_virtual_keyboard':self.persistent_data['hide_virtual_keyboard'],'developer':self.persistent_data['developer']}),
                         )
                         
                     elif action == 'get_collections':

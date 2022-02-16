@@ -8,12 +8,13 @@
       //console.log("models: ", models);
       //console.log("APP: ", app);
       
-      console.log("addon seetings: ", window.API.getAddonConfig("candleappstore"));
+      console.log("addon settings: ", window.API.getAddonConfig("candleappstore"));
       
       this.check_properties_scheduled == false;
 	  this.devices_with_logs = [];
       this.api_logs = [];
       this.log_collections = {};
+      this.kiosk = false;
       
       /*
       console.log("attempting window resize");
@@ -49,13 +50,39 @@
       
       if(document.getElementById('virtualKeyboardChromeExtension') != null){
           document.body.classList.add('kiosk');
-          const viewport = document.querySelector("meta[name=viewport]");
-          if(viewport != null){
-              viewport.setAttribute('content', 'width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;');
-              document.getElementById('virtualKeyboardChromeExtension').style.width = '100vw';
-          }
+          this.kiosk = true;
           
+          document.getElementById('virtualKeyboardChromeExtension').style.width = '100vw';
+          
+          // Block all outgoing links on the kiosk
+          document.addEventListener(`click`, e => {
+              const origin = e.target.closest("a");
+              console.log(e);
+              if (origin) {
+                  console.clear();
+                  console.log(`You clicked ${origin.href}`);
+              }
+          
+              if(event.target.tagName.toLowerCase() === 'a'){
+                  console.log("click on an A tag");
+                  if( event.target.getAttribute("target") == "_blank"){
+                      e.preventDefault();
+                      console.log("Blocking external link from opening since kiosk mode is active");
+                      alert("Sorry, you cannot open links to other websites here. Connect with a browser on your phone, tablet or computer instead.");
+                  }
+              }
+          
+              if(event.target.classList.contains('addon-settings-license')){
+                  console.log("clicked on a license link on the settings page");
+                  e.preventDefault();
+                  alert("Sorry, you cannot open links to other websites here. Connect with a browser on your phone, tablet or computer instead.");
+              }
+          
+          });
       }
+      
+      
+      
       
       
       
@@ -228,6 +255,12 @@
       //localStorage.setItem("candle_theme_log_collections", JSON.stringify({}));
       
 
+
+
+
+
+      
+
       /*
       // Listen for changes in dropdowns
       const message_area = document.getElementById('message-area');
@@ -323,6 +356,29 @@
                     document.body.classList.add('zoom3');
                 }
             }
+            
+            
+            if(typeof body.allow_pinch_to_zoom != 'undefined'){
+                if(body.allow_pinch_to_zoom == false){
+                    const viewport = document.querySelector("meta[name=viewport]");
+                    if(viewport != null){
+                        console.log('disabling pinch-to-zoom');
+                        viewport.setAttribute('content', 'width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;');
+                    }
+                }
+            }
+            
+            if(typeof body.hide_virtual_keyboard != 'undefined'){
+                if(body.hide_virtual_keyboard){
+                    const viewport = document.querySelector("meta[name=viewport]");
+                    if(viewport != null){
+                        console.log('hiding virtual keyboard');
+                        document.body.classList.add('hide-virtual-keyboard');
+                        //document.getElementById('virtualKeyboardChromeExtension').style.display = 'none!important';
+                    }
+                }
+            }
+            
 		
         }).catch((e) => {
   			console.log("Error getting theme init data: " + e.toString());
@@ -1654,34 +1710,35 @@
     filter_rule_parts_list(code){
         
         //console.log("in filter_rule_parts_list. key code: ", code);
-        
-        if (document.activeElement.tagName === "INPUT"){
+        console.log('document.activeElement.tagName: ', document.activeElement.tagName);
+        if (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "SPAN"){
             //console.log("An input is already focused");
+            code = 27;
         }
-        else{
-            if( code == 8 || code == 27 || code == 32){ // backspace, escape, space
-                let parts = document.querySelectorAll("#rule-parts-list .rule-part");
-                for (var i = 0; i < parts.length; ++i) {
-                    parts[i].style.display = 'block';
+        
+        if( code == 8 || code == 27 || code == 32){ // backspace, escape, space
+            let parts = document.querySelectorAll("#rule-parts-list .rule-part");
+            for (var i = 0; i < parts.length; ++i) {
+                parts[i].style.display = 'inline-block';
+            }
+        }
+        else if(code > 64 && code < 91){ // a-z
+            let parts = document.querySelectorAll("#rule-parts-list .rule-part");
+            for (var i = 0; i < parts.length; ++i) {
+                
+                const p_text = parts[i].getElementsByTagName('p')[0].innerText.toLowerCase();
+                //console.log("p_text: " + p_text);
+                //console.log(event.key + " =?= " + p_text.charAt(0));
+                if( event.key != p_text.charAt(0) ){
+                    parts[i].style.display = 'none';
+                }
+                else{
+                    parts[i].style.display = 'inline-block';
                 }
             }
-            else if(code > 64 && code < 91){ // a-z
-                let parts = document.querySelectorAll("#rule-parts-list .rule-part");
-                for (var i = 0; i < parts.length; ++i) {
-                    
-                    const p_text = parts[i].getElementsByTagName('p')[0].innerText.toLowerCase();
-                    //console.log("p_text: " + p_text);
-                    //console.log(event.key + " =?= " + p_text.charAt(0));
-                    if( event.key != p_text.charAt(0) ){
-                        parts[i].style.display = 'none';
-                    }
-                    else{
-                        parts[i].style.display = 'block';
-                    }
-                }
-            }
+        }
             
-        }
+        
     }
     
     

@@ -30,6 +30,8 @@
       "Background color": "",
       "Hide floorplan": false,
 	  "Zoom": "100%",
+	  "Allow pinch-to-zoom": false,
+	  "Hide virtual keyboard": false,
       "Debugging": false
     },
     "schema": {
@@ -52,6 +54,14 @@
           ],
           "type": "string"
         },
+        "Allow pinch-to-zoom": {
+          "type": "boolean",
+          "description": "If you're using a touch screen, then you may want to be able to zoom in and out using a pinch gesture. By default this is disabled to avoid accidental zooming in, which for some people can cause confusion when the menu buttons disappear from view."
+        },
+        "Hide virtual keyboard": {
+          "type": "boolean",
+          "description": "If you're using an external display, but it's not touch-sensitive, then you might want to hide the external keyboard. This means you will have to attach a real keyboard instead."
+        },
         "Debugging": {
           "type": "boolean",
           "description": "Advanced. Debugging allows you to diagnose any issues with the add-on. If enabled it will result in a lot more debug data in the internal log (which can be found under settings -> developer -> view internal logs)."
@@ -62,7 +72,7 @@
     }
   },
   "short_name": "ctheme",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "web_accessible_resources": [
     "css/*.css",
     "js/*.js",
