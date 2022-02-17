@@ -274,7 +274,9 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 }
 
 
-
+#virtualKeyboardChromeExtension{
+    width:100%!important;
+}
 
 #virtualKeyboardChromeExtension #settingsButton{
     display:none;

@@ -372,13 +372,8 @@
             }
             
             if(typeof body.hide_virtual_keyboard != 'undefined'){
-                if(body.hide_virtual_keyboard){
-                    const viewport = document.querySelector("meta[name=viewport]");
-                    if(viewport != null){
-                        //console.log('hiding virtual keyboard');
-                        document.body.classList.add('hide-virtual-keyboard');
-                        //document.getElementById('virtualKeyboardChromeExtension').style.display = 'none!important';
-                    }
+                if(body.hide_virtual_keyboard == true){
+                    document.body.classList.add('hide-virtual-keyboard');
                 }
             }
             

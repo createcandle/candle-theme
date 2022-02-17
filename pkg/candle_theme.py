@@ -184,7 +184,7 @@ class CandleThemeAPIHandler(APIHandler):
                 print("-Pinch to zoom preference was in config: " + str(self.persistent_data['allow_pinch_to_zoom']))
                 
         if 'Hide virtual keyboard' in config:
-            self.persistent_data['hide_virtual_keyboard'] = str(config['Hide virtual keyboard'])
+            self.persistent_data['hide_virtual_keyboard'] = bool(config['Hide virtual keyboard'])
             if self.DEBUG:
                 print("-Hide virtual keyboard preference was in config: " + str(self.persistent_data['hide_virtual_keyboard']))
         
