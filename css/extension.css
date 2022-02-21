@@ -152,7 +152,6 @@ body{
 body #menu-button{
     z-index:2;
     background: no-repeat 100% 100% url(/images/menu.svg);
-    display:block!important;
 }
 
 body #settings-back-button,
@@ -221,12 +220,19 @@ body #add-button{
 
 /*  Color adjustments to use opacity */
 
+
 #settings-view{
     background-color:transparent;
 }
 #settings-view.dark{
     background-color:rgba(0,0,0,.1);
 }
+#settings-view > section{
+    
+}
+
+
+
 
 #logs-view,
 #rules-view, #rules,
@@ -283,15 +289,49 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     background-color:rgba(0,0,0,.4);
 }
 
-
 #virtualKeyboardChromeExtension{
     width:100%!important;
     box-sizing:border-box;
+    height:auto!important;
+}
+
+@media only screen and (min-width: 801px) {
+    
+    #virtualKeyboardChromeExtension td.kbdHBE.kbdClick,
+    #virtualKeyboardChromeExtension td.kbNumberMain,
+    #virtualKeyboardChromeExtension td.kdbCase,
+    #virtualKeyboardChromeExtension td.kdbClick{
+        padding:4rem 0!important;
+    }
+
+    
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kdbCase span, 
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdHB span, 
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd td.kbdHBS span, 
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdHBE span, 
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdH span, 
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdS span, 
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdD span, 
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdShift span{
+        padding-top:3rem!important;
+    }
+
 }
 
 #virtualKeyboardChromeExtension #settingsButton{
     display:none;
 }
+
+/*
+#virtualKeyboardChromeExtension{
+    display:block!important;
+    opacity:1!important;
+    transform:none!important;
+}
+*/
+
+
+
 
 
 
