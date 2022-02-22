@@ -297,6 +297,8 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 
 @media only screen and (min-width: 801px) {
     
+    #virtualKeyboardChromeExtension td.kbdD,
+    #virtualKeyboardChromeExtension td.kbdS,
     #virtualKeyboardChromeExtension td.kbdHBE.kbdClick,
     #virtualKeyboardChromeExtension td.kbNumberMain,
     #virtualKeyboardChromeExtension td.kdbCase,
