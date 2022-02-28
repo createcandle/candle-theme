@@ -88,6 +88,9 @@ class CandleThemeAPIHandler(APIHandler):
         if not 'zoom' in self.persistent_data:
             self.persistent_data['zoom'] = '100%'
             
+        if not 'zoom_everywhere' in self.persistent_data:
+            self.persistent_data['zoom_everywhere'] = False
+            
         if not 'developer' in self.persistent_data:
             self.persistent_data['developer'] = False
 
@@ -95,7 +98,10 @@ class CandleThemeAPIHandler(APIHandler):
             self.persistent_data['allow_pinch_to_zoom'] = False
             
         if not 'hide_virtual_keyboard' in self.persistent_data:
-            self.persistent_data['hide_virtual_keyboard'] = False       
+            self.persistent_data['hide_virtual_keyboard'] = False     
+            
+        
+        
             
 
         # LOAD CONFIG
@@ -178,6 +184,11 @@ class CandleThemeAPIHandler(APIHandler):
             if self.DEBUG:
                 print("-Zoom preference was in config: " + str(self.persistent_data['zoom']))
                 
+        if 'Use zoom everywhere' in config:
+            self.persistent_data['zoom_everywhere'] = bool(config['Use zoom everywhere'])
+            if self.DEBUG:
+                print("-Use zoom everywhere preference was in config: " + str(self.persistent_data['zoom_everywhere']))
+        
         if 'Allow pinch-to-zoom' in config:
             self.persistent_data['allow_pinch_to_zoom'] = bool(config['Allow pinch-to-zoom'])
             if self.DEBUG:
@@ -254,7 +265,7 @@ class CandleThemeAPIHandler(APIHandler):
                         return APIResponse(
                           status=200,
                           content_type='application/json',
-                          content=json.dumps({'debug': self.DEBUG, 'background_color':self.persistent_data['background_color'], 'hide_floorplan':self.persistent_data['hide_floorplan'], 'zoom':self.persistent_data['zoom'], 'allow_pinch_to_zoom':self.persistent_data['allow_pinch_to_zoom'], 'hide_virtual_keyboard':self.persistent_data['hide_virtual_keyboard'],'developer':self.persistent_data['developer']}),
+                          content=json.dumps({'debug': self.DEBUG, 'background_color':self.persistent_data['background_color'], 'hide_floorplan':self.persistent_data['hide_floorplan'], 'zoom':self.persistent_data['zoom'],'zoom_everywhere':self.persistent_data['zoom_everywhere'], 'allow_pinch_to_zoom':self.persistent_data['allow_pinch_to_zoom'], 'hide_virtual_keyboard':self.persistent_data['hide_virtual_keyboard'],'developer':self.persistent_data['developer']}),
                         )
                         
                     elif action == 'get_collections':

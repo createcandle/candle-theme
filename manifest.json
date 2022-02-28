@@ -30,6 +30,7 @@
       "Background color": "",
       "Hide floorplan": false,
 	  "Zoom": "100%",
+	  "Use zoom everywhere": false,
 	  "Allow pinch-to-zoom": false,
 	  "Hide virtual keyboard": false,
       "Debugging": false
@@ -45,7 +46,7 @@
           "description": "If you nevery use it, then you might want to hide the floorplan."
         },
         "Zoom": {
-          "description": "This allows you to make certain parts of the interface larger. It doesn't affect logs and the floorplan. It cannot be guaranteed to work correctly with all addons.",
+          "description": "This allows you to make certain parts of the interface larger on attached displays. It doesn't apply to everything; for example, the logs overview and the floorplan aren't affected. It cannot be guaranteed to work correctly with all community addons.",
           "enum": [
               "100%",
               "120%",
@@ -53,6 +54,10 @@
 			  "160%"
           ],
           "type": "string"
+        },
+        "Use zoom everywhere": {
+          "type": "boolean",
+          "description": "By default the zoom feature applies only to displays attached directly to the Candle controller. It's possible to make the zoom work on every browser."
         },
         "Allow pinch-to-zoom": {
           "type": "boolean",
@@ -72,7 +77,7 @@
     }
   },
   "short_name": "ctheme",
-  "version": "2.2.8",
+  "version": "2.3.1",
   "web_accessible_resources": [
     "css/*.css",
     "js/*.js",

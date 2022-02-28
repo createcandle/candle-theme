@@ -39,6 +39,12 @@
       }
       
       
+      if(document.getElementById('things').innerHTML == 'No devices yet. Click + to scan for available devices.' || document.getElementById('things').innerHTML == ''){
+          document.getElementById('things').innerHTML = '<div id="extension-candle-theme-things-wait-message"><h1>Still starting</h1><p>Please wait a minute</p></div>';
+          document.getElementById('things').style.opacity = '1';
+      }
+      
+      
       /*
       if (localStorage.getItem("smallKeyboard") === null) {
           console.log('no smallKeyboard in local storage');
@@ -337,27 +343,31 @@
                 }
             }
             
-            if(typeof body.zoom != 'undefined'){
-                if(body.zoom == '100%'){
-                    document.body.classList.remove('zoom1');
-                    document.body.classList.remove('zoom2');
-                    document.body.classList.remove('zoom3');
+            if(typeof body.zoom != 'undefined' && typeof body.zoom_everywhere != 'undefined'){
+
+                if(this.kiosk || body.zoom_everywhere){
+                    if(body.zoom == '100%'){
+                        document.body.classList.remove('zoom1');
+                        document.body.classList.remove('zoom2');
+                        document.body.classList.remove('zoom3');
+                    }
+                    else if(body.zoom == '120%'){
+                        document.body.classList.remove('zoom2');
+                        document.body.classList.remove('zoom3');
+                        document.body.classList.add('zoom1');
+                    }
+                    else if(body.zoom == '140%'){
+                        document.body.classList.remove('zoom1');
+                        document.body.classList.remove('zoom3');
+                        document.body.classList.add('zoom2');
+                    }
+                    else if(body.zoom == '160%'){
+                        document.body.classList.remove('zoom1');
+                        document.body.classList.remove('zoom2');
+                        document.body.classList.add('zoom3');
+                    }
                 }
-                else if(body.zoom == '120%'){
-                    document.body.classList.remove('zoom2');
-                    document.body.classList.remove('zoom3');
-                    document.body.classList.add('zoom1');
-                }
-                else if(body.zoom == '140%'){
-                    document.body.classList.remove('zoom1');
-                    document.body.classList.remove('zoom3');
-                    document.body.classList.add('zoom2');
-                }
-                else if(body.zoom == '160%'){
-                    document.body.classList.remove('zoom1');
-                    document.body.classList.remove('zoom2');
-                    document.body.classList.add('zoom3');
-                }
+                
             }
             
             
