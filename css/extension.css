@@ -113,10 +113,11 @@ body:not(.developer) #domain-settings > ul > .domain-item:last-child{
     display:none;
 } 
 
-body:not(.developer) #domain-settings-local-checkbox,
-body:not(.developer) #domain-settings-local-label{
+body:not(.developer) #domain-settings-local-checkbox:checked,
+body:not(.developer) #domain-settings-local-checkbox:checked + #domain-settings-local-label{
     display:none;
 }
+
 
 
 /*
