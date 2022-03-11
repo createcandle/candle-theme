@@ -118,6 +118,10 @@ body:not(.developer) #domain-settings-local-checkbox:checked + #domain-settings-
     display:none;
 }
 
+body:not(.developer) #domain-settings ul li.domain-item:last-of-type{
+    display:none;
+}
+
 
 
 /*
@@ -317,6 +321,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     box-sizing:border-box;
     height:auto!important;
     background:black;
+    padding:0;
 }
 
 
@@ -326,7 +331,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 
 #virtualKeyboardChromeExtension table td.kdbCase span, 
 #virtualKeyboardChromeExtension table td.kbdHB span, 
-#virtualKeyboardChromeExtension td.kbdHBS span, 
+#virtualKeyboardChromeExtension table td.kbdHBS span, 
 #virtualKeyboardChromeExtension table td.kbdHBE span, 
 #virtualKeyboardChromeExtension table td.kbdH span, 
 #virtualKeyboardChromeExtension table td.kbdS span, 
@@ -338,21 +343,22 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 
 @media only screen and (min-width: 801px) {
     
-    #virtualKeyboardChromeExtension td.kbdD,
-    #virtualKeyboardChromeExtension td.kbdH,
-    #virtualKeyboardChromeExtension td.kbdS,
-    #virtualKeyboardChromeExtension td.kbdHBE.kbdClick,
-    #virtualKeyboardChromeExtension td.kbNumberMain,
-    #virtualKeyboardChromeExtension td.kdbCase,
-    #virtualKeyboardChromeExtension td.kdbClick{
+    
+    #virtualKeyboardChromeExtension table td.kbdD,
+    #virtualKeyboardChromeExtension table td.kbdH,
+    #virtualKeyboardChromeExtension table td.kbdS,
+    #virtualKeyboardChromeExtension table td.kbdHBE.kbdClick,
+    #virtualKeyboardChromeExtension table td.kbNumberMain,
+    #virtualKeyboardChromeExtension table td.kdbCase,
+    #virtualKeyboardChromeExtension table td.kdbClick{
         padding:4rem 0!important;
     }
 
-    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionNumberBarKbdInput td.kbdH span,
-    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionNumberBarKbdInput td.kbdD span,
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionNumberBarKbdInput table td.kbdH span,
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionNumberBarKbdInput table td.kbdD span,
     #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kdbCase span, 
     #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdHB span, 
-    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd td.kbdHBS span, 
+    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdHBS span, 
     #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdHBE span, 
     #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdH span, 
     #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionMainKbd table td.kbdS span, 
@@ -361,27 +367,29 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
         padding-top:3rem!important;
     }
 
+
+    #virtualKeyboardChromeExtension table td.kbdHB span, 
+    #virtualKeyboardChromeExtension table td.kbdHBE.kbdClick span{
+        font-size:0;
+    }
+
     
     /*  Tweaks to number pad  */
     #virtualKeyboardChromeExtensionNumberBarKbdInput table{
         width:500px!important;
     }
-    /*
-    #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionNumberBarKbdInput [_key=Enter] span{
-        background-image:none;
-    }
-    */
     
     #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionNumberBarKbdInput [_key=Enter] span,
     #virtualKeyboardChromeExtension #virtualKeyboardChromeExtensionNumberBarKbdInput [_key=Backspace] span{
         font-size: 0!important;
         background-position:30px;
     }
-    
-    
-    
-    
 
+}
+
+.kiosk .user-form,
+.kiosk .network-settings-wrap{
+    top:30%;
 }
 
 
