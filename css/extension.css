@@ -392,6 +392,11 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     top:30%;
 }
 
+.kiosk .new-thing-custom-icon-label.text-button,
+.kiosk #edit-thing-custom-icon-label{
+    display:none;
+}
+
 
 /*
 #virtualKeyboardChromeExtension{

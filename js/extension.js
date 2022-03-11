@@ -245,11 +245,22 @@
       document.querySelector('#settings-menu .section-title-icon').addEventListener('click', () => {
                     		//console.log("clicked on link to logs button. This:", this);
                             this.developer_clicks++;
-                            if(this.developer_clicks > 3){
-                                document.getElementById('authorization-settings-link').style.display = 'block';
-                                document.getElementById('experiment-settings-link').style.display = 'block';
-                                document.getElementById('developer-settings-link').style.display = 'block';
-                                document.body.classList.add('developer');
+                            if(this.developer_clicks > 7){
+                                document.body.classList.remove('developer');
+                                
+                            }
+                            else if(this.developer_clicks > 3){
+                                this.developer_clicks = 0;
+                                //document.getElementById('authorization-settings-link').style.display = 'block';
+                                //document.getElementById('experiment-settings-link').style.display = 'block';
+                                //document.getElementById('developer-settings-link').style.display = 'block';
+                                if( document.body.classList.contains('developer') ){
+                                    document.body.classList.remove('developer');
+                                }
+                                else{
+                                    document.body.classList.add('developer');
+                                }
+                                
                             }
         });
       
