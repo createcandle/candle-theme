@@ -1077,6 +1077,8 @@ webthing-level-property.component::part(number){
 }
 
 
+/* SLIDER */
+
 webthing-level-property.component::part(slider)::-webkit-slider-runnable-track{
 
     background-color:red;
@@ -1111,12 +1113,13 @@ webthing-level-property.component::part(slider){
 }
 
 /* Firefox and Safari */
+/*
 @media and (-webkit-min-device-pixel-ratio:0) {
     webthing-level-property.component::part(slider)::-webkit-slider-runnable-track{
         width:13rem!important;
     }
 }
-
+*/
 .webthing-level-property-slider{
     
 }
@@ -1150,9 +1153,11 @@ input[type="range"]::-webkit-slider-runnable-track{
 }
 
 .component::part(extra-thermostat-buttons){
-	width:100%;
+	width:110%;
 	display:flex;
 	justify-content:space-between;
+    position:absolute;
+    top:-2rem;
 }
 /*
 .component::part(down){
@@ -1178,9 +1183,13 @@ input[type="range"]::-webkit-slider-runnable-track{
     background-color: rgba(0,0,0,.1);
     margin-bottom: .2rem;	
     cursor: pointer;
-    margin: 1rem .8rem 0 .8rem;
+    /*margin: 1rem .8rem 0 .8rem;*/
+    margin:0;
     border-radius:.5rem;
     font-weight:bold;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 
