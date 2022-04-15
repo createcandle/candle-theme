@@ -338,7 +338,9 @@
                     try{
                         localStorage.removeItem('background_color');
                     }
-                    catch(e){}
+                    catch(e){
+                        console.log("Error while removing background color from local storage: ", e);
+                    }
                     
                 }
                 else{
@@ -346,6 +348,14 @@
                     localStorage.setItem('background_color', body.background_color);
                 }
                 
+            }
+            else{
+                try{
+                    localStorage.removeItem('background_color');
+                }
+                catch(e){
+                    //console.log("background color was not set in local storage, so won't be removed from it: ", e);
+                }
             }
             
             if(typeof body.hide_floorplan != 'undefined'){
