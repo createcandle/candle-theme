@@ -567,7 +567,10 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 }
 
 #things-container{
-    overflow:auto;
+    top: auto;
+    transform: none;
+    max-height: initial;
+    min-height: 100%;
 }
 
 #things{
@@ -950,7 +953,9 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 	
 	#things{
 		width:100%;
-		margin-left:0%;
+		margin-left:0;
+        padding-left:0;
+        padding-right:0;
 	}
 	
 	#things:not(.single-thing) .thing{
@@ -1552,12 +1557,10 @@ input[type="range"]::-webkit-slider-runnable-track{
 .logs-log-info{
     position: relative;
     top: -1rem;
-    margin-left:10rem;
 }
 
 .logs-log-week-dropdown{
     top:1rem;
-    right:9.6rem;
 }
 
 .kiosk .logs-scroll-control{
@@ -1891,6 +1894,14 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
     
     body > section[id^='extension-']{
         padding-left:9.6rem!important;
+    }
+    
+    .logs-log-info{
+        margin-left:10rem;
+    }
+    
+    .logs-log-week-dropdown{
+        right: 9.6rem;
     }
     
 }
