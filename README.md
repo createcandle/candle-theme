@@ -1,5 +1,5 @@
-# square-theme
-A theme for the WebThings Gateway that removes the octopus design, and replaces it with a more 'traditional' square view. With the circular view it can be difficult to spot the property you're looking for beccause they keep changing position randomly. A big advantage of this theme is that properties now always end up in the same, predictable positions.
+# Candle theme
+A theme for the Candle Conrtroller that offers a more 'traditional' square view.
 
 It also adds some features:
 - Setpoints buttons for thermostats. Allows you to quickly increase of decrease the temperature by one degree.
