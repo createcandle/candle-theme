@@ -566,6 +566,10 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 	border-radius: 0.5rem;
 }
 
+#things-container{
+    overflow:auto;
+}
+
 #things{
     opacity:0;
     /*display:none;*/
@@ -710,6 +714,10 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     height: auto;
 }
 
+
+
+#add-by-url{display:none;}
+.developer #add-by-url{display:block;}
 
 /*
 #things.single-thing > .thing .component::part(webthing-boolean-property-label):not([value]):after{
