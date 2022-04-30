@@ -400,9 +400,19 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 
 }
 
-.kiosk .user-form,
-.kiosk .network-settings-wrap{
+/* .kiosk .network-settings-wrap, */
+.kiosk .user-form{
     top:30%;
+}
+
+/*
+.kiosk #network-settings-wifi .network-settings-wrap{
+    top:50%;
+}
+*/
+
+.kiosk #network-settings-wifi-wrap{
+    margin-top:-20%;
 }
 
 .kiosk .new-thing-custom-icon-label.text-button,
@@ -410,6 +420,14 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     display:none;
 }
 
+
+.kiosk #context-menu-content{
+    top: calc(25% - 3.8rem);
+}
+
+.kiosk #create-log-content{
+    top:30%;
+}
 
 /*
 #virtualKeyboardChromeExtension{
@@ -761,7 +779,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 }
 
 #add-thing-cancel-button{
-    margin-bottom:4rem;
+    margin-bottom:20rem;
 }
 
 .media-modal-video{
@@ -1107,8 +1125,7 @@ webthing-level-property.component::part(number){
 
 webthing-level-property.component::part(slider)::-webkit-slider-runnable-track{
 
-    background-color:red;
-    /*-webkit-appearance: none;*/
+    /*-webkit-appearance: none;  this enables a complete style change */
     width: 10rem;
     min-width: 13rem;
     max-width:;
