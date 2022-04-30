@@ -880,7 +880,8 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 
 #things.single-thing > .thing > div.thing-detail-container [data-name="Data collection"],
 #things.single-thing > .thing > div.thing-detail-container [data-name="data transmission"],
-#things.single-thing > .thing > div.thing-detail-container [data-name="Data transmission"] {
+#things.single-thing > .thing > div.thing-detail-container [data-name="Data transmission"],
+#things.single-thing > .thing > div.thing-detail-container [data-name="Data blur"]{
     background-color:rgba(0,0,0,.1);
 }
 
