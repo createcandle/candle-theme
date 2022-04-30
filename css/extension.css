@@ -661,10 +661,15 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 	left:0;
 	right:auto;
 }
-.thing-details-link{
+#things-view .thing-details-link{
 	left:auto;
 	right:0;
     border-bottom-left-radius:.5rem;
+    background-image:url('../images/thing-details-link.svg');
+    opacity:.7;
+}
+#things-view .thing-details-link:hover{
+    opacity:1;
 }
 
 #thing-details .thing-details-link:hover{
@@ -777,6 +782,12 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 .dialog{
     z-index:2;
 }
+
+/*
+#add-adapters-hint{
+    display:none;
+}
+*/
 
 #add-thing-cancel-button{
     margin-bottom:20rem;
