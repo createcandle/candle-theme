@@ -546,6 +546,15 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     opacity:1;
 }
 
+
+.group-overflow-menu{
+    padding:0;
+}
+
+.group-overflow-menu > a{
+    padding:1rem;
+}
+
 .group-overflow-menu a:last-of-type{
     font-size:0;
 }
@@ -794,7 +803,7 @@ body #main-menu #things-menu-item{
 */
 
 #add-thing-cancel-button{
-    margin-bottom:20rem;
+    margin-bottom:50vh;
 }
 
 .media-modal-video{
@@ -893,6 +902,14 @@ body #main-menu #things-menu-item{
     position:initial;
     transform:none;
     margin:bottom:.2rem;
+}
+
+
+#overflow-menu{
+    padding:0;
+}
+#overflow-menu > a:link{
+    padding:1rem;
 }
 
 
@@ -1394,6 +1411,10 @@ input[type="range"]::-webkit-slider-runnable-track{
 
 /*  FLOORPLAN  */
 
+.kiosk #floorplan-upload-form{
+    display:none;
+}
+
 #floorplan.editing{
 	background-color: rgba(255,255,255,.1);
 }
@@ -1535,7 +1556,6 @@ input[type="range"]::-webkit-slider-runnable-track{
 }
 
 #candle-theme-log-list-container{
-    overflow:scroll;
     padding-bottom:4rem;
 }
 
@@ -1731,6 +1751,49 @@ body.zoom3 #logs-view .arrow-select{
 }
 
 
+/*  logs collection name popup */
+
+#extension-candle-theme-collection-input-popup-container{
+    width:100;
+}
+
+#extension-candle-theme-collection-input-popup-container{
+    display:none;
+    width:100%;
+    height:100%;
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:rgba(0,0,0,.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.kiosk #extension-candle-theme-collection-input-popup-container > div{
+    margin-bottom:50vh;
+}
+
+#extension-candle-theme-collection-input-popup-container > div{
+    width:60rem;
+    max-width:80%;
+    border-radius:.5rem;
+    background-color:#0c3b5c;
+    padding:4rem;
+    margin:2rem;
+}
+
+/* #extension-internet-radio-station-name-input */
+#extension-candle-theme-collection-name-input,
+#extension-candle-theme-collection-input-popup-container > div > input{
+    width:100%;
+    margin-bottom:2rem;
+}
+
+.extension-candle-theme-hidden{
+    display:none!important;
+}
+
 
 
 
@@ -1917,12 +1980,12 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
 	*/
 	
     .candle-theme-logs-small-button{
-        padding: .5rem
+        padding: 1rem;
     }
     
     #groups .thing,
 	#things:not(.single-thing) .thing{
-		min-width: 175px;
+		min-width:175px;
 		max-width:263px;
 	}
 

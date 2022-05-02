@@ -176,7 +176,7 @@
       
       var remove_group_question = document.createElement('div');
       remove_group_question.setAttribute("id", "candle-theme-remove-group-question");
-      remove_group_question.innerHTML = "Are you sure you want to move things out of this group and then remove it?";
+      remove_group_question.innerHTML = "This will move things out of this group and then remove it";
       
       
       const group_remove_view = document.getElementById('group-context-menu-content-remove');
@@ -1255,47 +1255,84 @@
 			//console.log(selected_log);
         }
         
-        if( selected_logs.length > 0){
+        if( selected_logs.length > 1){
             
-            let collection_name = prompt("What should this collection be called?");
-        
-            if(collection_name != ""){
-                //console.log("collection_name = " + collection_name);
-                //console.log("selected: ", selected_log_names);
-                /*
-                if(typeof this.log_collections == 'string'){
-                    //console.log("log collections was string? fixing.");
-                    this.log_collections = JSON.parse(this.log_collections);
-                }
-                */
-                this.log_collections[collection_name] = selected_log_names; //.push({'name':collection_name,'logs':selected_log_names});
-        
-                localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
+            const collection_popup_container = document.getElementById('extension-candle-theme-collection-input-popup-container');
+            if(collection_popup_container!= null){
+                collection_popup_container.parentNode.removeChild(collection_popup_container);
+            }
+            
+            if(document.getElementById('extension-candle-theme-collection-input-popup-container') == null){
+                console.log("creating and appending collection name input popup html");
                 
-                //console.log('going to save: ', this.log_collections);
-          
+                var collection_popup_el = document.createElement("div");
+                collection_popup_el.id = 'extension-candle-theme-collection-input-popup-container';
                 
-          
-          		// Save collections
-                window.API.postJson(
-                  `/extensions/${this.id}/api/ajax`,
-                    {'action':'save_collections','collections':this.log_collections}
+                var popup_html =  '<div id="extension-candle-theme-collection-input-popup">';
+                popup_html += '<div><h3>Please provide a name for the collection</h3>';
+                popup_html += '<input id="extension-candle-theme-collection-name-input" type="text" placeholder="Collection name" _vkenabled="true">';
+                popup_html += '<button id="extension-candle-theme-collection-name-cancel-button" class="text-button">Cancel</button>';
+                popup_html += '<button id="extension-candle-theme-collection-name-save-button" class="text-button">Save</button>';
+                popup_html += '</div></div>';
+                collection_popup_el.innerHTML = popup_html;
+                
+                document.body.appendChild(collection_popup_el);
+                
+                document.getElementById('extension-candle-theme-collection-name-save-button').onclick = (event) => {
+                    console.log("save collection button clicked");
+                    const collection_name = document.getElementById('extension-candle-theme-collection-name-input').value;
+                
+                    if(collection_name != "" && collection_name != null){
+                        //console.log("collection_name = " + collection_name);
+                        //console.log("selected: ", selected_log_names);
+                        /*
+                        if(typeof this.log_collections == 'string'){
+                            //console.log("log collections was string? fixing.");
+                            this.log_collections = JSON.parse(this.log_collections);
+                        }
+                        */
+                        this.log_collections[collection_name] = selected_log_names; //.push({'name':collection_name,'logs':selected_log_names});
+        
+                        localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
+                
+                        //console.log('going to save: ', this.log_collections);
+                    
+                  		// Save collections
+                        window.API.postJson(
+                          `/extensions/${this.id}/api/ajax`,
+                            {'action':'save_collections','collections':this.log_collections}
 
-                ).then((body) => {
-        			//console.log("save_collections API result:");
-        			//console.log(body);
-                    this.showLogCollections();
+                        ).then((body) => {
+                			//console.log("save_collections API result:");
+                			//console.log(body);
+                            const collection_popup_container = document.getElementById('extension-candle-theme-collection-input-popup-container');
+                            if(collection_popup_container != null){
+                                collection_popup_container.parentNode.removeChild(collection_popup_container);
+                            }
+                            this.showLogCollections();
             
-                }).catch((e) => {
-          			//console.log("Error saving collections after adding a collection: " + e.toString());
-                });	
+                        }).catch((e) => {
+                  			console.log("Error saving collections after adding a collection: ", e);
+                        });	
                 
+                    }
+                
+                };
+                
+                
+                document.getElementById('extension-candle-theme-collection-name-cancel-button').onclick = (event) => {
+                    const collection_popup_container = document.getElementById('extension-candle-theme-collection-input-popup-container');
+                    if(collection_popup_container != null){
+                        collection_popup_container.parentNode.removeChild(collection_popup_container);
+                    }
+                
+                };
             }
             
         }
-        
-        
-        
+        else{
+            console.log("select at least two logs");
+        }
 		
     }
 
