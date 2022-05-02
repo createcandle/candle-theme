@@ -353,6 +353,13 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     -webkit-box-shadow: none;
 }
 
+/*
+@media only screen and (max-width: 800px) {
+    body #virtualKeyboardChromeExtension table.virtualKeyboardChromeExtensionMainKeys td{
+        padding: inherit !important;
+    }
+}
+*/
 
 @media only screen and (min-width: 801px) {
     
@@ -1585,6 +1592,11 @@ input[type="range"]::-webkit-slider-runnable-track{
 	padding-left: 0;
 }
 
+.kiosk #candle-theme-log-list-ul > li{
+    padding:1rem 0;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
 
 .candle-theme-log-filter-button{
 	background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='white' d='M16 0c-8.837 0-16 2.239-16 5v3l12 12v10c0 1.105 1.791 2 4 2s4-0.895 4-2v-10l12-12v-3c0-2.761-7.163-5-16-5zM2.95 4.338c0.748-0.427 1.799-0.832 3.040-1.171 2.748-0.752 6.303-1.167 10.011-1.167s7.262 0.414 10.011 1.167c1.241 0.34 2.292 0.745 3.040 1.171 0.494 0.281 0.76 0.519 0.884 0.662-0.124 0.142-0.391 0.38-0.884 0.662-0.748 0.427-1.8 0.832-3.040 1.171-2.748 0.752-6.303 1.167-10.011 1.167s-7.262-0.414-10.011-1.167c-1.24-0.34-2.292-0.745-3.040-1.171-0.494-0.282-0.76-0.519-0.884-0.662 0.124-0.142 0.391-0.38 0.884-0.662z'%3E%3C/path%3E%3C/svg%3E");    
@@ -1734,6 +1746,7 @@ body.zoom3 #logs-view .arrow-select{
 
 
 
+
 .logs-graph-progress{
     animation: pulsate 2s ease-out infinite;
 }
@@ -1786,9 +1799,14 @@ body.zoom3 #logs-view .arrow-select{
 /* #extension-internet-radio-station-name-input */
 #extension-candle-theme-collection-name-input,
 #extension-candle-theme-collection-input-popup-container > div > input{
-    width:100%;
+    width:calc(100% - 1rem);
     margin-bottom:2rem;
 }
+
+#extension-candle-theme-collection-name-save-button{
+    margin-left:2rem;
+}
+
 
 .extension-candle-theme-hidden{
     display:none!important;

@@ -1121,7 +1121,7 @@
             li.appendChild(label);
 			
 	  	    li.onclick = (event) => {//function(element_name){
-				//console.log("filter item clicked");
+				console.log("filter item clicked");
                 this.filterLogs();
 	  	  	}
 			
@@ -1135,12 +1135,6 @@
 		let filter_buttons = document.createElement('div');
 		filter_buttons.setAttribute("id", "candle-theme-log-list-buttons");
 		
-        // Clear button
-		let clear_button = document.createElement('button');
-		clear_button.setAttribute("id", "candle-theme-logs-clear-button");
-        clear_button.setAttribute("class", "candle-theme-logs-small-button");
-		clear_button.textContent = "Clear";
-		filter_buttons.appendChild(clear_button)
         
 		// Overlay button
 		let overlay_button = document.createElement('button');
@@ -1149,11 +1143,20 @@
 		overlay_button.textContent = "Overlay";
 		filter_buttons.appendChild(overlay_button)
         
+        // Clear button
+		let clear_button = document.createElement('button');
+		clear_button.setAttribute("id", "candle-theme-logs-clear-button");
+        clear_button.setAttribute("class", "candle-theme-logs-small-button");
+		clear_button.textContent = "Clear";
+        clear_button.style.display = 'none';
+		filter_buttons.appendChild(clear_button)
+        
         // Add collection button
 		let collection_button = document.createElement('button');
 		collection_button.setAttribute("id", "candle-theme-logs-add-collection-button");
         collection_button.setAttribute("class", "candle-theme-logs-small-button");
 		collection_button.textContent = "Add collection";
+        collection_button.style.display = 'none';
 		filter_buttons.appendChild(collection_button)
         
 
@@ -1217,6 +1220,19 @@
         }
         //console.log("selected log item names = " + selected_log_names);
 		
+        if(selected_log_names.length > 0){
+            document.getElementById('candle-theme-logs-clear-button').style.display = 'block';
+            if(selected_log_names.length > 1){
+                document.getElementById('candle-theme-logs-add-collection-button').style.display = 'block';
+            }
+            else{
+                document.getElementById('candle-theme-logs-add-collection-button').style.display = 'none';
+            }
+        }
+        else{
+            document.getElementById('candle-theme-logs-clear-button').style.display = 'none';
+        }
+        
 		const all_logs = document.querySelectorAll(' #logs-view .logs-log-container');
 		//console.log(all_logs);
         
@@ -1255,6 +1271,9 @@
 			//console.log(selected_log);
         }
         
+        
+        localStorage.setItem('keyboardEnabled', false);
+        
         if( selected_logs.length > 1){
             
             const collection_popup_container = document.getElementById('extension-candle-theme-collection-input-popup-container');
@@ -1269,8 +1288,8 @@
                 collection_popup_el.id = 'extension-candle-theme-collection-input-popup-container';
                 
                 var popup_html =  '<div id="extension-candle-theme-collection-input-popup">';
-                popup_html += '<div><h3>Please provide a name for the collection</h3>';
-                popup_html += '<input id="extension-candle-theme-collection-name-input" type="text" placeholder="Collection name" _vkenabled="true">';
+                popup_html += '<div><h2>Please provide a name for the collection</h2>';
+                popup_html += '<input id="extension-candle-theme-collection-name-input" type="text" placeholder="Collection name">';
                 popup_html += '<button id="extension-candle-theme-collection-name-cancel-button" class="text-button">Cancel</button>';
                 popup_html += '<button id="extension-candle-theme-collection-name-save-button" class="text-button">Save</button>';
                 popup_html += '</div></div>';
