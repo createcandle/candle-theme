@@ -696,6 +696,10 @@ body #main-menu #things-menu-item{
     background-color:rgba(0,0,0,.2);
 }
 
+#overflow-button{
+    z-index:101;
+}
+
 .thing-detail-container{
     -webkit-transition: none !important;
     -moz-transition: none !important;

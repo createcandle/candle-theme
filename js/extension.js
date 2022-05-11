@@ -40,8 +40,20 @@
       
       
       if(document.getElementById('things').innerHTML == 'No devices yet. Click + to scan for available devices.' || document.getElementById('things').innerHTML == ''){
+          
           document.getElementById('things').innerHTML = '<div id="extension-candle-theme-things-wait-message"><h1>Still starting</h1><p>Please wait a minute</p></div>';
           document.getElementById('things').style.opacity = '1';
+          try{
+              navigator.brave.isBrave().then(response => {
+                  if(response){
+                      console.log("Brave detected");
+                      document.getElementById('things').innerHTML = '<div id="extension-candle-theme-things-wait-message"><h1>Still starting</h1><p>Make sure Brave shields are disabled.</p></div>';
+                  }
+              })
+          }
+          catch(e){
+              console.log("Brave not detected: ", e);
+          }
       }
       
       
