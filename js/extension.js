@@ -46,7 +46,7 @@
           try{
               navigator.brave.isBrave().then(response => {
                   if(response){
-                      console.log("Brave detected");
+                      //console.log("Brave detected");
                       document.getElementById('things').innerHTML = '<div id="extension-candle-theme-things-wait-message"><h1>Still starting</h1><p>Make sure Brave shields are disabled.</p></div>';
                   }
               })
