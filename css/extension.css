@@ -485,11 +485,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 
 /*   GROUPS   */
 
-#groups{
-    width: calc(100% - 19.2rem);
-    margin-left: 8.6rem;
-    padding-bottom:12rem;
-}
+
 
 .group{
     margin-top:4rem;
@@ -2000,7 +1996,13 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
 		min-height:200px;
 	}
 	*/
-	
+    
+    #groups{
+        width: calc(100% - 19.2rem);
+        margin-left: 8.6rem;
+        padding-bottom:12rem;
+    }
+    
     .candle-theme-logs-small-button{
         padding: 1rem;
     }
@@ -2016,9 +2018,13 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
 	
 	
 @media only screen and (min-width: 1000px) {
+
+    
     #groups .thing,
 	#things:not(.single-thing) .thing {
+        width:200px;
 		min-height:200px;
+        max-width:200px;
 	}
 	
     .thing{
@@ -2071,12 +2077,12 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         opacity:.9;
     }
     
-    
     #things:not(.single-thing) .thing.connected{
         /* good box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;*/
         /*box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(255 255 255 / 30%) 0px 30px 60px -30px, rgb(187 192 197 / 35%) 0px -2px 6px 0px inset;*/
-        box-shadow: rgb(50 50 93 / 25%) 0px 20px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px;
+        /*box-shadow: rgb(50 50 93 / 25%) 0px 20px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px;*/
     }
+    
     .kiosk #things:not(.single-thing) .thing.connected{
         box-shadow:none;
     }
