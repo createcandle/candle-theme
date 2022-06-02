@@ -36,6 +36,7 @@
       //console.log('background color from local storage: ', color);
       if (color != '' && color != null) {
           document.body.style.backgroundColor = color;
+          document.querySelector ("html").style.backgroundColor = color;
       }
       
       
@@ -347,6 +348,7 @@
             if(typeof body.background_color != 'undefined'){
                 if(body.background_color == ""){
                     body.background_color = 'transparent';
+                    document.querySelector ("html").style.backgroundColor = 'transparent';
                     try{
                         localStorage.removeItem('background_color');
                     }
@@ -357,6 +359,7 @@
                 }
                 else{
                     document.body.style.backgroundColor = body.background_color;
+                    document.querySelector ("html").style.backgroundColor = body.background_color;
                     localStorage.setItem('background_color', body.background_color);
                 }
                 
@@ -417,6 +420,12 @@
             if(typeof body.hide_virtual_keyboard != 'undefined'){
                 if(body.hide_virtual_keyboard == true){
                     document.body.classList.add('hide-virtual-keyboard');
+                }
+            }
+            
+            if(typeof body.menu_list != 'undefined'){
+                if(body.menu_list == true){
+                    document.body.classList.add('menu-list');
                 }
             }
             

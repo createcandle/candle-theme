@@ -1,15 +1,20 @@
 /*  candle theme CSS  */
 
-
-h1,h2,h3,h4,h5,h6{
-	font-family: 'Open Sans', sans-serif!important;
+/*
+html{
+    padding:0;
 }
+*/
 
 body{
     color:white;
     transition: background-color 1s linear;
 }
 
+
+h1,h2,h3,h4,h5,h6{
+	font-family: 'Open Sans', sans-serif!important;
+}
 
 #extension-candle-theme-things-wait-message{
     max-width:60rem;
@@ -84,14 +89,48 @@ body{
 
 /*  Remove gutters now that this theme has changed the z-index of the menu button to be above the content  */
 
+/*
 body > section[id^='extension-']{
     top:0!important;
     left:0!important;
     width:100%!important;
     height:100%!important;
 }
+*/
 
+body > section[id^='extension-']{
+    /*
+    margin-left: -2rem;
+    margin-right: 0;
+    */
+    /*
+    width: calc(100% + 4rem);
+    margin-bottom: 2rem;
+    height: calc(100% + 4rem);
+    
+    margin-top: -2rem;
+    */
+    /*position:static!important;*/
+    /*z-index:auto;*/
+    /*pointer-events: none;*/
+    width:100vw!important;
+    height:100vh!important;
+    background:transparent;
+    top:0!important;
+    left:0!important;
+}
 
+/*
+body > section[id^='extension-'] > *{
+    pointer-events:auto;
+}
+*/
+
+/*
+html body #main-menu{
+    opacity:.9;
+}
+*/
 
 /*  Hide virtual keyboard  */
 
@@ -174,6 +213,8 @@ body{
 
 body #menu-button{
     z-index:2;
+    /*z-index:2;
+    z-index: initial;*/
     background: no-repeat 100% 100% url(/images/menu.svg);
 }
 
@@ -230,6 +271,7 @@ body #add-button{
 
 .icon-button{
     cursor:pointer;
+    opacity:1!important;
 }
 
 .candle-theme-top-right-icon{
@@ -497,6 +539,9 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     /*box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(255 255 255 / 30%) 0px 30px 60px -30px, rgb(187 192 197 / 35%) 0px -2px 6px 0px inset;*/
     /*box-shadow: rgb(50 50 93 / 35%) 0px 50px 100px -20px, rgb(0 0 0 / 40%) 0px 30px 60px -30px, rgb(10 37 64 / 45%) 0px -2px 6px 0px inset;*/
     background-color:rgba(255,255,255,.1);
+    border-radius:.5rem;
+    padding-left:0;
+    padding-right:0;
 }
 
 .group.open{
@@ -1025,8 +1070,9 @@ body #main-menu #things-menu-item{
 	#things{
 		width:100%;
 		margin-left:0;
-        padding-left:0;
-        padding-right:0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        box-sizing: border-box;
 	}
 	
 	#things:not(.single-thing) .thing{
@@ -1853,6 +1899,10 @@ body.zoom3 #logs-view .arrow-select{
     border-radius:.5rem;
 }
 
+#rule-view .rule-delete-dialog{
+    max-width: calc(100vw - 4rem);
+}
+
 /* remove  'Title' from Voco notifier.. might interfere with other addons, so disabled.
 .property-select-option.open-button + .property-select-option .property-select-name[title="Title"],
 .property-select-option.open-button + .property-select-option .property-select-name[title="Title"] + .value-input{
@@ -1878,6 +1928,35 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 input[type="time"]::-webkit-calendar-picker-indicator:hover{
     background-color: white;
 }
+
+
+@media only screen and (max-width: 640px) {
+    
+    .triangle-select.rule-effect-select{
+        min-width:2.5rem;
+    }
+    
+    #rule-parts-list-container{
+        max-height: 14rem;
+    }
+    
+    #rule-parts-list .rule-part{
+        width: 8.8rem;
+    }
+    
+    #rule-parts-list .rule-part-block{
+        width: 6.2rem;
+        height:auto;
+    }
+    
+    #rule-parts-list .rule-part .rule-part-icon{
+        margin:1.7rem;
+        width:2.8rem;
+        height:2.8rem;
+    }
+}
+
+
 
 
 
@@ -1966,6 +2045,10 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
 
 @media only screen and (max-width: 640px) {
 
+    #groups{
+        margin:1rem;
+    }
+
     .logs-log-container{
         margin-top:2rem;
     }
@@ -1981,6 +2064,25 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         max-width:calc(100vw - 20rem);
     }
     
+    
+    #rules{
+        display: flex;
+        flex-direction: column;
+        min-width:auto;
+        padding-left:2rem;
+    }
+    
+    .rule{
+        width: calc(100% - 2.4rem);
+    }
+    
+    .rule-info{
+        box-sizing:border-box;
+    }
+    
+    .rule-delete-dialog{
+        width:80%;
+    }
     /*
     .network-settings-list-item-button{
         margin-left:auto;
@@ -2013,7 +2115,94 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
 		max-width:263px;
 	}
 
+
+
+
 }
+
+
+
+/*  APP DRAWER  */
+
+@media only screen and (min-width: 641px) and (min-height: 641px){
+    
+    body:not(.menu-list) #main-menu{
+        width:100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    body:not(.menu-list) #main-menu.hidden{
+        transform: translate(-100%) skewX(30deg); /* rotate(90deg)  */
+        opacity:0;
+    }
+
+    body:not(.menu-list) #main-menu ul{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 15rem);
+        grid-gap: 2rem;
+        min-width: 15rem;
+        justify-content: center;
+        max-width:80%;
+        margin: 0 auto;
+        /*max-height: calc(100% - 19.8rem);*/
+        max-width:100rem;
+        height:auto;
+    }
+    
+    body:not(.menu-list) #main-menu li{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    body:not(.menu-list) #main-menu #logout{
+        width:100%;
+    }
+    
+    body:not(.menu-list) #main-menu .log-out-button,
+    body:not(.menu-list) #main-menu li > a{
+        /*
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
+        align-items:center;
+        */
+        background-position: center 32%;
+        padding:2rem;
+        padding-top:7rem;
+        box-sizing: border-box;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height:100%;
+        max-height:20rem;
+        border-radius: 0.5rem;
+        background-color: transparent;
+    }
+    
+    body:not(.menu-list) #main-menu li > a{
+        width: 100%;
+        font-weight: bold;
+    }
+    
+    body:not(.menu-list) #main-menu .log-out-button{
+        position: fixed;
+        right: 2rem;
+        bottom: 2rem;
+        width:auto;
+        height: auto;
+        opacity:.6;
+    }
+    
+    body:not(.menu-list) #main-menu .log-out-button:hover{
+        background-color:rgba(128,0,0,.8);
+        opacity:1;
+    }
+    
+}
+
 	
 	
 	
@@ -2034,10 +2223,11 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
     #rules{
         padding: 0 7.6rem;
     }
-    
+    /*
     body > section[id^='extension-']{
         padding-left:9.6rem!important;
     }
+    */
     
     .logs-log-info{
         margin-left:10rem;

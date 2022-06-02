@@ -100,7 +100,8 @@ class CandleThemeAPIHandler(APIHandler):
         if not 'hide_virtual_keyboard' in self.persistent_data:
             self.persistent_data['hide_virtual_keyboard'] = False     
             
-        
+        if not 'menu_list' in self.persistent_data:
+            self.persistent_data['menu_list'] = False
         
             
 
@@ -199,6 +200,12 @@ class CandleThemeAPIHandler(APIHandler):
             if self.DEBUG:
                 print("-Hide virtual keyboard preference was in config: " + str(self.persistent_data['hide_virtual_keyboard']))
         
+        if 'Show main menu as a list' in config:
+            self.persistent_data['menu_list'] = bool(config['Show main menu as a list'])
+            if self.DEBUG:
+                print("-Show main menu as a list preference was in config: " + str(self.persistent_data['menu_list']))
+                
+                
                 
         if 'Show developer options' in config:
             self.persistent_data['developer'] = bool(config['Show developer options'])
@@ -265,7 +272,16 @@ class CandleThemeAPIHandler(APIHandler):
                         return APIResponse(
                           status=200,
                           content_type='application/json',
-                          content=json.dumps({'debug': self.DEBUG, 'background_color':self.persistent_data['background_color'], 'hide_floorplan':self.persistent_data['hide_floorplan'], 'zoom':self.persistent_data['zoom'],'zoom_everywhere':self.persistent_data['zoom_everywhere'], 'allow_pinch_to_zoom':self.persistent_data['allow_pinch_to_zoom'], 'hide_virtual_keyboard':self.persistent_data['hide_virtual_keyboard'],'developer':self.persistent_data['developer']}),
+                          content=json.dumps({'debug': self.DEBUG, 
+                                              'background_color':self.persistent_data['background_color'], 
+                                              'hide_floorplan':self.persistent_data['hide_floorplan'], 
+                                              'zoom':self.persistent_data['zoom'], 
+                                              'zoom_everywhere':self.persistent_data['zoom_everywhere'], 
+                                              'allow_pinch_to_zoom':self.persistent_data['allow_pinch_to_zoom'], 
+                                              'hide_virtual_keyboard':self.persistent_data['hide_virtual_keyboard'],
+                                              'developer':self.persistent_data['developer'],
+                                              'menu_list':self.persistent_data['menu_list']
+                                          }),
                         )
                         
                     elif action == 'get_collections':
