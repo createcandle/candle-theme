@@ -2131,7 +2131,9 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         display: flex;
         align-items: center;
         justify-content: center;
+        background-color:#0c3b5c;
     }
+    
     body:not(.menu-list) #main-menu.hidden{
         transform: translate(-100%) skewX(30deg); /* rotate(90deg)  */
         opacity:0;
