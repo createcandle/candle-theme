@@ -22,6 +22,11 @@ h1,h2,h3,h4,h5,h6{
     text-align:center;
 }
 
+
+#main-menu{
+    background-color: #0c3b5c;
+}
+
 /*  ZOOM  */
 
 
@@ -2132,11 +2137,23 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         align-items: center;
         justify-content: center;
         background-color:#0c3b5c;
+        pointer-events: none;
+        opacity:1;
+    }
+    
+    body:not(.menu-list):not(.kiosk) #main-menu{
+        transition: opacity 0.25s ease;
+    }
+    body.developer:not(.menu-list) #main-menu{
+        transition: translate 0.25s ease, opacity 0.25s ease;
     }
     
     body:not(.menu-list) #main-menu.hidden{
-        transform: translate(-100%) skewX(30deg); /* rotate(90deg)  */
+        transform: translate(-100%); /* rotate(90deg)  */
         opacity:0;
+    }
+    body.developer:not(.menu-list) #main-menu.hidden{
+        transform: translate(-100%); /* skewX(10deg); /* rotate(90deg)  */
     }
 
     body:not(.menu-list) #main-menu ul{
@@ -2150,12 +2167,20 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         /*max-height: calc(100% - 19.8rem);*/
         max-width:100rem;
         height:auto;
+        pointer-events: auto;
     }
     
     body:not(.menu-list) #main-menu li{
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    
+    body:not(.menu-list) #main-menu a.selected{
+        background-color:rgba(0,0,0,.15);
+    }
+    body:not(.menu-list) #main-menu li:not(:last-of-type) > a:hover{
+        background-color:rgba(0,0,0,.15);
     }
     
     body:not(.menu-list) #main-menu #logout{
@@ -2170,7 +2195,7 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         justify-content: center;
         align-items:center;
         */
-        background-position: center 32%;
+        background-position: center 25%;
         padding:2rem;
         padding-top:7rem;
         box-sizing: border-box;
@@ -2182,30 +2207,53 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         max-height:20rem;
         border-radius: 0.5rem;
         background-color: transparent;
+        background-size:4rem;
     }
     
     body:not(.menu-list) #main-menu li > a{
         width: 100%;
-        font-weight: bold;
+        /*font-weight: bold;*/
     }
     
+    body:not(.menu-list) #extension-power-settings-menu-item-li,
     body:not(.menu-list) #main-menu .log-out-button{
         position: fixed;
-        right: 2rem;
-        bottom: 2rem;
+        right: 0;
+        bottom: 0;
         width:auto;
         height: auto;
         opacity:.6;
+        background-size: 3rem;
+        background-position: center 35%;
+    }
+    body:not(.menu-list) #extension-power-settings-menu-item-li > a{
+        background-size: 3rem!important;
+        background-position: center 40%!important;
     }
     
+    
+    
+    body:not(.menu-list) #extension-power-settings-menu-item-li:hover,
     body:not(.menu-list) #main-menu .log-out-button:hover{
         background-color:rgba(128,0,0,.8);
         opacity:1;
     }
+    /*
+    body.developer:not(.menu-list) #menu-scrim:hover + #main-menu{
+        opacity:.8;
+    }
+    */
     
 }
 
-	
+@media only screen and (min-width: 1281px) and (min-height: 801px){
+    body:not(.menu-list) #main-menu ul{
+        margin-top:9.6rem;
+        margin-bottom:9.6rem;
+    }
+}
+    
+    
 	
 	
 @media only screen and (min-width: 1000px) {
