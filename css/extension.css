@@ -24,8 +24,10 @@ h1,h2,h3,h4,h5,h6{
 
 
 #main-menu{
-    /*background-color: #0c3b5c;
-    background-image: url(../images/black_transparent.png);*/
+    background-color: #0c3b5c;
+    /*
+    background-image: url(../images/black_transparent.png);
+    */
 }
 
 /*  ZOOM  */

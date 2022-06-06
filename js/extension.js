@@ -37,6 +37,7 @@
       if (color != '' && color != null) {
           document.body.style.backgroundColor = color;
           document.querySelector ("html").style.backgroundColor = color;
+          document.querySelector ("#main-menu").style.backgroundColor = color;
       }
       
       
