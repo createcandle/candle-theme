@@ -350,7 +350,7 @@
                 if(body.background_color == ""){
                     body.background_color = 'transparent';
                     document.querySelector ("html").style.backgroundColor = 'transparent';
-                    document.querySelector ("#main-menu").style.backgroundColor = 'transparent';
+                    //document.querySelector ("#main-menu").style.backgroundColor = 'transparent';
                     try{
                         localStorage.removeItem('background_color');
                     }
