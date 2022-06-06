@@ -24,7 +24,8 @@ h1,h2,h3,h4,h5,h6{
 
 
 #main-menu{
-    background-color: #0c3b5c;
+    /*background-color: #0c3b5c;
+    background-image: url(../images/black_transparent.png);*/
 }
 
 /*  ZOOM  */
@@ -559,9 +560,11 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     border-bottom:1px solid rgba(255,255,255,.2);
 }
 
+/*
 .group:not(.open){
     overflow:hidden;
 }
+*/
 
 .group:not(.open):hover{
     background-color:rgba(255,255,255,.15);
@@ -2136,9 +2139,10 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color:#0c3b5c;
+        /*background-color:#0c3b5c;*/
         pointer-events: none;
         opacity:1;
+        background-image: url(../images/black_transparent.png);
     }
     
     body:not(.menu-list):not(.kiosk) #main-menu{

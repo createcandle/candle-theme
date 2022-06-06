@@ -349,6 +349,7 @@
                 if(body.background_color == ""){
                     body.background_color = 'transparent';
                     document.querySelector ("html").style.backgroundColor = 'transparent';
+                    document.querySelector ("#main-menu").style.backgroundColor = 'transparent';
                     try{
                         localStorage.removeItem('background_color');
                     }
@@ -359,7 +360,8 @@
                 }
                 else{
                     document.body.style.backgroundColor = body.background_color;
-                    document.querySelector ("html").style.backgroundColor = body.background_color;
+                    document.querySelector("html").style.backgroundColor = body.background_color;
+                    document.querySelector("#main-menu").style.backgroundColor = body.background_color;
                     localStorage.setItem('background_color', body.background_color);
                 }
                 
