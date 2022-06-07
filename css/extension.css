@@ -1105,7 +1105,23 @@ body #main-menu #things-menu-item{
 	#things:not(.single-thing) .thing .component::part(unit){
 		display:block;
 	}
+    
+    #things.single-thing > .thing > *:not(div),
+    #things.single-thing > .thing > div{
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    
+    
+    .component::part(contents){
+        zoom:150%;
+    }
 	
+    /* webthing-string-label-property .component::part(value) */
+    #things.single-thing .component::part(value){
+        padding-top:4rem;
+    }
+    
 }
 
 
