@@ -986,6 +986,170 @@ body #main-menu #things-menu-item{
 
 
 
+.component::part(container){
+	width:100%;
+	border:none;
+	border-radius:0;
+	background-color: transparent;
+	background-position: center center;
+	/*margin-top:1rem;*/
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    
+}
+.component::part(icon){
+	border:none;
+	border-radius:0;
+	background-color: transparent;
+	background-position: center center;
+    max-width:10rem;
+    margin: 0 auto;
+}
+
+
+.component::part(container){
+    display: flex;
+    flex-direction: column;
+}
+
+.component::part(name){
+    max-width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: .7;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+	text-align:left;
+	font-size: 1.3rem;
+	background-color:transparent;
+}
+
+.component::part(label){
+	color:white;
+	/*font-size:2rem;*/
+	line-height:4rem;
+}
+
+#things.single-thing .component::part(value){
+	font-size:2.4rem;
+    margin-right:.2rem;
+    /*
+    -webkit-animation: hideThenFadeIn 1s ease-out;
+    -moz-animation: hideThenFadeIn 1s ease-out;
+    -o-animation: hideThenFadeIn 1s ease-out;
+    animation: hideThenFadeIn 1s ease-out;*/
+    animation: extension-candle-theme-fadeIn 1s linear;
+}
+
+#things.single-thing .component::part(button){
+    width:auto;
+    height:auto;
+    white-space:normal;
+}
+
+#things.single-thing > .thing > .component:not(div)::part(value){
+	font-size: 4rem;
+    margin-right:.2rem;
+}
+
+/*
+.component::part(container).webthing-switch-property-container{
+	border:5px solid red;
+}
+*/
+
+.component::part(contents){
+	/*position:relative;*/
+	left:50%;
+}
+/*
+.component::part(contents) > form{
+	display:inline-block;
+}
+*/
+
+.component::part(select),
+.component::part(input){
+	/*width:94%;
+	margin:3%;*/
+	min-width: 130px;
+    width:auto;
+    max-width:100%;
+}
+
+
+#things:not(.single-thing) webthing-light-capability{
+    position:relative;
+    top:1.8rem;
+}
+
+webthing-light-capability::part(label){
+    position:relative;
+    top:-1rem;
+}
+
+webthing-level-property.component::part(number){
+    margin-bottom:10px;
+}
+
+
+/* SLIDER */
+
+/*-webkit-appearance: none;*/
+
+/**/
+webthing-level-property.component::part(slider)::-webkit-slider-runnable-track{
+    width: 13rem;
+    min-width: 13rem;
+    outline: none;
+    opacity: 1;
+    border-radius:12px;
+}
+
+webthing-brightness-property.component::part(slider),
+webthing-level-property.component::part(slider){
+	margin-left:-2.5rem;
+    width: 13rem;
+    /*height: 16px;
+    background: #d3d3d3;*/
+    outline: none;
+    opacity: 0.7;
+    border-radius:12px;
+    /*zoom: 1.6;*/
+    transform:none!important;
+}
+
+webthing-brightness-property.component::part(slider){
+    
+}
+
+webthing-brightness-property.component::part(form){
+    display:flex;
+}
+
+.component::part(slider){
+    transform:none!important;
+    margin: 0 auto;
+}
+
+
+@supports (-moz-appearance:none) {
+    webthing-level-property.component::part(slider){
+        width:13rem;
+    }
+}
+
+webthing-pushed-property.component::part(value){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
 /*  hide components until they are upgraded  */
 /*
 #things.single-thing > .thing > *:not(div),
@@ -1007,6 +1171,9 @@ body #main-menu #things-menu-item{
    80% {opacity: 0;}
    100% {opacity: 1;} 
 } 
+
+
+
 
 /*
 @media only screen and (max-width: 640px) {
@@ -1114,164 +1281,112 @@ body #main-menu #things-menu-item{
     
     
     .component::part(contents){
-        zoom:150%;
+        zoom:140%;
     }
+    
 	
     /* webthing-string-label-property .component::part(value) */
     #things.single-thing .component::part(value){
         padding-top:4rem;
     }
     
-}
-
-
-.component::part(container){
-	width:100%;
-	border:none;
-	border-radius:0;
-	background-color: transparent;
-	background-position: center center;
-	/*margin-top:1rem;*/
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    
+    webthing-level-property.component::part(slider){
+        margin-left: -6rem;
+        width: 20rem;
+        /*height: 16px;
+        background: #d3d3d3;*/
+        outline: none;
+        opacity: 0.7;
+        border-radius:12px;
+        /*zoom: 1.6;*/
+        /*border:1px solid red;
+        height:3rem;
+        box-shadow: 2px 2px 20px 10px rgba(0, 0, 0, .5);*/
+        transform: none;
+    }
+    
+    @supports (-moz-appearance:none) {
+        webthing-level-property.component::part(slider){
+            width:20rem;
+        }
+    }
+    
+    .component::part(bar){
+        border:none;
+        /*min-height:2rem;*/
+        border-bottom-left-radius: .5rem;
+        border-top-left-radius: .5rem;
+    }
+    
+    .component::part(text),
+    .component::part(unit){
+        margin: 0 auto;
+    }
+    
+    webthing-brightness-property.component::part(contents),
+    webthing-brightness-property.component::part(form),
+    webthing-brightness-property.component::part(slider),
+    webthing-level-property.component::part(contents),
+    webthing-level-property.component::part(form),
+    webthing-level-property.component::part(slider){
+        width:100%;
+    }
+    
+    webthing-brightness-property.component::part(slider),
+    webthing-level-property.component::part(slider){
+        width:92%;
+        margin-left:4%;
+    }
+    
+    /*
+    webthing-on-off-property.component::part(slider){
+        zoom:200%;
+    }
+    */
     
 }
-.component::part(icon){
-	border:none;
-	border-radius:0;
-	background-color: transparent;
-	background-position: center center;
-    max-width:10rem;
-    margin: 0 auto;
+
+input[type="range"] {
+  -webkit-appearance: none;
+  background-color: gray;
 }
 
-
-.component::part(container){
-    display: flex;
-    flex-direction: column;
-}
-
-.component::part(name){
-    max-width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    opacity: .7;
-    width: 100%;
-    padding: 1rem;
-    box-sizing: border-box;
-	text-align:left;
-	font-size: 1.3rem;
-	background-color:transparent;
-}
-
-.component::part(label){
-	color:white;
-	/*font-size:2rem;*/
-	line-height:4rem;
-}
-
-#things.single-thing .component::part(value){
-	font-size:2.4rem;
-    margin-right:.2rem;
-    /*
-    -webkit-animation: hideThenFadeIn 1s ease-out;
-    -moz-animation: hideThenFadeIn 1s ease-out;
-    -o-animation: hideThenFadeIn 1s ease-out;
-    animation: hideThenFadeIn 1s ease-out;*/
-    animation: extension-candle-theme-fadeIn 1s linear;
-}
-
-#things.single-thing .component::part(button){
-    width:auto;
-    height:auto;
-    white-space:normal;
-}
-
-#things.single-thing > .thing > .component:not(div)::part(value){
-	font-size: 4rem;
-    margin-right:.2rem;
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #444;
+  width: 1rem;
+  height: 1rem;
 }
 
 /*
-.component::part(container).webthing-switch-property-container{
-	border:5px solid red;
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 56px;
+  width: 56px;
+  background: pink;
+  margin-top: -24px;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  height: 56px;
+  width: 56px;
+  margin-top: -24px;
+}
+
+input.resize[type="range"]:active::-webkit-slider-thumb {
+  height: 24px;
+  width: 24px;
+  margin-top: -10px;
 }
 */
 
-.component::part(contents){
-	/*position:relative;*/
-	left:50%;
-}
-/*
-.component::part(contents) > form{
-	display:inline-block;
-}
-*/
 
-.component::part(select),
-.component::part(input){
-	/*width:94%;
-	margin:3%;*/
-	min-width: 130px;
+
+input[type="range"] {
+  -webkit-appearance: slider-horizontal!important;
 }
 
-
-#things:not(.single-thing) webthing-light-capability{
-    position:relative;
-    top:1.8rem;
-}
-
-webthing-light-capability::part(label){
-    position:relative;
-    top:-1rem;
-}
-
-webthing-level-property.component::part(number){
-    margin-bottom:10px;
-}
-
-
-/* SLIDER */
-
-webthing-level-property.component::part(slider)::-webkit-slider-runnable-track{
-
-    /*-webkit-appearance: none;  this enables a complete style change */
-    width: 10rem;
-    min-width: 13rem;
-    max-width:;
-    height: 16px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 1;
-    border-radius:12px;
-}
-
-webthing-level-property.component::part(slider){
-	margin-left:-2.5rem;	
-    background-color:red;
-    /*-webkit-appearance: none;*/
-    width: 10rem;
-    height: 16px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    border-radius:12px;
-    zoom: 1.6;
-}
-
-@supports (-moz-appearance:none) {
-    webthing-level-property.component::part(slider){
-        width:13rem;
-    }
-}
-
-webthing-pushed-property.component::part(value){
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 /* Firefox and Safari */
 /*
@@ -2184,9 +2299,9 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         grid-gap: 2rem;
         min-width: 15rem;
         justify-content: center;
-        max-width:80%;
         margin: 0 auto;
         /*max-height: calc(100% - 19.8rem);*/
+        width:100%;
         max-width:100rem;
         height:auto;
         pointer-events: auto;
