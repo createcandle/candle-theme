@@ -615,7 +615,7 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 }
 
 .group-overflow-menu > a{
-    padding:1rem;
+    padding:2rem;
 }
 
 .group-overflow-menu a:last-of-type{
