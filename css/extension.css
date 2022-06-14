@@ -990,6 +990,10 @@ body #main-menu #things-menu-item{
 }
 
 
+ 
+#things:not(.single-thing) .thing webthing-on-off-switch-capability.component::part(icon){
+    cursor:pointer;
+}
 
 .component::part(container){
 	width:100%;
@@ -1010,6 +1014,8 @@ body #main-menu #things-menu-item{
 	background-position: center center;
     max-width:10rem;
     margin: 0 auto;
+    /*fill: white!important;
+    stroke: rgba(255,255,255,.3)!important;*/
 }
 
 
@@ -1085,6 +1091,18 @@ body #main-menu #things-menu-item{
     max-width: calc(100% - 2rem);
 }
 
+.webthing-on-off-switch-capability::part(label){
+    cursor:pointer;
+}
+
+
+:not([data-read-only="true"]).component::part(webthing-boolean-property-label),
+:not([data-read-only="true"]).component::part(checkbox),
+.component::part(info),
+.component::part(button),
+.component::part(select){
+    cursor:pointer;
+}
 
 #things:not(.single-thing) webthing-light-capability{
     position:relative;
@@ -1121,14 +1139,10 @@ webthing-level-property.component::part(slider){
     /*height: 16px;
     background: #d3d3d3;*/
     outline: none;
-    opacity: 0.7;
     border-radius:12px;
     /*zoom: 1.6;*/
     transform:none!important;
-}
-
-webthing-brightness-property.component::part(slider){
-    
+    cursor:pointer;
 }
 
 webthing-brightness-property.component::part(form){
@@ -1138,6 +1152,7 @@ webthing-brightness-property.component::part(form){
 .component::part(slider){
     transform:none!important;
     margin: 0 auto;
+    cursor:pointer;
 }
 
 
@@ -2018,7 +2033,12 @@ body.zoom3 #logs-view .arrow-select{
 }
 
 .candle-theme-message-addon{
+    display:none;
 }
+.developer .candle-theme-message-addon{
+    display:inline-block;
+}
+
 .candle-theme-message-device{
 }
 .candle-theme-message-message{
