@@ -548,13 +548,17 @@ body #virtualKeyboardChromeExtension td.kbdS span{
     display:flex;
     flex-wrap:wrap;
     border:none;
-    padding-bottom:.5rem;
+    /*padding-bottom:.5rem;*/
+    padding-bottom:0;
     /*box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(255 255 255 / 30%) 0px 30px 60px -30px, rgb(187 192 197 / 35%) 0px -2px 6px 0px inset;*/
     /*box-shadow: rgb(50 50 93 / 35%) 0px 50px 100px -20px, rgb(0 0 0 / 40%) 0px 30px 60px -30px, rgb(10 37 64 / 45%) 0px -2px 6px 0px inset;*/
     background-color:rgba(255,255,255,.1);
     border-radius:.5rem;
     padding-left:0;
     padding-right:0;
+    margin-top:1rem;
+    margin-bottom:1rem;
+    box-sizing:border-box;
 }
 
 .group.open{
@@ -600,10 +604,18 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 }
 */
 
+.group div.bar{
+    padding:0;
+}
+
 .group div.bar button.edit{
     cursor:pointer;
     opacity:.4;
-    top:1rem;
+    top:0;
+    right:0;
+    height:5rem;
+    width:5rem;
+    background-size:3rem;
 }
 .group > .bar .edit:hover{
     opacity:1;
@@ -629,11 +641,16 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 .group div.bar button.foldIn{
     position:absolute;
     opacity:0;
-    width: calc(100% - 6rem);
+    /*width: calc(100% - 6rem);*/
+    width: calc(50% - 3rem);
     transform:none;
-    cursor:row-resize;
-    height:4rem;
+    cursor:s-resize;
+    height:5rem;
 }
+.group.open div.bar button.foldIn{
+    cursor:n-resize;
+}
+
 .group.open div.bar button.foldIn{
     transform:none;
 }
@@ -646,6 +663,8 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 .group div.bar div.title{
     font-size:3.2rem;
     color:inherit;
+    padding:0.5rem 1rem;
+    line-height: 4rem;
 }
 
 
@@ -689,6 +708,8 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 	top:0;
 	height:auto;
 	max-height: none;
+    padding-left:0;
+    padding-right:0;
 	/*align-content: center; causes issues */
     
 }
@@ -2278,7 +2299,7 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
     #groups .thing,
 	#things:not(.single-thing) .thing{
 		min-width:175px;
-		max-width:263px;
+		max-width:267px; /* was 263 */
 	}
 
 
