@@ -1096,6 +1096,7 @@ body #main-menu #things-menu-item{
 .component::part(contents){
 	/*position:relative;*/
 	left:50%;
+    max-width:100%;
 }
 /*
 .component::part(contents) > form{
