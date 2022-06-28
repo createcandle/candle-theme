@@ -1,10 +1,10 @@
 /*  candle theme CSS  */
 
-/*
+
 html{
-    padding:0;
+    /*padding:0;*/
 }
-*/
+
 
 body{
     color:white;
@@ -184,8 +184,8 @@ body:not(.developer) #domain-settings ul li.domain-item:last-of-type{
 */
 
 #menu-wordmark{
-    width: 9rem;
-    top: 2rem;
+    width: 19rem;
+    top: 2.5rem;
     left: 9rem;
 }
 
@@ -1061,7 +1061,7 @@ body #main-menu #things-menu-item{
 
 .component::part(label){
 	color:white;
-	/*font-size:2rem;*/
+	font-size:1.8rem;
 	line-height:4rem;
 }
 
@@ -1126,9 +1126,29 @@ body #main-menu #things-menu-item{
     cursor:pointer;
 }
 
-#things:not(.single-thing) webthing-light-capability{
+/*  The light bulb icon is a little off  */
+
+#things:not(.single-thing) webthing-light-capability,
+#groups:not(.single-thing) webthing-light-capability{
     position:relative;
-    top:1.8rem;
+    top:1.2rem;
+    /*min-height: calc(140px - 1rem)!important;*/
+}
+
+#things.single-thing webthing-light-capability{
+    padding-top:2rem!important;
+}
+
+/*
+webthing-light-capability{
+    position: relative;
+    top: 1rem;
+    min-height: calc(140px - 1rem)!important;
+}
+*/
+
+webthing-smoke-sensor-capability::part(label){
+    padding-top:8.2rem;
 }
 
 webthing-light-capability::part(label){
@@ -2450,7 +2470,6 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
 	
 	
 @media only screen and (min-width: 1000px) {
-
     
     #groups .thing,
 	#things:not(.single-thing) .thing {

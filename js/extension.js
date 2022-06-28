@@ -276,15 +276,24 @@
                                 }
                                 
                             }
-        });
+                        });
+      
+
+      // This is for the virtual keyboard
+      document.getElementById('network-settings-wifi-password').addEventListener('keyup', () => {
+          console.log("document.getElementById('network-settings-wifi-password').value.length: ", document.getElementById('network-settings-wifi-password').value.length);
+          if(document.getElementById('network-settings-wifi-password').value.length > 7){
+              document.getElementById('network-settings-wifi-connect').disabled = false;
+          }
+      });           
       
       
       
       
       // Change logo
-      document.getElementById('menu-wordmark').src = '/extensions/candle-theme/images/candle-logo.svg';
-      document.getElementById('menu-wordmark').alt = "Candle, built on WebThings Gateway";
-      document.getElementById('menu-wordmark').classList.add("extension-candle-theme-candle-logo");
+      //document.getElementById('menu-wordmark').src = '/extensions/candle-theme/images/candle-logo.svg';
+      document.getElementById('menu-wordmark').alt = "Candle";
+      //document.getElementById('menu-wordmark').classList.add("extension-candle-theme-candle-logo");
       
       //localStorage.setItem("candle_theme_log_collections", JSON.stringify({}));
       
