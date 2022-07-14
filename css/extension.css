@@ -1032,7 +1032,7 @@ body #main-menu #things-menu-item{
 	border:none;
 	border-radius:0;
 	background-color: transparent;
-	background-position: center center;
+	/*background-position: center center;*/
     max-width:10rem;
     margin: 0 auto;
     /*fill: white!important;
@@ -1062,7 +1062,7 @@ body #main-menu #things-menu-item{
 .component::part(label){
 	color:white;
 	font-size:1.8rem;
-	line-height:4rem;
+	/*line-height:4rem;*/
 }
 
 #things.single-thing .component::part(value){
@@ -1735,6 +1735,13 @@ input[type="range"]::-webkit-slider-runnable-track{
 
 /*  LOGS LOGGING OVERVIEW  */
 
+
+#extension-candle-theme-last-logs-view-time-container{
+    padding:2rem;
+    margin-bottom:4rem;
+    font-size:1.6rem;
+    text-align:center;
+}
 
 .logs-graph-tooltip{
     display:none;

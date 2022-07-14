@@ -5,8 +5,7 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'lib'))
 import json
-import time
-from time import sleep
+import datetime
 import requests
 import threading
 
@@ -102,6 +101,9 @@ class CandleThemeAPIHandler(APIHandler):
             
         if not 'menu_list' in self.persistent_data:
             self.persistent_data['menu_list'] = False
+        
+        if not 'last_log_view_time' in self.persistent_data:
+            self.persistent_data['last_log_view_time'] = None;
         
             
 
@@ -299,7 +301,8 @@ class CandleThemeAPIHandler(APIHandler):
                             self.save_persistent_data()
                             
                         except Exception as ex:
-                            print("Error saving collections: " + str(ex))
+                            if self.DEBUG:
+                                print("Error saving collections: " + str(ex))
                             state = 'error'
                         
                         return APIResponse(
@@ -308,8 +311,46 @@ class CandleThemeAPIHandler(APIHandler):
                           content=json.dumps({'state' : state, 'collections': self.persistent_data['collections']}),
                         )
                         
+                        
+                    elif action == 'save_last_logs_view_time':
+                        
+                        current_time = datetime.datetime.now()
+                        self.persistent_data['last_log_view_time'] = current_time.timestamp() #int(time.time())
+                        self.save_persistent_data()
+                        
+                        return APIResponse(
+                          status=200,
+                          content_type='application/json',
+                          content=json.dumps({'state' : True}),
+                        )
+                        
+                    elif action == 'get_last_logs_view_time':
+                        
+                        last_log_view_time = 'unknown'
+                        
+                        try:
+                            if self.persistent_data['last_log_view_time'] != None:
+                                date_object = datetime.datetime.fromtimestamp(self.persistent_data['last_log_view_time'])
+                                last_log_view_time = date_object.strftime("%A %e %B %Y at %H:%M")#str(date_object)
+                        except Exception as ex:
+                            if self.DEBUG:
+                                print("Error creating last_log_view date string: " + str(ex))
+                        
+                        return APIResponse(
+                          status=200,
+                          content_type='application/json',
+                          content=json.dumps({'state' : True,'last_log_view_time':last_log_view_time}),
+                        )
+                        
                     else:
+                        if self.DEBUG:
+                            print("unsupported ajax action: " + str(action))
                         return APIResponse( status=404 )
+                        
+                        
+                    
+                    
+                    
                         
                         
                 except Exception as ex:

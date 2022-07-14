@@ -9,6 +9,7 @@
       //console.log("APP: ", app);
       
       //console.log("addon settings: ", window.API.getAddonConfig("candleappstore"));
+      this.debug = false;
       
       this.check_properties_scheduled == false;
 	  this.devices_with_logs = [];
@@ -347,13 +348,20 @@
         this.on_new_page(true);
         
         
-  		// Init
+  		// /init
         window.API.postJson(
           `/extensions/${this.id}/api/ajax`,
             {'action':'init'}
 
         ).then((body) => {
 			//console.log("Candle theme Init API result: ", body);
+            
+            if(typeof body.debug != 'undefined'){
+                this.debug = body.debug;
+                if(this.debug){
+                    console.log("Candle theme: /init response: ", body);
+                }
+            }
             
             if(typeof body.background_color != 'undefined'){
                 if(body.background_color == ""){
@@ -443,7 +451,7 @@
             
 		
         }).catch((e) => {
-  			console.log("Error getting theme init data: " + e.toString());
+  			console.log("Error getting Candle theme init data: ", e);
         });	
         
         
@@ -462,7 +470,9 @@
     
     
     on_new_page(just_arrived=false){
-        //console.log("ON NEW PAGE:" + window.location.pathname);
+        if(this.debug){
+            console.log("Candle theme: ON NEW PAGE:" + window.location.pathname);
+        }
         
         if(window.location.pathname.startsWith('/things')){
             //console.log("at /things or a sub-page" );
@@ -513,8 +523,61 @@
             
         }
         
-        else if(window.location.pathname == ('/logs')){
-            //console.log("on /logs");
+        else if(window.location.pathname == '/logs'){
+            console.log("on /logs");
+            
+            window.API.postJson(
+              `/extensions/${this.id}/api/ajax`,
+                {'action':'get_last_logs_view_time'}
+
+            ).then((body) => {
+                console.log("get_last_logs_view_time response: ", body);
+                if(typeof body.last_log_view_time != 'undefined'){
+                    if(body.last_log_view_time != null){
+                        try{
+                            if(document.getElementById('extension-candle-theme-last-logs-view-time-container') == null){
+                    
+                    			var last_logs_view_time_container_el = document.createElement("div");
+                    			last_logs_view_time_container_el.setAttribute("id", "extension-candle-theme-last-logs-view-time-container");
+			    
+                    			last_logs_view_time_container_el.innerHTML = '<span>The logs were last viewed on </span><span id="extension-candle-theme-last-logs-view-time">...</span>';
+                    			//new_log_filter_container.append(toggle);
+                    			document.getElementById("logs-view").append(last_logs_view_time_container_el);
+                            }
+                            document.getElementById('extension-candle-theme-last-logs-view-time').innerText = body.last_log_view_time;
+                        }
+                        catch(e){
+                            console.log("error adding/updating last_log_view_time_container: ", e);
+                        }
+                    }
+                    
+                }
+                
+            }).catch((e) => {
+      			console.log("Error calling get_last_logs_view_time: ", e);
+            });	
+            
+            window.setTimeout(() => {
+                if(window.location.pathname == '/logs'){
+                    console.log("still on the log page 10 seconds later. Saving last log view time.");
+                    
+                    window.API.postJson(
+                      `/extensions/${this.id}/api/ajax`,
+                        {'action':'save_last_logs_view_time'}
+
+                    ).then((body) => {
+                        console.log("save_last_logs_view_time response: ", body);
+		
+                    }).catch((e) => {
+              			console.log("Error calling save_last_logs_view_time: ", e);
+                    });	
+                    
+                }
+                else{
+                    console.log("logs page was only visited momentarily");
+                }
+            }, 10000);
+            
         }
         else{
             //console.log("ON SOME OTHER PAGE");
@@ -1477,7 +1540,7 @@
                             localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
             
                         }).catch((e) => {
-                  			//console.log("Error saving log collections after deleting a collection: " + e.toString());
+                  			console.log("Error saving log collections after deleting a collection: ", e);
                         });	
                         
                     }
