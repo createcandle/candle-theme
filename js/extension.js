@@ -1,7 +1,36 @@
+
 (function() {
   class candleTheme extends window.Extension {
     constructor() {
       super('candle-theme');
+      
+      
+      /*
+      (function(history) {
+          var pushState = history.pushState;
+          history.pushState = function(state) {
+              if (typeof history.onpushstate == "function") 
+              {
+                  history.onpushstate({
+                      state: state
+                  });
+              }
+              return pushState.apply(history, arguments);
+          }
+      })(window.history);
+      */
+      
+      var pushState = history.pushState;
+      history.pushState = function(state) {
+          if (typeof history.onpushstate == "function") 
+          {
+              history.onpushstate({
+                  state: state
+              });
+          }
+          return pushState.apply(history, arguments);
+      }
+      
       
       //console.log("window: ", window);
       //console.log("API: ", API);
@@ -16,6 +45,12 @@
       this.api_logs = [];
       this.log_collections = {};
       this.kiosk = false;
+      
+      //console.log("hostname: ",window.location.hostname);
+      //console.log("origin: ", window.location.origin);
+      //console.log("double: ", window.location.origin+window.location.pathname);
+      //console.log(location.href = window.location.origin + '/wifi-setup');
+      //console.log(window.location.origin + '/wifi-setup');
       
       /*
       console.log("attempting window resize");
@@ -142,19 +177,21 @@
       
       //this.check_keyboard = false;
       this.previous_document_location = window.location.pathname;
+    
+      
   
-  
-       /*
+       
       API.getPlatform().then((platform) => {
-          console.log('API: platform: ', platform);
+          console.log('Theme: API: platform: ', platform);
       });
       
+      /*
       API.getThings().then((things) => {
-          console.log('API: things: ', things);
+          console.log('Theme:API: things: ', things);
       });
       
-      API.getThing('z2m-0xa4c1385e69337d2a').then((thing) => {
-          console.log('API: thing: ', thing);
+      API.getThing('device_id_here').then((thing) => {
+          console.log('Theme:API: thing: ', thing);
       });
       
       try{
@@ -170,7 +207,7 @@
 
       
       API.getAddonsInfo().then((addons) => {
-          //console.log('addons: ', addons);
+          //console.log('Theme: API: addons: ', addons);
       });
       
       
@@ -257,6 +294,32 @@
           
       });
       
+      
+      
+      
+      try{
+          document.getElementById('create-log-save-button').addEventListener('click', () => {
+              if(this.debug){
+                  console.log("a new log was added");
+              }
+              this.on_new_page(false);
+          });
+      
+          /*
+          document.querySelector('img[alt="Remove Icon"]').addEventListener('click', () => {
+              if(this.debug){
+                  console.log("Something was removed");
+              }
+              this.on_new_page(false);
+          });
+          */
+      }
+      catch(e){
+          console.log("attaching to log add and remove buttons failed?: ", e);
+      }
+      
+      
+      
       document.querySelector('#settings-menu .section-title-icon').addEventListener('click', () => {
                     		//console.log("clicked on link to logs button. This:", this);
                             this.developer_clicks++;
@@ -328,21 +391,28 @@
         {childList: false}
       );
       */
-      this.update_logs_list().then(() => {
-          // In the future the filter checkboxes could be populated from the API?
+      
+      
+
+      
+      
+      
+      window.onpopstate = history.onpushstate = (event) => {
           
-      })
-      .finally(() =>{
-          this.add_log_filter_button();
-          
-          if(window.location.href.indexOf('/logs#') !== -1){
-              //console.log("spotted a device id in the URL");
-              const paths = window.location.href.split("#").filter(entry => entry !== "");
-              const device_id = paths[paths.length - 1];
-              this.filter_logs_by_device(device_id);
+          try{
+              if(this.debug){
+                  console.log('\n\ntheme: page history has been modified!: ', event);
+                  //console.log("\n\n NEW PATH: ", event.state.path);
+              }
+              this.on_new_page(false,event.state.path);
+          }
+          catch(e){
+              console.error("Theme: error parsing window url change: ", e);
           }
           
-      });
+      };
+      
+      
       
         
         this.on_new_page(true);
@@ -468,18 +538,24 @@
     
     
     
-    
-    on_new_page(just_arrived=false){
+    // this only works for /things and its sub-pages
+    on_new_page(just_arrived=false,page_url=null){
         if(this.debug){
             console.log("Candle theme: ON NEW PAGE:" + window.location.pathname);
         }
         
-        if(window.location.pathname.startsWith('/things')){
+        
+        var current_path = window.location.pathname;
+        if(page_url != null){
+            current_path = page_url;
+        }
+        
+        if( current_path.startsWith('/things') ){
             //console.log("at /things or a sub-page" );
             
             this.addParts();
             
-            if(window.location.pathname == '/things'){
+            if(current_path == '/things'){
                 //console.log("at /things");
                 
                 // hide link to logs
@@ -523,9 +599,35 @@
             
         }
         
-        else if(window.location.pathname == '/logs'){
-            console.log("on /logs");
+        else if( current_path.startsWith('/logs') ){
+            console.log("on /logs (or sub-page)");
             
+            
+            API.getThings().then((things) => {
+                console.log('Theme:API: things: ', things);
+                this.things = things; // needed to figure out what type the various logs are
+                
+                this.update_logs_list().then(() => {
+                    // In the future the filter checkboxes could be populated from the API?
+                    //console.log("log list updated");
+                })
+                .finally(() =>{
+                    this.add_log_filter_button();
+    
+                    if( current_path.startsWith('/logs#') ){
+                    //if(window.location.href.indexOf('/logs#') !== -1){
+                        //console.log("spotted a device id in the URL");
+                        const paths = window.location.href.split("#").filter(entry => entry !== "");
+                        const device_id = paths[paths.length - 1];
+                        this.filter_logs_by_device(device_id);
+                    }
+    
+                });
+            });
+            
+            
+            
+            // Handle last-logs-view time
             window.API.postJson(
               `/extensions/${this.id}/api/ajax`,
                 {'action':'get_last_logs_view_time'}
@@ -616,13 +718,19 @@
     }
     */
     
-
+    // updates devices_with_logs, which is used to link thing detail pages a filtered log page showing only that log
     update_logs_list(){
         
         return new Promise((resolve, reject) => {
 
             API.getLogs().then((logs) => {
-                //console.log("API.getlogs: ", logs);
+                if(this.debug){
+                    console.log("theme: API.getlogs: ", logs);
+                    console.log("theme: API.getthings: ", this.things);
+                }
+                
+                this.create_quick_log_filter_buttons(logs,this.things);
+                
                 this.api_logs = logs;
                 this.devices_with_logs = [];
             
@@ -631,7 +739,9 @@
                     //console.log( logs[i].thing);
                     this.devices_with_logs.push(logs[i].thing);
                 }
-                //console.log("updated list of devices with logs: ", this.devices_with_logs);
+                if(this.debug){
+                    console.log("theme: updated list of devices with logs: ", this.devices_with_logs);
+                }
                 //window.location.pathname = '/logs';
             
                 resolve();
@@ -691,7 +801,9 @@
 
 
     add_log_filter_button(){
-        
+        if(this.debug){
+            console.log("theme: in add_log_filter_button");
+        }
         /*
         const log_elements = document.querySelectorAll('.logs-log-container');
         if(log_elements.length < 7){
@@ -741,7 +853,6 @@
 			
             
             window.setTimeout(() => {
-                
                 this.addLogSelector(); // adds the checkbox list
             }, 2000);
             
@@ -787,6 +898,224 @@
 		}
 		
     }
+
+
+
+    
+    create_quick_log_filter_buttons(logs,things){
+        if(this.debug){
+            console.log("in create_quick_log_filter_buttons");
+        }
+        try{
+            
+            if(logs.length > 5){
+                //console.log("enough logs");
+                var buttons_data = {
+                            'All':[{'thing':'fake1','property':'fake1'},{'thing':'fake2','property':'fake2'}],
+                            'Temperature':[],
+                            'Humidity':[],
+                            'Air':[],
+                            'Lux':[],
+                            'Watt':[],
+                            'kWh':[],
+                            'Battery':[]
+                            };
+            
+                // Create quick filter buttons container if it doesn't exist yet.
+        		var quick_log_filter_container = document.getElementById("candle-theme-quick-log-filter-container");
+        		if(quick_log_filter_container == null){
+        			if(this.debug){
+                        console.log("creating quick logs filter container");            
+        			}
+                    //const logs_view = document.getElementById("logs-view");
+                
+        			var quick_log_filter_container_el = document.createElement("div");
+        			quick_log_filter_container_el.setAttribute("id", "candle-theme-quick-log-filter-container");
+                    document.querySelector('#logs-view .logs').prepend(quick_log_filter_container_el);
+                    quick_log_filter_container = document.getElementById("candle-theme-quick-log-filter-container");
+                    if(this.debug){
+                        //console.log("quick_log_filter_container is now: ", quick_log_filter_container);
+                    }
+                }
+            
+                for(let l = 0; l < logs.length; l++){
+                    //console.log("log", l);
+                    //console.log("q log: ", logs[l] );
+                    //const log = logs[l];
+                    // selectedCapability
+                
+                    try{
+                    
+                        for(let t = 0; t < things.length; t++){
+                            //console.log("thing: ", things[t]);
+                            
+                            /*
+                            var forms_type = "forms";
+                            if( typeof things[t].links != 'undefined' ){
+                                forms_type = "links";
+                            }
+                            */
+                            /*
+                            var forms_type = "links";
+                            if( typeof things[t].forms != 'undefined' ){
+                                forms_type = "forms";
+                            }
+                            console.log("forms_type: ", forms_type);
+                            */
+                            
+                            //console.log("things[t][forms_type][0]['href']: ", things[t][forms_type][0]['href']);
+                            if( things[t]['href'].endsWith("/" + logs[l]['thing']) ){
+                                
+                                const thing_title = things[t].title;
+                                //console.log("found matching log thing");
+                                const property_keys = Object.keys(things[t]['properties']);
+                                for(let p = 0; p < property_keys.length; p++){
+                                    const prop = things[t]['properties'][ property_keys[p] ];
+                                    
+                                    var forms_type = "links";
+                                    if( typeof prop.forms != 'undefined' ){
+                                        forms_type = "forms";
+                                    }
+                                    
+                                    if( prop[forms_type][0]['href'].endsWith("/" + logs[l]['property']) ){
+                                        
+                                        if(this.debug){
+                                            //console.log("quick logs filter: found property");
+                                        }
+                                        
+                                        var button_type = null;
+                                        if(typeof prop.unit != 'undefined'){
+                                            
+                                            console.log("prop.unit: ", prop.unit);
+                                            console.log("prop.unit.toLowerCase(): ", prop.unit.toLowerCase());
+                                            if(prop.unit.toLowerCase() == 'kwh'){
+                                                button_type = 'kWh';
+                                            }
+                                            else if(prop.unit.toLowerCase() == 'w'){
+                                                button_type = 'Watt';
+                                            }
+                                            else if(prop.unit.toLowerCase().startsWith('degree') ){
+                                                button_type = 'Temperature';
+                                            }
+                                            else if(prop.unit.toLowerCase().startsWith('µg/m')){
+                                                button_type = 'Air';
+                                            }
+                                            else if(prop.unit.toLowerCase() == 'lx' || prop.unit.toLowerCase() == 'lux'){
+                                                button_type = 'Lux'; //buttons_data['Lux'].push( logs[l] );
+                                            }
+                                            // Percentage
+                                            else if(prop.unit.toLowerCase().startsWith('percent')){
+                                                if(prop.title.toLowerCase().startsWith('battery')){
+                                                    button_type = 'Battery';
+                                                
+                                                }
+                                                else if(prop.title.toLowerCase().indexOf('humidity') != -1){
+                                                    button_type = 'Humidity';
+                                                }
+                                            }
+                                            //console.log("button_type: ", button_type);
+                                            
+                                            if(button_type != null){
+                                                if(typeof thing_title != 'undefined' && typeof prop.title != 'undefined'){
+                                                    //console.log("adding to quick filter buttons data");
+                                                    var push_me = logs[l];
+                                                    push_me['thing_title'] = thing_title;
+                                                    push_me['property_title'] = prop.title;
+                                                    buttons_data[button_type].push( push_me );
+                                                }
+                                                else{
+                                                    // In theory some very old addons used "name" instead of title... they are skipped here.
+                                                    if(this.debug){
+                                                        console.warn("weird, could not add log to quick list. Title attribute of thing or property missing? Ancient addon?");
+                                                    }
+                                                }
+                                            }
+                                            
+                                            
+                                            
+                                        }
+                                        
+                                        
+                                    }
+                                
+                                    
+                                
+                                }
+                            }
+                    
+                        }
+                    
+                    }
+                    catch(e){
+                        console.error("Error looping over logs while making quick filter buttons: ", e);
+                    }
+                
+                } // end of looping over logs
+                if(this.debug){
+                    console.log("quick buttons_data: ", buttons_data);
+                }
+                
+                // Find out if it's useful to show buttons
+                const buttons_keys = Object.keys(buttons_data);
+                var buttons_with_multiple_logs_count = 0;
+                for(let b = 0; b < buttons_keys.length; b++){
+                    if( buttons_data[buttons_keys[b]].length > 1 ){
+                        buttons_with_multiple_logs_count++;
+                    }
+                }
+                if(this.debug){
+                    console.log("buttons_with_multiple_logs_count: ", buttons_with_multiple_logs_count);
+                }
+                
+            
+                // Clear the quick buttons container
+                quick_log_filter_container.innerHTML = "";
+                
+                // Actually add the buttons
+                if(buttons_with_multiple_logs_count > 1){
+                    for(let b = 0; b < buttons_keys.length; b++){
+                        
+                        if( buttons_data[buttons_keys[b]].length > 0 ){
+                            var button_el = document.createElement('button');
+                            button_el.classList.add('candle-theme-quick-log-filter-button');
+                            button_el.classList.add('text-button');
+                            button_el.innerText = buttons_keys[b];
+                            button_el.onclick = (event) => {
+                                if(this.debug){
+                                    console.log("quick log button clicked. data: ", b, buttons_data[buttons_keys[b]]);
+                                }
+                                var logs_to_show = [];
+                                for(let d = 0; d < buttons_data[buttons_keys[b]].length; d++){
+                                    if(this.debug){
+                                        console.log("d: ", d, buttons_data[buttons_keys[b]][d]);
+                                    }
+                                    
+                                    var log_name = buttons_data[buttons_keys[b]][d]['thing_title'] + "-" + buttons_data[buttons_keys[b]][d]['property_title'];
+                                    log_name = log_name.replace(/\s/g , "-");
+                                    logs_to_show.push(log_name);
+                                }
+                                this.filter_these_logs(logs_to_show);
+                            
+                            };
+                            quick_log_filter_container.appendChild(button_el);
+                            //console.log("should be appended");
+                        }
+                        
+                    }
+                }
+            
+            }
+            
+        }catch(e){
+            console.error("theme: error in create_quick_log_filter_buttons: ", e);
+        }
+        
+		
+        
+    }
+    
+
+
 
 
     // helper function to guarantee there is always a device name. If not provided it will be taken from the URL
@@ -1158,7 +1487,9 @@
     
 	
 	addLogSelector() {
-        
+        if(this.debug){
+            console.log("theme: in addLogSelector");
+        }
         const logs_view = document.getElementById("logs-view");
 		
 		const log_list_container = document.getElementById("candle-theme-log-list-container");
@@ -1170,7 +1501,7 @@
         for (const item of listItems) {
             //console.log(item.innerHTML);
             if(item.innerHTML != ""){
-                log_names.push(item.innerHTML);
+                log_names.push(item.innerText);
             }
             
         }
@@ -1189,6 +1520,10 @@
         let ul = document.createElement('ul');
         ul.setAttribute("id", "candle-theme-log-list-ul");
 
+        //log_names.sort(key=lambda v: v.upper());
+        log_names = log_names.sort((a, b) => {
+          return a.localeCompare(b, undefined, {sensitivity: 'base'});
+        });
 
         log_names.forEach( spaced_log_name => {
             
@@ -1300,10 +1635,11 @@
 		const all_log_name_elements = document.querySelectorAll('#logs-view .logs-log-name');
         var all_log_names = [];
         for (const log_name_element of all_log_name_elements) {
-            all_log_names.push(log_name_element.innerHTML.replace(/\s+/g, '-'));
+            all_log_names.push(log_name_element.innerText.replace(/\s+/g, '-'));
 			//console.log(log_name_element);
 			//console.log(log_name_element.innerHTML);
         }
+        //console.log("all_log_names: ", all_log_names);
 		//console.log("all log item names = " + all_log_names);
 		
 		// get list of selected log names
@@ -1314,7 +1650,9 @@
             selected_log_names.push(selected_log.name);
 			//console.log(selected_log);
         }
-        //console.log("selected log item names = " + selected_log_names);
+        if(this.debug){
+            console.log("selected log filter item names = " + selected_log_names);
+        }
 		
         if(selected_log_names.length > 0){
             document.getElementById('candle-theme-logs-clear-button').style.display = 'block';
@@ -1564,17 +1902,22 @@
 
     // Toggles the correct checkboxes, and then calls filterLogs.
     filter_these_logs(should_check){
+        if(this.debug){
+            console.log("theme: should_check these log filter checkboxes: ", should_check);
+        }
         const log_checkboxes = document.querySelectorAll(' #logs-view #candle-theme-log-list-ul input');
 
         //console.log("log_checkboxes: ", log_checkboxes);
         for (const checkbox of log_checkboxes) {
+            //const checkbox_name = checkbox.name
+            //console.log("checkbox.name: ", checkbox.name);
             
             if(should_check.indexOf(checkbox.name) == -1){
-                //console.log("should not check");
+                console.log("should not check");
                 checkbox.checked = false;
             }
             else{
-                //console.log("should check: " + checkbox.name);
+                console.log("should check: " + checkbox.name);
                 checkbox.checked = true;
             }
         }

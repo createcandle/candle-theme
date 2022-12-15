@@ -9,6 +9,7 @@ html{
 body{
     color:white;
     /*transition: background-color 1s linear;*/
+    letter-spacing: 0.03em;
 }
 
 
@@ -556,7 +557,6 @@ body #virtualKeyboardChromeExtension td.kbdS span{
     border-radius:.5rem;
     padding-left:0;
     padding-right:0;
-    margin-top:1rem;
     margin-bottom:1rem;
     box-sizing:border-box;
 }
@@ -1195,6 +1195,7 @@ webthing-brightness-property.component::part(form){
     transform:none!important;
     margin: 0 auto;
     cursor:pointer;
+    zoom:133%;
 }
 
 
@@ -1737,7 +1738,7 @@ input[type="range"]::-webkit-slider-runnable-track{
 
 
 #extension-candle-theme-last-logs-view-time-container{
-    padding:2rem;
+    padding:2rem 8rem;
     margin-bottom:4rem;
     font-size:1.6rem;
     text-align:center;
@@ -1889,10 +1890,15 @@ input[type="range"]::-webkit-slider-runnable-track{
 
 
 .logs-log-container{
-    animation: extension-candle-theme-fadeIn 1s linear;
+    animation: extension-candle-theme-fadeIn 0.5s linear;
     margin-bottom:4rem;
+}
+
+
+.logs-log-container:not(.solo-view){
     padding:2rem 0;
 }
+
 
 .logs-log-info{
     position: relative;
@@ -1903,6 +1909,10 @@ input[type="range"]::-webkit-slider-runnable-track{
     top:1rem;
 }
 
+
+.logs-scroll-control{
+    height:30px;
+}
 .kiosk .logs-scroll-control{
     height:40px;
 }
@@ -2017,6 +2027,35 @@ body.zoom3 #logs-view .arrow-select{
     100% { 
         opacity: 0.8;
     }
+}
+
+
+
+
+/*  Logs quick filter buttons  */
+
+#candle-theme-quick-log-filter-container{
+    /*background-color:rgba(0,0,0,.1);
+    border-radius:.5rem;*/
+    padding:1rem;
+    text-align:center;
+    max-width:80rem;
+    margin:2rem 8rem;
+    border-left:2rem solid transparent;
+    border-right:2rem solid transparent;
+}
+
+.candle-theme-quick-log-filter-button{
+    display:inline-block;
+    padding:1rem;
+    border-radius:1rem;
+    margin: 1rem;
+}
+
+
+.solo-view.selected #candle-theme-quick-log-filter-container,
+.solo-view.selected #extension-candle-theme-last-logs-view-time-container{
+    display:none;
 }
 
 
@@ -2340,6 +2379,13 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
 @media only screen and (max-width: 840px) {
     #things.single-thing > .thing{
         justify-content:center;
+    }
+    
+    #candle-theme-quick-log-filter-container{
+        margin:2rem;
+    }
+    .candle-theme-quick-log-filter-button{
+        margin:.5rem;
     }
 }
 
