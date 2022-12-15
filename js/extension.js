@@ -180,12 +180,11 @@
     
       
   
-       
+      /*
       API.getPlatform().then((platform) => {
           console.log('Theme: API: platform: ', platform);
       });
       
-      /*
       API.getThings().then((things) => {
           console.log('Theme:API: things: ', things);
       });
@@ -661,14 +660,19 @@
             
             window.setTimeout(() => {
                 if(window.location.pathname == '/logs'){
-                    console.log("still on the log page 10 seconds later. Saving last log view time.");
+                    if(this.debug){
+                        console.log("theme: still on the log page 10 seconds later. Saving last log view time.");
+                    }
+                    
                     
                     window.API.postJson(
                       `/extensions/${this.id}/api/ajax`,
                         {'action':'save_last_logs_view_time'}
 
                     ).then((body) => {
-                        console.log("save_last_logs_view_time response: ", body);
+                        if(this.debug){
+                            console.log("theme: save_last_logs_view_time response: ", body);
+                        }
 		
                     }).catch((e) => {
               			console.log("Error calling save_last_logs_view_time: ", e);
@@ -986,8 +990,8 @@
                                         var button_type = null;
                                         if(typeof prop.unit != 'undefined'){
                                             
-                                            console.log("prop.unit: ", prop.unit);
-                                            console.log("prop.unit.toLowerCase(): ", prop.unit.toLowerCase());
+                                            //console.log("prop.unit: ", prop.unit);
+                                            //console.log("prop.unit.toLowerCase(): ", prop.unit.toLowerCase());
                                             if(prop.unit.toLowerCase() == 'kwh'){
                                                 button_type = 'kWh';
                                             }
@@ -997,7 +1001,7 @@
                                             else if(prop.unit.toLowerCase().startsWith('degree') ){
                                                 button_type = 'Temperature';
                                             }
-                                            else if(prop.unit.toLowerCase().startsWith('µg/m')){
+                                            else if(prop.unit.toLowerCase().startsWith('µg/m') || prop.unit.toLowerCase() == 'ppm'){
                                                 button_type = 'Air';
                                             }
                                             else if(prop.unit.toLowerCase() == 'lx' || prop.unit.toLowerCase() == 'lux'){
