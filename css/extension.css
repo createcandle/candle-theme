@@ -1914,6 +1914,17 @@ input[type="range"]::-webkit-slider-runnable-track{
     top: -1rem;
 }
 
+/*
+.logs-log-name:empty{
+    color:red;
+}
+*/
+
+.logs-log-name:empty::after{
+    content:"Missing";
+    color:red;
+}
+
 .logs-log-week-dropdown{
     top:5rem;
 }

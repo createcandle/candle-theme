@@ -870,14 +870,17 @@
 			log_filter_container = document.getElementById("candle-theme-log-filter-container");
             
             this.showLogCollections(); // adds the collection buttons at the top
-			
             
+            // delay no longer needed as the logs api is used instead of scanning the HTML. So much nicer and more robust now.
+            /*
             window.setTimeout(() => {
                 if(this.debug){
                     console.log("add_log_filter_button: waited two seconds, then called add_log_selector");
                 }
-                this.addLogSelector(); // add_log_filter_button -> 2 seconds later add the checkbox list
-            }, 2000);
+                this.addLogSelector(); // add_log_filter_button -> 2 seconds later add the checkboxes list
+            }, 1000);
+            */
+            this.addLogSelector();
             
     		//console.log("log_filter_container is now:");
     		//console.log(log_filter_container);
@@ -1502,130 +1505,100 @@
 		
 		const log_list_container = document.getElementById("candle-theme-log-list-container");
         
-        // still relying on a bit of old code here. Should actually generate this log names list from this.api_logs;
-        const listItems = document.querySelectorAll(' #logs-view .logs-log-name'); // old style was to get the names from the generated logs
-        var log_names = [];
-        for (const item of listItems) {
-            //console.log(item.innerHTML);
-            if(item.innerHTML != ""){
-                log_names.push(item.innerText);
-            }
-        }
-        
-        
         if(typeof this.api_logs == 'undefined'){
             if(this.debug){
                 console.warn("candle theme: addLogSelector: this.api_logs was still null. Did window API to list logs fail?");
             }
         }
         else{
+            if(this.debug){
+                console.log("candle theme: addLogSelector: this.api_logs: ", this.api_logs);
+            }
             if(this.api_logs.length == 0){
                 //console.warn("candle theme: addLogSelector: this.api_logs was still an empty array. Could simply be that the user has no logs.");
                 log_list_container.innerHTML = '<p style="font-size:1.6rem;padding:1rem">Once you have created some logs you can filter them here.</p>';
             }
             else{
-                //console.log("this.api_logs: ", this.api_logs);
+                
+                for (var f=0;f<this.api_logs.length;f++){
+                    const log_name = this.ids_to_log_name(this.api_logs[f]);
+                    if(log_name != null){
+                        //console.log("log name from ids_to_log_name: ", log_name);
+                        this.api_logs[f]['html_log_name'] = log_name;
+                    }
+                    else{
+                        if(this.debug){
+                            console.warn("generated html_log_name was null. Broken log?");
+                        }
+                    }
+
+                }
+                
+                // Sort the logs data
+                function compare(a,b) {
+                    try{
+                        if(typeof a.html_log_name != 'undefined' && typeof b.html_log_name != 'undefined'){
+                            const a_title = a.html_log_name.toLowerCase();
+                            const b_title = b.html_log_name.toLowerCase();
+                            if (a_title < b_title){
+                                return -1;
+                            }
+                            if (a_title > b_title){
+                                return 1;
+                            }
+                        }
+                        return 0;
+                    }catch(e){
+                        console.warn("log item sorting error: ", e);
+                        return 0;
+                    }
+                }
+                this.api_logs.sort(compare);
+                //console.log("this.api_logs sorted: ", this.api_logs);
+                
                 log_list_container.innerHTML = "";
                 
                 // Create checkbox list
                 let ul = document.createElement('ul');
                 ul.setAttribute("id", "candle-theme-log-list-ul");
-
+                
                 for (var i=0;i<this.api_logs.length;i++){
-            
-                    for (var t=0;t<this.things.length;t++){
-                        if(this.things[t].href.endsWith('/' + this.api_logs[i].thing)){
-                            //const thing_id = this.things[t].href.split('/').pop();
-                            //console.log("found a thing id that is in the logs too: ", thing_id);
-                            if(this.things[t].title != 'undefined'){
-                                //console.log("found a thing title that is in the log: ", this.things[t].title);
-                        
-                                this.things[t].title
-                        
-                                if(typeof this.things[t]['properties'][ this.api_logs[i].property ] != 'undefined'){
-                                    if(typeof this.things[t]['properties'][ this.api_logs[i].property ]['title'] != 'undefined'){
-                                        const log_name = this.things[t].title + ' ' + this.things[t]['properties'][ this.api_logs[i].property ]['title'];
-                                        const dashed_log_name = log_name.replace(/\s/g , "-");
-                                        //console.log("generated log name: ", log_name);
-                                        if(log_names.length > 0 && log_names.indexOf(log_name) == -1){
-                                            console.error("generated log name did not match any name in the html");
-                                        }
-                                        
-                                        let li = document.createElement('li');
-
-                                        //li.innerHTML += log_name;
-
-                                        var input = document.createElement("input");
-                                            //input.type = "checkbox";
-                                            input.setAttribute('type', 'checkbox');
-                                            input.setAttribute('name', dashed_log_name);
-                                            input.setAttribute('id', dashed_log_name);
-                                            input.setAttribute('data-thing', this.api_logs[i].thing);
-                                            input.setAttribute('data-property', this.api_logs[i].property);
-                                            
-                                            //input.setAttribute('id', log_name);
-                                            //input.value = log_name;
-            
-                                        var label = document.createElement("label");
-                                            label.setAttribute("for",dashed_log_name);
-							
-                            			var span = document.createElement("span");
-                            				span.innerHTML = log_name;
-
-                                        label.appendChild(input);
-                            			label.appendChild(span);
-                                        li.appendChild(label);
-			
-                            	  	    li.onclick = (event) => {
-                            				if(this.debug){
-                                                console.log("filter item clicked");
-                                            }
-                                            this.filterLogs();
-                            	  	  	}
-			
-                                        ul.appendChild(li);
-                                        
-                                        
-                                    }
-                                }
-                        
-                            }
-                            else{
-                                console.error("thing has no title? maybe an ancient addon? Skipping all the same..");
-                            }
                     
-                        }
-            
+                    if(typeof this.api_logs[i]['html_log_name'] != 'undefined'){
+                        const dashed_log_name = this.api_logs[i]['html_log_name'].replace(/\s/g , "-");
+                    
+                        let li = document.createElement('li');
+                        
+                        var input = document.createElement("input");
+                            //input.type = "checkbox";
+                            input.setAttribute('type', 'checkbox');
+                            input.setAttribute('name', dashed_log_name);
+                            input.setAttribute('id', dashed_log_name);
+                            input.setAttribute('data-thing', this.api_logs[i].thing);
+                            input.setAttribute('data-property', this.api_logs[i].property);
+
+                        var label = document.createElement("label");
+                            label.setAttribute("for",dashed_log_name);
+		
+            			var span = document.createElement("span");
+            				span.innerHTML = this.api_logs[i]['html_log_name'];
+
+                        label.appendChild(input);
+            			label.appendChild(span);
+                        li.appendChild(label);
+
+            	  	    li.onclick = (event) => {
+            				if(this.debug){
+                                console.log("filter item clicked");
+                            }
+                            this.filterLogs();
+            	  	  	}
+
+                        ul.appendChild(li);
                     }
-                    /*
-                    if(this.api_logs[i].thing == device_id){
-                        //console.log("adding property: ", this.api_logs[i].property);
-                        properties_to_show.push( '/logs/things/' + device_id + '/properties/' + this.api_logs[i].property );
-                    }*/
+                    
                 }
                 
-                
-                
-                
-                
-                
-                
-
-                //log_names.sort(key=lambda v: v.upper());
-                log_names = log_names.sort((a, b) => {
-                  return a.localeCompare(b, undefined, {sensitivity: 'base'});
-                });
-                
-                
-                
-                log_names.forEach( spaced_log_name => {
-            
-                    //const log_name = spaced_log_name.replace(/\s+/g, '-');
-                    //console.log("log_name = " + log_name);
-                    
-
-                });
-
                 log_list_container.appendChild(ul);	
 		
 		
@@ -1690,29 +1663,9 @@
                     this.addLogCollection();
         		}
                 
-                
-                
             }
         }
-        
-        
-        
-        /*
-        // old way of going over the list of available log names in the html
-        
-        
-        */
-       
-		
-		
-
-        
-
-        
-        
-		
         //this.filterLogs(); // resets the filtered logs to no filter
-        
 	}
 
     // Goes over all the ticked checkboxes, and based on that shows or hides logs
@@ -1801,10 +1754,17 @@
                         if(typeof this.things[t]['properties'][combo.property]['title'] != 'undefined'){
                             return this.things[t].title + ' ' + this.things[t]['properties'][combo.property]['title'];
                         }
+                        else{
+                            console.warn("candle theme: ids_to_log_name: title attribute not found in property: ", combo, this.things[t]['properties'][combo.property] );
+                        }
+                    }
+                    else{
+                        console.warn("candle theme: ids_to_log_name: property not found in thing: ", combo, this.things[t]);
                     }
                 }
             }
         }
+        return null;
     }
 
 
@@ -2041,54 +2001,26 @@
                 console.warn("upgrade_collections_data: entire upgraded array was empty??");
             }
             
-        
-            
         }
         
-        if(this.debug){
-            console.log("UPGRADED new_collections_data: ", new_collections_data, "\n");
-        }
+
+        console.log("UPGRADED new_collections_data: ", new_collections_data, "\n");
         
         this.log_collections = new_collections_data;
-        // Also save it to the server again, why not.
+        // Also save the upgraded collections data
         
-        
-        /*
-                  		// Save collections after a collection was deleted
-                        window.API.postJson(
-                          `/extensions/${this.id}/api/ajax`,
-                            {'action':'save_collections','collections':this.log_collections}
+  		// Save collections after upgrade. In theory this should only happen once.
+        window.API.postJson(
+          `/extensions/${this.id}/api/ajax`,
+            {'action':'save_collections','collections':this.log_collections}
 
-                        ).then((body) => {
-                			//console.log("Save collections API result: ", body);
-                            localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
-            
-                        }).catch((e) => {
-                  			console.log("Error saving log collections after deleting a collection: ", e);
-                        });	
-            
-            
-        */
-        
-            
-            /*
-            for (var i=0;i<this.api_logs.length;i++){
-                if(this.api_logs[i].thing == device_id){
-                    
-                }
-                
-            }
-            */
-            
-            // this.log_collections = new_collections_data;
-            
-        //}
-        //else{
-        //    console.error("attempting collections data upgrade: darn, api_logs was still null");
-        //}
-        
-        
-        
+        ).then((body) => {
+			console.log("Save upgraded collections API result: ", body);
+            //localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
+
+        }).catch((e) => {
+  			console.log("Error saving upgraded log collections: ", e);
+        });
     }
 
     // Creates collection buttons
@@ -2097,9 +2029,6 @@
             console.log("in showLogCollections");
         }
         
-        //var log_collections = {};
-        
-    
   		// Save collections
         window.API.postJson(
           `/extensions/${this.id}/api/ajax`,
