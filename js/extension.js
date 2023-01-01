@@ -40,9 +40,11 @@
       //console.log("addon settings: ", window.API.getAddonConfig("candleappstore"));
       this.debug = false;
       
+      this.things; // later holds data from window.API.getThings()
+      
       this.check_properties_scheduled == false;
 	  this.devices_with_logs = [];
-      this.api_logs = [];
+      this.api_logs; // later becomes array
       this.log_collections = {};
       this.kiosk = false;
       
@@ -298,10 +300,12 @@
       
       try{
           document.getElementById('create-log-save-button').addEventListener('click', () => {
+              console.log("create-log-save-button clicked");
               if(this.debug){
                   console.log("a new log was added");
               }
               this.on_new_page(false);
+              this.update_logs_list();
           });
       
           /*
@@ -599,11 +603,11 @@
         }
         
         else if( current_path.startsWith('/logs') ){
-            console.log("on /logs (or sub-page)");
+            //console.log("on /logs (or sub-page)");
             
             
             API.getThings().then((things) => {
-                console.log('Theme:API: things: ', things);
+                //console.log('Theme:API: things: ', things);
                 this.things = things; // needed to figure out what type the various logs are
                 
                 this.update_logs_list().then(() => {
@@ -611,10 +615,11 @@
                     //console.log("log list updated");
                 })
                 .finally(() =>{
-                    this.add_log_filter_button();
+                    //console.log("finally. current_path: ", current_path);
+                    //this.add_log_filter_button();
     
-                    if( current_path.startsWith('/logs#') ){
-                    //if(window.location.href.indexOf('/logs#') !== -1){
+                    //if( current_path.startsWith('/logs#') ){
+                    if(window.location.href.indexOf('/logs#') !== -1){
                         //console.log("spotted a device id in the URL");
                         const paths = window.location.href.split("#").filter(entry => entry !== "");
                         const device_id = paths[paths.length - 1];
@@ -632,7 +637,7 @@
                 {'action':'get_last_logs_view_time'}
 
             ).then((body) => {
-                console.log("get_last_logs_view_time response: ", body);
+                //console.log("get_last_logs_view_time response: ", body);
                 if(typeof body.last_log_view_time != 'undefined'){
                     if(body.last_log_view_time != null){
                         try{
@@ -680,7 +685,9 @@
                     
                 }
                 else{
-                    console.log("logs page was only visited momentarily");
+                    if(this.debug){
+                        console.log("logs page was only visited momentarily");
+                    }
                 }
             }, 10000);
             
@@ -722,9 +729,11 @@
     }
     */
     
-    // updates devices_with_logs, which is used to link thing detail pages a filtered log page showing only that log
+    // gets logs data from window API, then updates devices_with_logs (which is used to link thing detail pages a filtered log page showing only that log). It also tries to generate the log filter sidebar.
     update_logs_list(){
-        
+        if(this.debug){
+            console.log("in update_logs_list");
+        }
         return new Promise((resolve, reject) => {
 
             API.getLogs().then((logs) => {
@@ -737,6 +746,8 @@
                 
                 this.api_logs = logs;
                 this.devices_with_logs = [];
+            
+                this.add_log_filter_button();
             
                 for (var i=0;i<logs.length;i++){
                     //console.log( logs[i] );
@@ -755,7 +766,9 @@
                 reject();
             })
             .finally(() => {
-                //console.log("API.getLogs finally");
+                if(this.debug){
+                    console.log("theme: logs: in API.getLogs finally");
+                }
                 this.add_log_filter_button();
             });
         
@@ -765,6 +778,9 @@
 
     // Adds a direct link from a device detail page to an overview of all the logs of a device.
     add_link_to_logs(device_id){
+        if(this.debug){
+            console.log("in add_link_to_logs, which adds a shortcut to logs on a thin details page");
+        }
         device_id = this.get_device_id_from_url(device_id);
         if( this.devices_with_logs.includes(device_id)){
             //console.log(device_id + " has logs, adding direct link to them");
@@ -785,7 +801,7 @@
                 document.getElementById('candle-theme-link-to-logs-button').addEventListener('click', () => {
               		//console.log("clicked on link to logs button. This:", this);
                     
-                    document.getElementById('back-button').classList.add("hidden");
+                    //document.getElementById('back-button').classList.add("hidden"); // DANGEROUS?
                     const device_id2 = this.get_device_id_from_url();
                     window.setTimeout(() => {
                         this.filter_logs_by_device(device_id2);
@@ -803,7 +819,7 @@
         }
     }
 
-
+    // Button in the top-right of the logs page
     add_log_filter_button(){
         if(this.debug){
             console.log("theme: in add_log_filter_button");
@@ -857,13 +873,11 @@
 			
             
             window.setTimeout(() => {
-                this.addLogSelector(); // adds the checkbox list
+                if(this.debug){
+                    console.log("add_log_filter_button: waited two seconds, then called add_log_selector");
+                }
+                this.addLogSelector(); // add_log_filter_button -> 2 seconds later add the checkbox list
             }, 2000);
-            
-            
-            
-            
-            
             
     		//console.log("log_filter_container is now:");
     		//console.log(log_filter_container);
@@ -878,18 +892,15 @@
     		  	}
     			else{
     				log_filter_container.classList.add('candle-theme-log-filter-container-hidden');
-                
     			}
             
     			const list = document.getElementById('candle-theme-log-list-ul');
     			//const buttons = document.getElementById('candle-theme-log-list-buttons');
     			if(list != null){
                     if(list.querySelectorAll("li").length == 0){
-                        //console.log("there were no checkboxes yet");
+                        console.warn("there were no checkboxes yet? really?");
                         //this.showLogCollections(); // adds the collection buttons at the top
-                        this.addLogSelector(); // adds the checkbox list
-                        
-        				
+                        this.addLogSelector(); // tries to add the checkbox list if the filter button is clicked and the list is still empty
         			}
     			}
             
@@ -911,6 +922,13 @@
             console.log("in create_quick_log_filter_buttons");
         }
         try{
+            
+            if(typeof things == 'undefined'){
+                if(this.debug){
+                    console.log("theme: create_quick_log_filter_buttons: things was not yet defined? Aborting");
+                }
+                return;
+            }
             
             if(logs.length > 5){
                 //console.log("enough logs");
@@ -1085,18 +1103,19 @@
                             button_el.classList.add('text-button');
                             button_el.innerText = buttons_keys[b];
                             button_el.onclick = (event) => {
-                                if(this.debug){
+                                //if(this.debug){
                                     console.log("quick log button clicked. data: ", b, buttons_data[buttons_keys[b]]);
-                                }
+                                //}
                                 var logs_to_show = [];
                                 for(let d = 0; d < buttons_data[buttons_keys[b]].length; d++){
-                                    if(this.debug){
+                                    //if(this.debug){
                                         console.log("d: ", d, buttons_data[buttons_keys[b]][d]);
-                                    }
+                                    //}
                                     
-                                    var log_name = buttons_data[buttons_keys[b]][d]['thing_title'] + "-" + buttons_data[buttons_keys[b]][d]['property_title'];
-                                    log_name = log_name.replace(/\s/g , "-");
-                                    logs_to_show.push(log_name);
+                                    //var log_name = buttons_data[buttons_keys[b]][d]['thing_title'] + "-" + buttons_data[buttons_keys[b]][d]['property_title'];
+                                    //log_name = log_name.replace(/\s/g , "-");
+                                    //logs_to_show.push(log_name);
+                                    logs_to_show.push({'thing': buttons_data[buttons_keys[b]][d]['thing'],'property':buttons_data[buttons_keys[b]][d]['property']});
                                 }
                                 this.filter_these_logs(logs_to_show);
                             
@@ -1168,9 +1187,21 @@
             //console.log("check_properties was called on /things, stopping");
             return;
         }
-        else{
+        if(window.location.pathname.startsWith('/things')){
+            if(this.debug){
+                console.log("Theme: Error, check_properties was called on page outside of /things/*, stopping");
+            }
+            return;
+        }
+        
+        if(typeof device_id == 'undefined'){
             device_id = this.get_device_id_from_url(device_id);
             //console.log("checking device properties for: " + device_id );
+        }
+        
+        if(typeof device_id == 'undefined'){
+            console.warn("Theme: checkProperties: undefined device id, aborting.");
+            return;
         }
         
         if(on_new_page){
@@ -1218,34 +1249,8 @@
                                     //console.log("check_properties: on_new_page was true. Attaching listeners.");
                                     var element_to_observe = document.querySelector('[id$="' + property_name + '"]');
                                     if(element_to_observe != null){
-                                    
                                         const shadow_to_observe = element_to_observe.shadowRoot;
                                         this.shadow_observer.observe( shadow_to_observe, {childList: true, subtree:true} ); // attributes: true, 
-                                    
-                                        //shadow_to_observe.addEventListener('change', this.shadowMutationCallback);
-                                    
-                                
-                                        var value_element = shadow_to_observe.querySelector('.webthing-numeric-label-property-value');
-                                        if(value_element != null){
-                                            //console.log("value element existed: " + property_name);
-                                            //value_element.addEventListener('change', this.shadowMutationCallback);
-                                        }
-                                        else{
-                                            //console.log("adding value element change listener failed, value element doesn't exist (yet): " + property_name);
-                                            /*
-                                            setTimeout(() =>{
-                                                //console.log("trying again: " + property_name);
-                                                var value_element2 = shadow_to_observe.querySelector('.webthing-numeric-label-property-value');
-                                                value_element2.addEventListener('change', this.shadowMutationCallback);
-                                            }, 100);
-                                            */
-                                        }
-                                
-                                
-                                
-                                        //console.log("adding an observer to: ", shadow_to_observe);
-                                        // Add an observer
-                                    
                                     }
                                     else{
                                         //console.log("property to observe didn't exist yet: " + property_name);
@@ -1265,19 +1270,17 @@
                                 if(Object.keys(prop2).length === 0){
                                     //console.log(property_name + " was Undefined");
                                 
-                                    this.modify_property_ui(property_name, false); //
-                                
-                                
+                                    this.modify_property_ui(property_name, false);
                                 }
                                 else if(prop2[property_name] == null){
                                     //console.log(property_name + " WAS NULL");
-                                    this.modify_property_ui(property_name, false); //
+                                    this.modify_property_ui(property_name, false);
                                 }
                             }
                             else{
                                 if(prop2 == null){
                                     //console.log(property_name + " WAS NULL: ", prop2);
-                                    this.modify_property_ui(property_name, false); //
+                                    this.modify_property_ui(property_name, false);
                                 }
                             }
                             
@@ -1489,143 +1492,223 @@
     }
 
     
-	
+    
+	// Creates list of checkboxes in the filter side bar
 	addLogSelector() {
         if(this.debug){
-            console.log("theme: in addLogSelector");
+            console.log("theme: in addLogSelector (checkboxes list in filter sidebar)");
         }
         const logs_view = document.getElementById("logs-view");
 		
 		const log_list_container = document.getElementById("candle-theme-log-list-container");
         
-        const listItems = document.querySelectorAll(' #logs-view .logs-log-name');
+        // still relying on a bit of old code here. Should actually generate this log names list from this.api_logs;
+        const listItems = document.querySelectorAll(' #logs-view .logs-log-name'); // old style was to get the names from the generated logs
         var log_names = [];
-        
-        
         for (const item of listItems) {
             //console.log(item.innerHTML);
             if(item.innerHTML != ""){
                 log_names.push(item.innerText);
             }
-            
         }
         
-       
-		// Clear the log list
-        if(listItems.length == 0){
-            log_list_container.innerHTML = '<p style="font-size:1.6rem;padding:1rem">Once you have created some logs you can filter them here.</p>';
+        
+        if(typeof this.api_logs == 'undefined'){
+            if(this.debug){
+                console.warn("candle theme: addLogSelector: this.api_logs was still null. Did window API to list logs fail?");
+            }
         }
         else{
-            log_list_container.innerHTML = "";
-        }
-		
+            if(this.api_logs.length == 0){
+                //console.warn("candle theme: addLogSelector: this.api_logs was still an empty array. Could simply be that the user has no logs.");
+                log_list_container.innerHTML = '<p style="font-size:1.6rem;padding:1rem">Once you have created some logs you can filter them here.</p>';
+            }
+            else{
+                //console.log("this.api_logs: ", this.api_logs);
+                log_list_container.innerHTML = "";
+                
+                // Create checkbox list
+                let ul = document.createElement('ul');
+                ul.setAttribute("id", "candle-theme-log-list-ul");
 
-        // Create checkbox list
-        let ul = document.createElement('ul');
-        ul.setAttribute("id", "candle-theme-log-list-ul");
-
-        //log_names.sort(key=lambda v: v.upper());
-        log_names = log_names.sort((a, b) => {
-          return a.localeCompare(b, undefined, {sensitivity: 'base'});
-        });
-
-        log_names.forEach( spaced_log_name => {
+                for (var i=0;i<this.api_logs.length;i++){
             
-            const log_name = spaced_log_name.replace(/\s+/g, '-');
-            //console.log("log_name = " + log_name);
-            let li = document.createElement('li');
+                    for (var t=0;t<this.things.length;t++){
+                        if(this.things[t].href.endsWith('/' + this.api_logs[i].thing)){
+                            //const thing_id = this.things[t].href.split('/').pop();
+                            //console.log("found a thing id that is in the logs too: ", thing_id);
+                            if(this.things[t].title != 'undefined'){
+                                //console.log("found a thing title that is in the log: ", this.things[t].title);
+                        
+                                this.things[t].title
+                        
+                                if(typeof this.things[t]['properties'][ this.api_logs[i].property ] != 'undefined'){
+                                    if(typeof this.things[t]['properties'][ this.api_logs[i].property ]['title'] != 'undefined'){
+                                        const log_name = this.things[t].title + ' ' + this.things[t]['properties'][ this.api_logs[i].property ]['title'];
+                                        const dashed_log_name = log_name.replace(/\s/g , "-");
+                                        //console.log("generated log name: ", log_name);
+                                        if(log_names.length > 0 && log_names.indexOf(log_name) == -1){
+                                            console.error("generated log name did not match any name in the html");
+                                        }
+                                        
+                                        let li = document.createElement('li');
 
-            //li.innerHTML += log_name;
+                                        //li.innerHTML += log_name;
 
-            var input = document.createElement("input");
-                //input.type = "checkbox";
-                input.setAttribute('type', 'checkbox');
-                input.setAttribute('name', log_name);
-                input.setAttribute('id', log_name);
-                //input.setAttribute('id', log_name);
-                //input.value = log_name;
+                                        var input = document.createElement("input");
+                                            //input.type = "checkbox";
+                                            input.setAttribute('type', 'checkbox');
+                                            input.setAttribute('name', dashed_log_name);
+                                            input.setAttribute('id', dashed_log_name);
+                                            input.setAttribute('data-thing', this.api_logs[i].thing);
+                                            input.setAttribute('data-property', this.api_logs[i].property);
+                                            
+                                            //input.setAttribute('id', log_name);
+                                            //input.value = log_name;
             
-            var label = document.createElement("label");
-                label.setAttribute("for",log_name);
+                                        var label = document.createElement("label");
+                                            label.setAttribute("for",dashed_log_name);
 							
-			var span = document.createElement("span");
-				span.innerHTML = spaced_log_name;
+                            			var span = document.createElement("span");
+                            				span.innerHTML = log_name;
 
-            label.appendChild(input);
-			label.appendChild(span);
-            li.appendChild(label);
+                                        label.appendChild(input);
+                            			label.appendChild(span);
+                                        li.appendChild(label);
 			
-	  	    li.onclick = (event) => {//function(element_name){
-				console.log("filter item clicked");
-                this.filterLogs();
-	  	  	}
+                            	  	    li.onclick = (event) => {
+                            				if(this.debug){
+                                                console.log("filter item clicked");
+                                            }
+                                            this.filterLogs();
+                            	  	  	}
 			
-            ul.appendChild(li);
+                                        ul.appendChild(li);
+                                        
+                                        
+                                    }
+                                }
+                        
+                            }
+                            else{
+                                console.error("thing has no title? maybe an ancient addon? Skipping all the same..");
+                            }
+                    
+                        }
+            
+                    }
+                    /*
+                    if(this.api_logs[i].thing == device_id){
+                        //console.log("adding property: ", this.api_logs[i].property);
+                        properties_to_show.push( '/logs/things/' + device_id + '/properties/' + this.api_logs[i].property );
+                    }*/
+                }
+                
+                
+                
+                
+                
+                
+                
 
-        });
+                //log_names.sort(key=lambda v: v.upper());
+                log_names = log_names.sort((a, b) => {
+                  return a.localeCompare(b, undefined, {sensitivity: 'base'});
+                });
+                
+                
+                
+                log_names.forEach( spaced_log_name => {
+            
+                    //const log_name = spaced_log_name.replace(/\s+/g, '-');
+                    //console.log("log_name = " + log_name);
+                    
 
-        log_list_container.appendChild(ul);	
-		
-		
-		let filter_buttons = document.createElement('div');
-		filter_buttons.setAttribute("id", "candle-theme-log-list-buttons");
-		
-        
-		// Overlay button
-		let overlay_button = document.createElement('button');
-		overlay_button.setAttribute("id", "candle-theme-logs-overlay-button");
-        overlay_button.setAttribute("class", "candle-theme-logs-small-button");
-		overlay_button.textContent = "Overlay";
-		filter_buttons.appendChild(overlay_button)
-        
-        // Clear button
-		let clear_button = document.createElement('button');
-		clear_button.setAttribute("id", "candle-theme-logs-clear-button");
-        clear_button.setAttribute("class", "candle-theme-logs-small-button");
-		clear_button.textContent = "Clear";
-        clear_button.style.display = 'none';
-		filter_buttons.appendChild(clear_button)
-        
-        // Add collection button
-		let collection_button = document.createElement('button');
-		collection_button.setAttribute("id", "candle-theme-logs-add-collection-button");
-        collection_button.setAttribute("class", "candle-theme-logs-small-button");
-		collection_button.textContent = "Add collection";
-        collection_button.style.display = 'none';
-		filter_buttons.appendChild(collection_button)
-        
+                });
 
-        
-        
-		log_list_container.appendChild(filter_buttons)
+                log_list_container.appendChild(ul);	
+		
+		
+        		let filter_buttons = document.createElement('div');
+        		filter_buttons.setAttribute("id", "candle-theme-log-list-buttons");
 		
         
-		document.getElementById("candle-theme-logs-clear-button").onclick = (event) => {
-  		    //console.log("Clear button clicked");
-            this.addLogSelector();
-            this.filterLogs();
-		}
+        		// Overlay button
+        		let overlay_button = document.createElement('button');
+        		overlay_button.setAttribute("id", "candle-theme-logs-overlay-button");
+                overlay_button.setAttribute("class", "candle-theme-logs-small-button");
+        		overlay_button.textContent = "Overlay";
+        		filter_buttons.appendChild(overlay_button)
+        
+                // Clear button
+        		let clear_button = document.createElement('button');
+        		clear_button.setAttribute("id", "candle-theme-logs-clear-button");
+                clear_button.setAttribute("class", "candle-theme-logs-small-button");
+        		clear_button.textContent = "Clear";
+                clear_button.style.display = 'none';
+        		filter_buttons.appendChild(clear_button)
+        
+                // Add collection button
+        		let collection_button = document.createElement('button');
+        		collection_button.setAttribute("id", "candle-theme-logs-add-collection-button");
+                collection_button.setAttribute("class", "candle-theme-logs-small-button");
+        		collection_button.textContent = "Add collection";
+                collection_button.style.display = 'none';
+        		filter_buttons.appendChild(collection_button)
         
         
-		document.getElementById("candle-theme-logs-overlay-button").onclick = (event) => {
-  		    //console.log("Overlay button clicked");
+        		log_list_container.appendChild(filter_buttons)
+		
+        
+        		document.getElementById("candle-theme-logs-clear-button").onclick = (event) => {
+          		    if(this.debug){
+                        console.log("Clear logs filter button clicked");
+                    }
+                    this.addLogSelector(); // TODO: could this attach additional listeners?
+                    this.filterLogs();
+        		}
+        
+        
+        		document.getElementById("candle-theme-logs-overlay-button").onclick = (event) => {
+          		    //console.log("Overlay button clicked");
 			
-	        if (logs_view.classList.contains('candle-theme-logs-overlay')) {
-				logs_view.classList.remove('candle-theme-logs-overlay');
-		  	}
-			else{
-				logs_view.classList.add('candle-theme-logs-overlay');
-			}
-		}
+        	        if (logs_view.classList.contains('candle-theme-logs-overlay')) {
+        				logs_view.classList.remove('candle-theme-logs-overlay');
+        		  	}
+        			else{
+        				logs_view.classList.add('candle-theme-logs-overlay');
+        			}
+        		}
 
         
-        if (localStorage.getItem("candle_theme_log_collections") !== null) {
-            this.showLogCollections();
+                if (localStorage.getItem("candle_theme_log_collections") !== null) { // TODO: isn't this deprecated? Isn't this stored on the controller now? I guess it saves some time. But it could get out of sync.
+                    console.warn("add_log_selector: candle_theme_log_collections was still in local storage?");
+                    this.showLogCollections();
+                }
+        
+        		document.getElementById("candle-theme-logs-add-collection-button").onclick = (event) => {//.onclick = function(event){
+                    this.addLogCollection();
+        		}
+                
+                
+                
+            }
         }
         
-		document.getElementById("candle-theme-logs-add-collection-button").onclick = (event) => {//.onclick = function(event){
-            this.addLogCollection();
-		}
+        
+        
+        /*
+        // old way of going over the list of available log names in the html
+        
+        
+        */
+       
+		
+		
+
+        
+
+        
         
 		
         //this.filterLogs(); // resets the filtered logs to no filter
@@ -1634,7 +1717,9 @@
 
     // Goes over all the ticked checkboxes, and based on that shows or hides logs
     filterLogs(){
-        //console.log("in filterLogs");
+        if(this.debug){
+            console.log("in filterLogs");
+        }
 		// get list of all log names
 		const all_log_name_elements = document.querySelectorAll('#logs-view .logs-log-name');
         var all_log_names = [];
@@ -1643,7 +1728,7 @@
 			//console.log(log_name_element);
 			//console.log(log_name_element.innerHTML);
         }
-        //console.log("all_log_names: ", all_log_names);
+        //console.log("filterLogs: all_log_names: ", all_log_names);
 		//console.log("all log item names = " + all_log_names);
 		
 		// get list of selected log names
@@ -1695,6 +1780,110 @@
     }
 
     
+    // Not currently used?
+    // Transforms a thing-property combo into a single string name (concatenated titles)
+    ids_to_log_name(combo){
+        if(this.debug){
+            console.log("in log_name_to_ids with combo: ", combo);
+        }
+        
+        if(typeof this.things == 'undefined'){
+            console.warn("ids_to_log_name: too early, this.things was still undefined");
+            return null;
+        }
+        
+        for (var t=0;t<this.things.length;t++){
+            if(this.things[t].href.endsWith('/' + combo.thing)){
+                //const thing_id = this.things[t].href.split('/').pop();
+                //console.log("found a thing id that is in the logs too: ", thing_id);
+                if(this.things[t].title != 'undefined'){
+                    if(typeof this.things[t]['properties'][combo.property] != 'undefined'){
+                        if(typeof this.things[t]['properties'][combo.property]['title'] != 'undefined'){
+                            return this.things[t].title + ' ' + this.things[t]['properties'][combo.property]['title'];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    log_name_to_ids(old_name){
+        if(this.debug){
+            console.log("in log_name_to_ids with old_name: ", old_name);
+        }
+        
+        old_name = old_name.replace(/\s/g , "-"); // make sure the old name uses dashes instead of space. The are compared with dashes because the old names were stored that way.
+        
+        if(typeof this.api_logs == 'undefined'){
+            console.warn("log_name_to_ids: too early, this.api_logs was still undefined");
+            return null;
+        }
+        if(typeof this.things == 'undefined'){
+            console.warn("log_name_to_ids: too early, this.things was still undefined");
+            return null;
+        }
+        //console.log("log_name_to_ids. api_logs and things data is available: ", this.api_logs, this.things);
+        if(this.debug){
+            console.log("log_name_to_ids: OK, api_logs and things data is available");
+        }
+        
+        var found_thing_title = null;
+        for (var i=0;i<this.api_logs.length;i++){
+            
+            for (var t=0;t<this.things.length;t++){
+                if(this.things[t].href.endsWith('/' + this.api_logs[i].thing)){
+                    const thing_id = this.things[t].href.split('/').pop();
+                    //console.log("found a thing id that is in the logs too: ", thing_id);
+                    if(this.things[t].title != 'undefined'){
+                        //console.log("found a thing title that is in the log: ", this.things[t].title);
+                        
+                        const dashed_title = this.things[t].title.replace(/\s/g , "-"); //.replace(/-/g, ' ');
+                        //console.log("--dashed_title: ", dashed_title);
+                        if(old_name.startsWith(dashed_title)){
+                            if(this.debug){
+                                console.log("Found it. The old name started with the title of this thing: ", dashed_title);
+                            }
+                            found_thing_title = this.things[t].title;
+                            if(typeof this.things[t]['properties'] != 'undefined'){
+                                const property_keys = Object.keys(this.things[t]['properties']);
+                                for (var p=0;p<property_keys.length;p++){
+                                    if(typeof this.things[t]['properties'][ property_keys[p] ]['title'] != 'undefined'){
+                                        
+                                        const dashed_property_title = this.things[t]['properties'][ property_keys[p] ]['title'].replace(/\s/g , "-");
+                                        
+                                        if(dashed_title + '-' + dashed_property_title == old_name){
+                                            if(this.debug){
+                                                console.log("Found matching property id: ", property_keys[p]);
+                                            }
+                                            return {'thing':thing_id,'property': property_keys[p]};
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    else{
+                        console.error("thing has no title? maybe an ancient addon? Skipping all the same..");
+                    }
+                    
+                }
+            
+            }
+            /*
+            if(this.api_logs[i].thing == device_id){
+                //console.log("adding property: ", this.api_logs[i].property);
+                properties_to_show.push( '/logs/things/' + device_id + '/properties/' + this.api_logs[i].property );
+            }*/
+        }
+        
+        
+        return null;
+    }
+
+    
+    // Create a new collection of logs and save it to the backend
     addLogCollection(){
         //let self = this;
         //var log_collections = {};
@@ -1705,12 +1894,28 @@
         const selected_logs = document.querySelectorAll(' #logs-view #candle-theme-log-list-ul input:checked');
         var selected_log_names = [];
         for (const selected_log of selected_logs) {
-            selected_log_names.push(selected_log.name);
-			//console.log(selected_log);
+            if(this.debug){
+                console.log("addLogCollection. Selected log: ", selected_log);
+            }
+            
+            if(typeof selected_log.dataset.thing != 'undefined' && typeof selected_log.dataset.property != 'undefined'){
+                if(this.debug){
+                    console.log("GREAT, getting list of selected logs the modern way: ", selected_log.dataset.thing, selected_log.dataset.property);
+                }
+                selected_log_names.push({'thing':selected_log.dataset.thing,'property':selected_log.dataset.property});
+            }
+            else{
+                console.error("getting log combo the old fashioned way");
+                const ids_dict = log_name_to_ids(selected_log.name);
+                if(ids_dict != null){
+                    selected_log_names.push(ids_dict);
+                }
+            }
+            
         }
         
         
-        localStorage.setItem('keyboardEnabled', false);
+        //localStorage.setItem('keyboardEnabled', false); // TODO: what does this do again?
         
         if( selected_logs.length > 1){
             
@@ -1720,7 +1925,9 @@
             }
             
             if(document.getElementById('extension-candle-theme-collection-input-popup-container') == null){
-                console.log("creating and appending collection name input popup html");
+                if(this.debug){
+                    console.log("creating and appending collection name input popup html");
+                }
                 
                 var collection_popup_el = document.createElement("div");
                 collection_popup_el.id = 'extension-candle-theme-collection-input-popup-container';
@@ -1736,7 +1943,10 @@
                 document.body.appendChild(collection_popup_el);
                 
                 document.getElementById('extension-candle-theme-collection-name-save-button').onclick = (event) => {
-                    console.log("save collection button clicked");
+                    if(this.debug){
+                        console.log("save collection button clicked");
+                    }
+                        
                     const collection_name = document.getElementById('extension-candle-theme-collection-name-input').value;
                 
                     if(collection_name != "" && collection_name != null){
@@ -1750,7 +1960,7 @@
                         */
                         this.log_collections[collection_name] = selected_log_names; //.push({'name':collection_name,'logs':selected_log_names});
         
-                        localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
+                        //localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
                 
                         //console.log('going to save: ', this.log_collections);
                     
@@ -1794,9 +2004,98 @@
     }
 
 
+    // Upgrades user data to more future proof version of log collections
+    upgrade_collections_data(old_collections){
+        if(this.debug){
+            console.log("in upgrade_old_collections. old_collections: ", old_collections);
+        }
+        var new_collections_data = {};
+        //if(this.api_logs != null){ // is this even a possiblity?
+        //console.log("attempting upgrade of old collections data");
+        
+        const keys = Object.keys(old_collections);
+        
+        for(let k= 0; k < keys.length; k++){
+        //for (const old_collection of old_collection) {
+            //console.log("\n-----", k, keys[k]);
+            const old_collection = old_collections[ keys[k] ];
+            //console.log("old_collection: ", old_collection);
+            var new_collection_array = [];
+            for(let oc = 0; oc < old_collection.length; oc++){
+                //console.log("upgrade_collections_data: upgrading string: ", old_collection[oc]);
+                const collection_combo = this.log_name_to_ids( old_collection[oc] );
+                //console.log("improved combo: ", collection_combo);
+                if(collection_combo != null){
+                    //console.log("upgraded collection combo: ", collection_combo);
+                    new_collection_array.push(collection_combo);
+                }
+                else{
+                    console.warn("upgrade collections: not adding improved combo because log_name_to_ids returned null for: ", old_collections[oc]);
+                }
+            }
+            if(new_collection_array.length > 0){
+                //console.log("new collection array is not empty, good: ", new_collection_array);
+                new_collections_data[ keys[k] ] = new_collection_array;
+            }
+            else{
+                console.warn("upgrade_collections_data: entire upgraded array was empty??");
+            }
+            
+        
+            
+        }
+        
+        if(this.debug){
+            console.log("UPGRADED new_collections_data: ", new_collections_data, "\n");
+        }
+        
+        this.log_collections = new_collections_data;
+        // Also save it to the server again, why not.
+        
+        
+        /*
+                  		// Save collections after a collection was deleted
+                        window.API.postJson(
+                          `/extensions/${this.id}/api/ajax`,
+                            {'action':'save_collections','collections':this.log_collections}
+
+                        ).then((body) => {
+                			//console.log("Save collections API result: ", body);
+                            localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
+            
+                        }).catch((e) => {
+                  			console.log("Error saving log collections after deleting a collection: ", e);
+                        });	
+            
+            
+        */
+        
+            
+            /*
+            for (var i=0;i<this.api_logs.length;i++){
+                if(this.api_logs[i].thing == device_id){
+                    
+                }
+                
+            }
+            */
+            
+            // this.log_collections = new_collections_data;
+            
+        //}
+        //else{
+        //    console.error("attempting collections data upgrade: darn, api_logs was still null");
+        //}
+        
+        
+        
+    }
+
     // Creates collection buttons
     showLogCollections(){
-        //console.log("in showLogCollections");
+        if(this.debug){
+            console.log("in showLogCollections");
+        }
         
         //var log_collections = {};
         
@@ -1807,12 +2106,32 @@
             {'action':'get_collections'}
 
         ).then((body) => {
-			//console.log("get_collections API result:");
-			//console.log(body);
+			if(this.debug){
+                console.log("get_collections API result:");
+			    console.log(body);
+            }
             if(typeof body.collections != 'undefined'){
-                //console.log("body.collections existed: ", body.collections);
-                this.log_collections = body.collections;
-                localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
+                if(this.debug){
+                    console.log("theme: logs: theme api: get_collections response: body.collections existed: ", body.collections);
+                }
+                
+                
+                const keys = Object.keys(body.collections);
+        
+                if(keys.length > 0){
+                    //for(let k= 0; k < keys.length; k++){
+                    // get first dict item's first array item. If it's a string, then it's old fashioned collections data.
+                    if(typeof body.collections[ keys[0] ][0] == "string" ){
+                        console.warn("Candle theme: OLD FASHIONED COLLECTIONS DATA SPOTTED. WILL ATTEMPT UPGRADE.");
+                        this.upgrade_collections_data(body.collections);
+                    }
+                    else{
+                        //console.log("collections data already upgraded");
+                        this.log_collections = body.collections;
+                    }
+                }
+                
+                //localStorage.setItem("candle_theme_log_collections", JSON.stringify(this.log_collections));
             }
         }).catch((e) => {
   			//console.log("Error getting log collections data: ", e);
@@ -1836,6 +2155,9 @@
             collection_names.forEach((collection_name, index) => {
                 //console.log(`${collection_name}: ${this.log_collections[collection_name]}`);
             
+                if(this.debug){
+                    console.log("creating button for collection: ", collection_name, index);
+                }
         		let new_collection_button = document.createElement('button');
         		new_collection_button.setAttribute("class", "candle-theme-logs-collection-button candle-theme-logs-small-button");
         		new_collection_button.textContent = collection_name;
@@ -1844,12 +2166,18 @@
                 new_collection_button.onclick = (event) => { //function(element_name){
                     //console.log("collection button clicked", event.target.innerText);
                     //console.log(this);
-                    //console.log("log_collections: ", log_collections);
+                    if(this.debug){
+                        console.log("log collection button clicked. All log_collections: ", this.log_collections);
+                        console.log("- will show this log_collection: ", this.log_collections[event.target.innerText]); // TODO: xxxx this will fail with new approach? Or is this the log collection name?
+                    }
+                    
                     //console.log("log_collection: ", log_collections[event.target.innerText]);
                     let should_check = this.log_collections[event.target.innerText];
-                    //console.log("should_check: " + should_check);
+                    if(this.debug){
+                        console.log("collection button clicked. should_check these checkboxes: ", should_check);
+                    }
                     this.filter_these_logs(should_check);
-                
+                    
                     // remove sidebar when collection button is clicked
                     //this.hideLogMenu();
                     //document.getElementById('candle-theme-log-collections-container').innerHTML = "";
@@ -1904,35 +2232,76 @@
     }
 
 
+
     // Toggles the correct checkboxes, and then calls filterLogs.
-    filter_these_logs(should_check){
+    filter_these_logs(should_check){ // ingests list of thing+property dictionaries
         if(this.debug){
-            console.log("theme: should_check these log filter checkboxes: ", should_check);
+            console.log("theme: should check these log filter checkboxes: ", should_check);
         }
         const log_checkboxes = document.querySelectorAll(' #logs-view #candle-theme-log-list-ul input');
 
-        //console.log("log_checkboxes: ", log_checkboxes);
         for (const checkbox of log_checkboxes) {
-            //const checkbox_name = checkbox.name
-            //console.log("checkbox.name: ", checkbox.name);
+            if(this.debug){
+                console.log("checkbox.name: ", checkbox.name);
+            }
             
-            if(should_check.indexOf(checkbox.name) == -1){
-                console.log("should not check");
+            if(typeof checkbox.dataset.thing != 'undefined' && typeof checkbox.dataset.property != 'undefined'){
                 checkbox.checked = false;
+                // Loop over all the thing-properties combo's that should be checked
+                for( let cb = 0; cb < should_check.length; cb++){
+            
+                    if(typeof should_check[cb].thing != 'undefined' && typeof should_check[cb].property != 'undefined'){
+                    //console.log("OK .thing exists in log_checkboxes"); // , log_checkboxes
+                
+                    //const0checkbox_name = checkbox.name
+                    
+                    //console.log("checkbox.name: ", checkbox.name);
+                    
+                    
+                        //console.log("thing and property exist: ", checkbox.name);
+                        //console.log("checkbox.dataset.thing: ", checkbox.dataset.thing);
+                        //console.log("checkbox.dataset.property: ", checkbox.dataset.property);
+                        if(should_check[cb].thing == checkbox.dataset.thing && should_check[cb].property == checkbox.dataset.property){
+                            if(this.debug){
+                                console.log("setting checkbox to true: ", checkbox.dataset.property);
+                            }
+                            checkbox.checked = true;
+                        }
+                        
+                    }
+                    else{
+                        console.error("Error, should_check item does not have thing and/or property");
+                        checkbox.checked = false;
+                    }
+                    /*
+                    if(should_check.indexOf(checkbox.name) == -1){
+                        console.log("should not check");
+                        checkbox.checked = false;
+                    }
+                    else{
+                        console.log("should check: " + checkbox.name);
+                        checkbox.checked = true;
+                    }*/
+                }
             }
             else{
-                console.log("should check: " + checkbox.name);
-                checkbox.checked = true;
+                console.error("Error in filter_these_logs: no thing and property dataset attribute in checkbox element");
             }
+            
         }
+
+        
         
         // finally, call filter logs with the new checkboxes settings
         this.filterLogs();
     }
 
 
+
+    // This takes yet another approach, comparing the href in each log container with href's from the selected device.
+    // Downside is that this doesn't also check the filter checkboxes.
     filter_logs_by_device(device_id){
-        //console.log("filter logs by device: " + device_id);
+        console.log("in filter logs by device. Device ID: " + device_id);
         //console.log(this.api_logs);
         
         var properties_to_show = [];
@@ -1948,9 +2317,7 @@
         //console.log("log_elements: ", log_elements);
         
         if(log_elements == null){
-            
             setTimeout(() => {
-                
                 this.filter_logs_by_device(device_id);
             }, 100);
             return;
@@ -2070,6 +2437,7 @@
     }
     
     
+    // TODO; add these buttons on the things overview page too?
     addThermostatButtons() {
       const thermostats = document.getElementsByTagName(
         'webthing-target-temperature-property'
@@ -2155,9 +2523,6 @@
             }, 100);
         }
         */
-        
-
-        
         
     }
     

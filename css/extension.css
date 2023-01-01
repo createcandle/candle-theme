@@ -1111,6 +1111,8 @@ body #main-menu #things-menu-item{
 	min-width: 130px;
     width:auto;
     max-width: calc(100% - 2rem);
+    height:auto;
+    font-size:1..6rem;
 }
 
 .webthing-on-off-switch-capability::part(label){
@@ -1158,6 +1160,7 @@ webthing-light-capability::part(label){
 
 webthing-level-property.component::part(number){
     margin-bottom:10px;
+    height:auto;
 }
 
 
@@ -1167,8 +1170,8 @@ webthing-level-property.component::part(number){
 
 /**/
 webthing-level-property.component::part(slider)::-webkit-slider-runnable-track{
-    width: 13rem;
-    min-width: 13rem;
+    width: 11rem;
+    min-width: 11rem;
     outline: none;
     opacity: 1;
     border-radius:12px;
@@ -1177,7 +1180,7 @@ webthing-level-property.component::part(slider)::-webkit-slider-runnable-track{
 webthing-brightness-property.component::part(slider),
 webthing-level-property.component::part(slider){
 	margin-left:-2.5rem;
-    width: 13rem;
+    width: 11rem;
     /*height: 16px;
     background: #d3d3d3;*/
     outline: none;
@@ -1201,7 +1204,7 @@ webthing-brightness-property.component::part(form){
 
 @supports (-moz-appearance:none) {
     webthing-level-property.component::part(slider){
-        width:13rem;
+        width:11rem;
     }
 }
 
@@ -1380,6 +1383,7 @@ webthing-pushed-property.component::part(value){
         /*min-height:2rem;*/
         border-bottom-left-radius: .5rem;
         border-top-left-radius: .5rem;
+        width:100%;
     }
     
     .component::part(text),
@@ -1396,10 +1400,11 @@ webthing-pushed-property.component::part(value){
         width:100%;
     }
     
+    
     webthing-brightness-property.component::part(slider),
     webthing-level-property.component::part(slider){
-        width:92%;
-        margin-left:4%;
+        width:100%;
+        margin-left:0;
     }
     
     /*
@@ -1891,12 +1896,16 @@ input[type="range"]::-webkit-slider-runnable-track{
 
 .logs-log-container{
     animation: extension-candle-theme-fadeIn 0.5s linear;
-    margin-bottom:4rem;
+    /*margin-bottom:4rem;
+    margin-top:4rem;*/
 }
 
+.logs-log-container:nth-child(even){
+    background-color:rgba(0,0,0,.07);
+}
 
 .logs-log-container:not(.solo-view){
-    padding:2rem 0;
+    padding:6rem 0 4rem 0;
 }
 
 
@@ -1906,7 +1915,7 @@ input[type="range"]::-webkit-slider-runnable-track{
 }
 
 .logs-log-week-dropdown{
-    top:1rem;
+    top:5rem;
 }
 
 
@@ -2039,7 +2048,6 @@ body.zoom3 #logs-view .arrow-select{
     border-radius:.5rem;*/
     padding:1rem;
     text-align:center;
-    max-width:80rem;
     margin:2rem 8rem;
     border-left:2rem solid transparent;
     border-right:2rem solid transparent;
@@ -2536,7 +2544,7 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
     }
 
     #rules{
-        padding: 0 7.6rem;
+        padding: 2rem 7.6rem 10rem 7.6rem;
     }
     /*
     body > section[id^='extension-']{
