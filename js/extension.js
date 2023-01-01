@@ -1106,14 +1106,14 @@
                             button_el.classList.add('text-button');
                             button_el.innerText = buttons_keys[b];
                             button_el.onclick = (event) => {
-                                //if(this.debug){
+                                if(this.debug){
                                     console.log("quick log button clicked. data: ", b, buttons_data[buttons_keys[b]]);
-                                //}
+                                }
                                 var logs_to_show = [];
                                 for(let d = 0; d < buttons_data[buttons_keys[b]].length; d++){
-                                    //if(this.debug){
+                                    if(this.debug){
                                         console.log("d: ", d, buttons_data[buttons_keys[b]][d]);
-                                    //}
+                                    }
                                     
                                     //var log_name = buttons_data[buttons_keys[b]][d]['thing_title'] + "-" + buttons_data[buttons_keys[b]][d]['property_title'];
                                     //log_name = log_name.replace(/\s/g , "-");
