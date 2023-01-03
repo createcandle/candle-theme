@@ -2344,8 +2344,9 @@
       for (const item of items) {
         let part = item.getAttribute('id');
         if (part !== null) {
-          if (part .indexOf('-') != -1) {
-			  part = part.substr(0, part.indexOf('-'));
+          if (part.indexOf('-') != -1) {
+              //part = part.substr(0, part.indexOf('-'));
+              part = part.substring(0, part.lastIndexOf('-'));
           }
           item.setAttribute('part', part);
         }
