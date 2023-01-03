@@ -19,7 +19,7 @@ fi
 mkdir -p package
 
 # Put package together
-cp -r LICENSE manifest.json *.py README.md pkg css images js views package/
+cp -r lib pkg LICENSE manifest.json *.py README.md  package/
 find package -type f -name '*.pyc' -delete
 find package -type f -name '._*' -delete
 find package -type d -empty -delete
@@ -33,10 +33,12 @@ cd -
 
 # Make the tarball
 echo "creating archive"
-TARFILE="candle-theme-${version}.tgz"
+TARFILE="candle-theme-${version}${TARFILE_SUFFIX}.tgz"
+echo "TARFILE: $TARFILE"
 tar czf ${TARFILE} package
 
+echo "creating shasums"
 shasum --algorithm 256 ${TARFILE} > ${TARFILE}.sha256sum
 cat ${TARFILE}.sha256sum
-
+#sha256sum ${TARFILE}
 #rm -rf SHA256SUMS package
