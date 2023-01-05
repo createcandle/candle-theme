@@ -1025,11 +1025,11 @@ body #main-menu #things-menu-item{
     margin-bottom:1rem;
     box-sizing:border-box;
     height:1.4rem;
+    overflow:hidden;
 }
 .component::part(bar){
     border-bottom-left-radius: .4rem;
     border-top-left-radius: .4rem;
-    height:1.2rem;
 }
 
 .component::part(unit){
@@ -1903,6 +1903,12 @@ input[type="range"]::-webkit-slider-runnable-track{
     content:"Missing";
     color:red;
 }
+
+.logs-log-name > span:first-of-type::after{
+    content:" - ";
+    opacity:.5;
+}
+
 
 .logs-log-week-dropdown{
     top:5rem;
