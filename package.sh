@@ -17,6 +17,7 @@ fi
 
 # Prep new package
 mkdir -p package
+mkdir -p lib
 
 # Put package together
 cp -r lib pkg LICENSE manifest.json *.py README.md  package/
