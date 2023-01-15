@@ -2188,6 +2188,60 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
 }
 
 
+
+
+/*  EXHIBIT MODE  */
+
+body.exhibit-mode #domain-settings-local-update,
+body.exhibit-mode .network-settings-list-item-button,
+body.exhibit-mode #user-remove-1,
+body.exhibit-mode #user-edit-1,
+body.exhibit-mode #add-user-button,
+body.exhibit-mode #authorization-settings-link,
+body.exhibit-mode #developer-settings-link,
+body.exhibit-mode #floorplan-edit-button,
+body.exhibit-mode .create-log-button,
+body.exhibit-mode #overflow-button,
+
+body.exhibit-mode #overflow-menu > *,
+body.exhibit-mode .localization-item
+{
+    pointer-events: none!important;
+}
+
+
+
+
+/*  Animations */
+
+@keyframes hideThenFadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 640px) {
     
     .triangle-select.rule-effect-select{
@@ -2323,25 +2377,6 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover{
         display:none;
     }
 
-}
-
-
-
-
-/*  Animations */
-
-@keyframes hideThenFadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    60% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
 }
 
 
