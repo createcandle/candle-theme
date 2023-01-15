@@ -46,7 +46,8 @@
 	  this.devices_with_logs = [];
       this.api_logs; // later becomes array
       this.log_collections = {};
-      this.kiosk = false;
+      this.kiosk = false; // If running on the built-in kiosk browser (indicated by the virtual keyboard existing)
+      this.exhibit_mode = false;
       
       //console.log("hostname: ",window.location.hostname);
       //console.log("origin: ", window.location.origin);
@@ -326,20 +327,26 @@
       document.querySelector('#settings-menu .section-title-icon').addEventListener('click', () => {
                     		//console.log("clicked on link to logs button. This:", this);
                             this.developer_clicks++;
+                            /*
                             if(this.developer_clicks > 7){
                                 document.body.classList.remove('developer');
-                                
-                            }
-                            else if(this.developer_clicks > 3){
                                 this.developer_clicks = 0;
-                                //document.getElementById('authorization-settings-link').style.display = 'block';
-                                //document.getElementById('experiment-settings-link').style.display = 'block';
-                                //document.getElementById('developer-settings-link').style.display = 'block';
+                            }
+                            else 
+                            */
+                            if(this.developer_clicks > 3){
+                                this.developer_clicks = 0;
                                 if( document.body.classList.contains('developer') ){
                                     document.body.classList.remove('developer');
                                 }
                                 else{
-                                    document.body.classList.add('developer');
+                                    if(!this.exhibit_mode){
+                                        document.body.classList.add('developer');
+                                    }
+                                    else{
+                                        console.warn("Candle theme: cannot enable developer mode with 4 gear clicks: exhibit mode active");
+                                    }
+                                    
                                 }
                                 
                             }
@@ -434,6 +441,10 @@
                 if(this.debug){
                     console.log("Candle theme: /init response: ", body);
                 }
+            }
+            
+            if(typeof body.exhibit_mode != 'undefined'){
+                this.exhibit_mode = body.exhibit_mode;
             }
             
             if(typeof body.background_color != 'undefined'){

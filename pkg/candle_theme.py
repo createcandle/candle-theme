@@ -46,6 +46,9 @@ class CandleThemeAPIHandler(APIHandler):
             
         self.persistent_data = {'background_color':"",'hide_floorplan':False, 'zoom':'100%', 'collections':{}}
             
+        self.exhibit_mode = False
+        if os.path.isfile('/boot/exhibit_mode.txt'):
+            self.exhibit_mode = True
 
         # Paths
         # Get persistent data
@@ -277,6 +280,7 @@ class CandleThemeAPIHandler(APIHandler):
                           content=json.dumps({'debug': self.DEBUG, 
                                               'background_color':self.persistent_data['background_color'], 
                                               'hide_floorplan':self.persistent_data['hide_floorplan'], 
+                                              'exhibit_mode':self.exhibit_mode,
                                               'zoom':self.persistent_data['zoom'], 
                                               'zoom_everywhere':self.persistent_data['zoom_everywhere'], 
                                               'allow_pinch_to_zoom':self.persistent_data['allow_pinch_to_zoom'], 
