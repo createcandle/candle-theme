@@ -1139,7 +1139,18 @@
                         }
                         
                     }
+                    /*
+                    setTimeout(() => {
+                        if(document.getElementById('candle-theme-quick-log-filter-container') != null){
+                            document.getElementById('candle-theme-quick-log-filter-container').style.display = 'block';
+                        }
+                    }, 1000);
+                    */
+                    
+                    
                 }
+                
+                
             
             }
             
@@ -1688,13 +1699,31 @@
 		const all_log_name_elements = document.querySelectorAll('#logs-view .logs-log-name');
         var all_log_names = [];
         for (const log_name_element of all_log_name_elements) {
-            all_log_names.push(log_name_element.innerText.replace(/\s+/g, '-'));
-			//console.log(log_name_element);
-			//console.log(log_name_element.innerHTML);
+            if(this.debug){
+                //console.log("log name element: ", log_name_element);
+            }
+            
+            var log_name_raw = null;
+            const span1 = log_name_element.getElementsByTagName('span')[0];
+            const span2 = log_name_element.getElementsByTagName('span')[1];
+            
+            if(span1 != null && span2 != null){
+                log_name_raw = span1.innerText + " " + span2.innerText;
+            }
+            else{
+                log_name_raw = log_name_element.innerText;
+            }
+            if(log_name_raw != null && log_name_raw != ""){
+                all_log_names.push(log_name_raw.replace(/\s+/g, '-'));
+            }
         }
-        //console.log("filterLogs: all_log_names: ", all_log_names);
-		//console.log("all log item names = " + all_log_names);
+        
+        if(this.debug){
+            console.log("\nfilterLogs: all_log_names: ", all_log_names);
+        }
 		
+        
+        
 		// get list of selected log names
         const selected_logs = document.querySelectorAll(' #logs-view #candle-theme-log-list-ul input:checked');
         //console.log("selected_logs: ", selected_logs);
@@ -1704,7 +1733,7 @@
 			//console.log(selected_log);
         }
         if(this.debug){
-            console.log("selected log filter item names = " + selected_log_names);
+            console.log("selected log filter item names: ", selected_log_names);
         }
 		
         if(selected_log_names.length > 0){
@@ -1731,12 +1760,18 @@
 			if( selected_log_names.indexOf(all_log_names[log_counter]) > -1 || selected_log_names.length == 0 ){
 				//console.log("do not hide " + all_log_names[log_counter]);
 				//log_container.style.visibility = 'visible';
+                if(this.debug){
+                    //console.log("not hiding log: ", all_log_names[log_counter], ' because it is in: ', selected_log_names);
+                }
 				log_container.style.display = 'block';
 			}
 			else{
 				//console.log("hiding log container: " + all_log_names[log_counter]);
 				//console.log(log_container);
 				//log_container.style.visibility = 'hidden';
+                if(this.debug){
+                    //console.log("hiding log: ", all_log_names[log_counter], ' because it is not in: ', selected_log_names);
+                }
 				log_container.style.display = 'none';
 			}
 			log_counter++;
