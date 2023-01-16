@@ -20,6 +20,7 @@
       })(window.history);
       */
       
+      // Useed to detect URL changes
       var pushState = history.pushState;
       history.pushState = function(state) {
           if (typeof history.onpushstate == "function") 
@@ -36,6 +37,57 @@
       //console.log("API: ", API);
       //console.log("models: ", models);
       //console.log("APP: ", app);
+      
+      
+      
+      /*
+      API.getPlatform().then((platform) => {
+          console.log('Theme: API: platform: ', platform);
+      });
+      
+      API.getThings().then((things) => {
+          console.log('Theme:API: things: ', things);
+      });
+      
+      API.getThings().then((things) => {
+          console.log('Theme:API: things: ', things);
+      });
+      
+      API.getThing('device_id_here').then((thing) => {
+          console.log('Theme:API: thing: ', thing);
+      });
+      
+      try{
+          if(typeof API.getGroups === 'function') {
+              API.getGroups().then((groups) => {
+                  //console.log('groups: ', groups);
+              });
+          }
+      }
+      catch(e){
+          //console.log("Api test error: ", e);
+      }
+
+      
+      API.getAddonsInfo().then((addons) => {
+          //console.log('Theme: API: addons: ', addons);
+      });
+      
+      
+      API.getInstalledAddons().then((addons) => {
+          //console.log('addons: ', addons);
+      });
+      
+      
+      API.getExtensions().then((extensions) => {
+          //console.log('extensions: ', extensions);
+      });
+      
+      
+      API.getAllUserInfo().then((user_info) => {
+          //console.log('user_info: ', user_info);
+      });
+      */
       
       //console.log("addon settings: ", window.API.getAddonConfig("candleappstore"));
       this.debug = false;
@@ -182,51 +234,6 @@
       this.previous_document_location = window.location.pathname;
     
       
-  
-      /*
-      API.getPlatform().then((platform) => {
-          console.log('Theme: API: platform: ', platform);
-      });
-      
-      API.getThings().then((things) => {
-          console.log('Theme:API: things: ', things);
-      });
-      
-      API.getThing('device_id_here').then((thing) => {
-          console.log('Theme:API: thing: ', thing);
-      });
-      
-      try{
-          if(typeof API.getGroups === 'function') {
-              API.getGroups().then((groups) => {
-                  //console.log('groups: ', groups);
-              });
-          }
-      }
-      catch(e){
-          //console.log("Api test error: ", e);
-      }
-
-      
-      API.getAddonsInfo().then((addons) => {
-          //console.log('Theme: API: addons: ', addons);
-      });
-      
-      
-      API.getInstalledAddons().then((addons) => {
-          //console.log('addons: ', addons);
-      });
-      
-      
-      API.getExtensions().then((extensions) => {
-          //console.log('extensions: ', extensions);
-      });
-      
-      
-      API.getAllUserInfo().then((user_info) => {
-          //console.log('user_info: ', user_info);
-      });
-      */
       
       var remove_group_question = document.createElement('div');
       remove_group_question.setAttribute("id", "candle-theme-remove-group-question");
@@ -273,7 +280,10 @@
               const search_input = document.getElementById('candle-theme-things-search-input');
               if(document.activeElement !== search_input){
                   //console.log("giving focus");
-                  search_input.focus();
+                  if(!this.kiosk){
+                      search_input.focus();
+                  }
+                  
               }
           }
           else if(document.location.href.endsWith('/settings/addons/discovered')){
