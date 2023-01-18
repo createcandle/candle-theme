@@ -652,37 +652,7 @@
             
             
             
-            // Handle last-logs-view time
-            window.API.postJson(
-              `/extensions/${this.id}/api/ajax`,
-                {'action':'get_last_logs_view_time'}
 
-            ).then((body) => {
-                //console.log("get_last_logs_view_time response: ", body);
-                if(typeof body.last_log_view_time != 'undefined'){
-                    if(body.last_log_view_time != null){
-                        try{
-                            if(document.getElementById('extension-candle-theme-last-logs-view-time-container') == null){
-                    
-                    			var last_logs_view_time_container_el = document.createElement("div");
-                    			last_logs_view_time_container_el.setAttribute("id", "extension-candle-theme-last-logs-view-time-container");
-			    
-                    			last_logs_view_time_container_el.innerHTML = '<span>The logs were last viewed on </span><span id="extension-candle-theme-last-logs-view-time">...</span>';
-                    			//new_log_filter_container.append(toggle);
-                    			document.getElementById("logs-view").append(last_logs_view_time_container_el);
-                            }
-                            document.getElementById('extension-candle-theme-last-logs-view-time').innerText = body.last_log_view_time;
-                        }
-                        catch(e){
-                            console.log("error adding/updating last_log_view_time_container: ", e);
-                        }
-                    }
-                    
-                }
-                
-            }).catch((e) => {
-      			console.log("Error calling get_last_logs_view_time: ", e);
-            });	
             
             window.setTimeout(() => {
                 if(window.location.pathname == '/logs'){
@@ -778,6 +748,10 @@
                 if(this.debug){
                     console.log("theme: updated list of devices with logs: ", this.devices_with_logs);
                 }
+                
+                if(logs.length > 0){
+                    this.show_last_log_view_time();
+                }
                 //window.location.pathname = '/logs';
             
                 resolve();
@@ -794,6 +768,41 @@
             });
         
         });
+    }
+
+
+    show_last_log_view_time(){
+        // Handle last-logs-view time
+        window.API.postJson(
+          `/extensions/${this.id}/api/ajax`,
+            {'action':'get_last_logs_view_time'}
+
+        ).then((body) => {
+            //console.log("get_last_logs_view_time response: ", body);
+            if(typeof body.last_log_view_time != 'undefined'){
+                if(body.last_log_view_time != null){
+                    if(body.last_log_view_time != "unknown"){
+                        try{
+                            if(document.getElementById('extension-candle-theme-last-logs-view-time-container') == null){
+                
+                    			var last_logs_view_time_container_el = document.createElement("div");
+                    			last_logs_view_time_container_el.setAttribute("id", "extension-candle-theme-last-logs-view-time-container");
+		    
+                    			last_logs_view_time_container_el.innerHTML = '<span>The logs were last viewed on </span><span id="extension-candle-theme-last-logs-view-time">...</span>';
+                    			//new_log_filter_container.append(toggle);
+                    			document.getElementById("logs-view").append(last_logs_view_time_container_el);
+                            }
+                            document.getElementById('extension-candle-theme-last-logs-view-time').innerText = body.last_log_view_time;
+                        }
+                        catch(e){
+                            console.log("error adding/updating last_log_view_time_container: ", e);
+                        }
+                    }
+                }   
+            }
+        }).catch((e) => {
+  			console.log("Error calling get_last_logs_view_time: ", e);
+        });	
     }
 
 

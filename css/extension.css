@@ -2147,6 +2147,9 @@ body.zoom3 #logs-view .arrow-select{
 /*  RULES OVERVIEW  */
 
 
+#rule-view .rule-info h1 .rule-name{
+    padding:.5rem 1rem;
+}
 
 .rule{
     max-width:100vw;
