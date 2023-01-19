@@ -1769,30 +1769,61 @@
         }
         
 		const all_logs = document.querySelectorAll(' #logs-view .logs-log-container');
-		//console.log(all_logs);
+	    //console.log("all logs:", all_logs);
         
 		var log_counter = 0;
 		for (const log_container of all_logs) {
             //console.log("comparing:", log_container);
-			//console.log("comparing to:", all_log_names[log_counter]);
-			// If the current corresponding name is in the selected arrays name
-			if( selected_log_names.indexOf(all_log_names[log_counter]) > -1 || selected_log_names.length == 0 ){
-				//console.log("do not hide " + all_log_names[log_counter]);
-				//log_container.style.visibility = 'visible';
-                if(this.debug){
-                    //console.log("not hiding log: ", all_log_names[log_counter], ' because it is in: ', selected_log_names);
+            
+            const log_name_element = log_container.querySelector('.logs-log-name');
+            
+            //console.log("log_name_element: ",log_name_element);
+            
+            var log_name_raw = null;
+            const span1 = log_name_element.getElementsByTagName('span')[0];
+            const span2 = log_name_element.getElementsByTagName('span')[1];
+            
+            if(span1 != null && span2 != null){
+                log_name_raw = span1.innerText + " " + span2.innerText;
+            }
+            else{
+                log_name_raw = log_name_element.innerText;
+            }
+            
+            if(log_name_raw != null && log_name_raw != ""){
+                const this_log_name = log_name_raw.replace(/\s+/g, '-');
+                //console.log("this_log_name: ", this_log_name);
+    			//console.log("comparing to:", all_log_names[log_counter]);
+    			// If the current corresponding name is in the selected arrays name
+    			if( selected_log_names.indexOf(this_log_name) > -1 || selected_log_names.length == 0 ){
+    				//console.log("do not hide " + all_log_names[log_counter]);
+    				//log_container.style.visibility = 'visible';
+                    if(this.debug){
+                        console.log("not hiding log: ", this_log_name, ' because it is in: ', selected_log_names);
+                    }
+    				log_container.style.display = 'block';
+    			}
+    			else{
+    				//console.log("hiding log container: " + all_log_names[log_counter]);
+    				//console.log(log_container);
+    				//log_container.style.visibility = 'hidden';
+                    if(this.debug){
+                        console.log("hiding log: ", this_log_name, ' because it is not in: ', selected_log_names);
+                    }
+    				log_container.style.display = 'none';
+    			}
+                
+            }
+            else{
+                if(selected_log_names.length != 0){
+                    log_container.style.display = 'none';
                 }
-				log_container.style.display = 'block';
-			}
-			else{
-				//console.log("hiding log container: " + all_log_names[log_counter]);
-				//console.log(log_container);
-				//log_container.style.visibility = 'hidden';
-                if(this.debug){
-                    //console.log("hiding log: ", all_log_names[log_counter], ' because it is not in: ', selected_log_names);
+                else{
+                    log_container.style.display = 'block';
                 }
-				log_container.style.display = 'none';
-			}
+                
+            }
+            
 			log_counter++;
 		}
     }
