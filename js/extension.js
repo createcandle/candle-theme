@@ -333,7 +333,6 @@
       }
       
       
-      
       document.querySelector('#settings-menu .section-title-icon').addEventListener('click', () => {
                     		//console.log("clicked on link to logs button. This:", this);
                             this.developer_clicks++;
@@ -834,6 +833,7 @@
                     //document.getElementById('back-button').classList.add("hidden"); // DANGEROUS?
                     const device_id2 = this.get_device_id_from_url();
                     window.setTimeout(() => {
+                        document.getElementById('back-button').classList.add('hidden');
                         this.filter_logs_by_device(device_id2);
                     }, 300);
                     
@@ -1473,9 +1473,17 @@
                 const message_array = document.getElementById('message-area').innerText.split(":", 3);
                 //console.log(message_array);
                 if(message_array.length > 2){
-                    var upgraded_message = '<span class="candle-theme-message-addon">' + message_array[0] + '</span>';
+                    var upgraded_message = "";
+                    if(message_array[0].endsWith('Adapter')){
+                        message_array[0].replace("Adapter", "");
+                    }
+                    
+                    //if( document.body.classList.contains('developer') ){
+                    upgraded_message = '<span class="candle-theme-message-addon">' + message_array[0] + '</span>';
+                    //}
                     upgraded_message += '<span class="candle-theme-message-device">' + message_array[1] + '</span>';
                     upgraded_message += '<span class="candle-theme-message-message">' + message_array[2] + '</span>';
+                    
                     //console.log(upgraded_message);
                     document.getElementById('message-area').innerHTML = upgraded_message;
                 }
