@@ -38,9 +38,12 @@
       //console.log("models: ", models);
       //console.log("APP: ", app);
       
-      
-      
       /*
+      API.getThings().then((things) => {
+          console.log('Theme:API: things: ', things);
+      });
+      
+      
       API.getPlatform().then((platform) => {
           console.log('Theme: API: platform: ', platform);
       });
@@ -420,7 +423,7 @@
           
           try{
               if(this.debug){
-                  console.log('\n\ntheme: page history has been modified!: ', event);
+                  console.log('\n\ncandle theme debug: page history has been modified!: ', event);
                   //console.log("\n\n NEW PATH: ", event.state.path);
               }
               this.on_new_page(false,event.state.path);
