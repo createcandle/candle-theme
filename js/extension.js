@@ -33,8 +33,8 @@
       }
       
       
-      //console.log("window: ", window);
-      //console.log("API: ", API);
+      console.log("window: ", window);
+      console.log("API: ", API);
       //console.log("models: ", models);
       //console.log("APP: ", app);
       
