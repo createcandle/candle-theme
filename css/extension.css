@@ -2015,12 +2015,19 @@ body.zoom3 #logs-view .arrow-select{
 	opacity:1;
 }
 
-
-
-
 .logs-graph-progress{
     animation: pulsate 2s ease-out infinite;
 }
+
+/*  X-axis ticks and labels in the log graphs */
+.logs-graph-label-day{
+    font-weight:bold;
+}
+.logs-graph-tick-day{
+    opacity:.3;
+    stroke-dasharray:"10,10"
+}
+
 
 @keyframes pulsate {
     0% { 
