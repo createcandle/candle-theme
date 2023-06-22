@@ -972,6 +972,7 @@
                             'All':[{'thing':'fake1','property':'fake1'},{'thing':'fake2','property':'fake2'}],
                             'Temperature':[],
                             'Humidity':[],
+                            'Moisture':[],
                             'Air':[],
                             'Lux':[],
                             'Watt':[],
@@ -1069,6 +1070,9 @@
                                                 }
                                                 else if(prop.title.toLowerCase().indexOf('humidity') != -1){
                                                     button_type = 'Humidity';
+                                                }
+                                                else if(prop.title.toLowerCase().indexOf('moisture') != -1){
+                                                    button_type = 'Moisture';
                                                 }
                                             }
                                             //console.log("button_type: ", button_type);
