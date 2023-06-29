@@ -24,8 +24,14 @@ mkdir -p lib
 #pip3 install --upgrade pip
 
 #pip3 install importlib-metadata
+# https://github.com/pypa/pip/issues/11453
+#  --use-pep517
+
+
 # Pull down Python dependencies
-pip3 install -r requirements.txt -t lib  --prefix ""  --use-pep517 --no-binary :all:
+pip3 install -r requirements.txt -t lib  --prefix "" --no-cache --no-binary :all:
+
+
 
 # Put package together
 cp -r lib pkg LICENSE manifest.json *.py README.md css js views images package/
