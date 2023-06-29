@@ -21,11 +21,11 @@ mkdir -p lib
 
 
 # Upgrade pip (experimental)
-pip3 install --upgrade pip
+#pip3 install --upgrade pip
 
-pip3 install importlib-metadata
+#pip3 install importlib-metadata
 # Pull down Python dependencies
-pip3 install -r requirements.txt -t lib --no-binary :all: --prefix ""
+pip3 install -r requirements.txt -t lib  --prefix ""  --use-pep517 --no-binary :all:
 
 # Put package together
 cp -r lib pkg LICENSE manifest.json *.py README.md css js views images package/
