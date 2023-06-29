@@ -26,10 +26,10 @@ mkdir -p lib
 #pip3 install importlib-metadata
 # https://github.com/pypa/pip/issues/11453
 #  --use-pep517
-
+#  --no-binary :all:
 
 # Pull down Python dependencies
-pip3 install -r requirements.txt -t lib  --prefix "" --no-cache --no-binary :all:
+pip3 install -r requirements.txt -t lib  --prefix "" --no-cache --use-pep517 --no-binary :all:
 
 
 
