@@ -29,7 +29,7 @@ mkdir -p lib
 #  --no-binary :all:
 
 # Pull down Python dependencies
-pip3 install -r requirements.txt -t lib  --prefix "" --no-cache --use-pep517 --no-binary :all:
+pip3 install -r requirements.txt -t lib  --prefix "" --no-cache --use-pep517
 
 
 
