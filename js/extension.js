@@ -38,27 +38,25 @@
       //console.log("models: ", models);
       //console.log("APP: ", app);
       
+      
       /*
       API.getThings().then((things) => {
           console.log('Theme:API: things: ', things);
       });
       
       
+      
+      API.getThing('energyuse').then((thing) => {
+          console.log('Theme:API: thing: ', thing);
+      });
+      
+      
+      
+      
       API.getPlatform().then((platform) => {
           console.log('Theme: API: platform: ', platform);
       });
       
-      API.getThings().then((things) => {
-          console.log('Theme:API: things: ', things);
-      });
-      
-      API.getThings().then((things) => {
-          console.log('Theme:API: things: ', things);
-      });
-      
-      API.getThing('device_id_here').then((thing) => {
-          console.log('Theme:API: thing: ', thing);
-      });
       
       try{
           if(typeof API.getGroups === 'function') {
@@ -967,7 +965,7 @@
             }
             
             if(logs.length > 5){
-                //console.log("enough logs");
+                //console.log("enough logs to show filter buttons");
                 var buttons_data = {
                             'All':[{'thing':'fake1','property':'fake1'},{'thing':'fake2','property':'fake2'}],
                             'Temperature':[],
@@ -1040,12 +1038,14 @@
                                         
                                         if(this.debug){
                                             //console.log("quick logs filter: found property");
+                                            console.log("prop.title: ", prop.title);
+                                            console.log("prop.unit: ", prop.unit);
                                         }
                                         
                                         var button_type = null;
+                                        
                                         if(typeof prop.unit != 'undefined'){
                                             
-                                            //console.log("prop.unit: ", prop.unit);
                                             //console.log("prop.unit.toLowerCase(): ", prop.unit.toLowerCase());
                                             if(prop.unit.toLowerCase() == 'kwh'){
                                                 button_type = 'kWh';
@@ -1075,28 +1075,32 @@
                                                     button_type = 'Moisture';
                                                 }
                                             }
-                                            //console.log("button_type: ", button_type);
-                                            
-                                            if(button_type != null){
-                                                if(typeof thing_title != 'undefined' && typeof prop.title != 'undefined'){
-                                                    //console.log("adding to quick filter buttons data");
-                                                    var push_me = logs[l];
-                                                    push_me['thing_title'] = thing_title;
-                                                    push_me['property_title'] = prop.title;
-                                                    buttons_data[button_type].push( push_me );
-                                                }
-                                                else{
-                                                    // In theory some very old addons used "name" instead of title... they are skipped here.
-                                                    if(this.debug){
-                                                        console.warn("weird, could not add log to quick list. Title attribute of thing or property missing? Ancient addon?");
-                                                    }
-                                                }
+                                        }
+                                        else{
+                                            if(prop.title.toLowerCase().startsWith('voc')){
+                                                console.log("FOUND VOC");
+                                                button_type = 'Air';
                                             }
-                                            
-                                            
-                                            
                                         }
                                         
+                                        //console.log("button_type: ", button_type);
+                                        
+                                        if(button_type != null){
+                                            if(typeof thing_title != 'undefined' && typeof prop.title != 'undefined'){
+                                                //console.log("adding to quick filter buttons data");
+                                                // Add the thing and property of the log that should be shown when this filter button is pressed
+                                                var push_me = logs[l];
+                                                push_me['thing_title'] = thing_title;
+                                                push_me['property_title'] = prop.title;
+                                                buttons_data[button_type].push( push_me );
+                                            }
+                                            else{
+                                                // In theory some very old addons used "name" instead of title... they are skipped here.
+                                                if(this.debug){
+                                                    console.warn("weird, could not add log to quick list. Title attribute of thing or property missing? Ancient addon?");
+                                                }
+                                            }
+                                        }
                                         
                                     }
                                 
@@ -1133,7 +1137,7 @@
                 // Clear the quick buttons container
                 quick_log_filter_container.innerHTML = "";
                 
-                // Actually add the buttons
+                // Actually add the quick filter buttons
                 if(buttons_with_multiple_logs_count > 1){
                     for(let b = 0; b < buttons_keys.length; b++){
                         
