@@ -449,7 +449,7 @@
             if(typeof body.debug != 'undefined'){
                 this.debug = body.debug;
                 if(this.debug){
-                    console.log("Candle theme: /init response: ", body);
+                    console.log("Candle theme: debug: /init response: ", body);
                 }
             }
             
@@ -815,7 +815,7 @@
     // Adds a direct link from a device detail page to an overview of all the logs of a device.
     add_link_to_logs(device_id){
         if(this.debug){
-            console.log("in add_link_to_logs, which adds a shortcut to logs on a thin details page");
+            console.log("in add_link_to_logs (which adds a shortcut to the thing's logs in the top right corner)");
         }
         device_id = this.get_device_id_from_url(device_id);
         if( this.devices_with_logs.includes(device_id)){
@@ -1229,7 +1229,7 @@
     // This can be called multiple times when at a page, for example if a property with a known value changes to unknown, this can be reflected.
     checkProperties(device_id, on_new_page){
         if(this.debug){
-            console.log("in checkProperties. device_id: ", device_id);
+            //console.log("in checkProperties. device_id: ", device_id);
         }
         /*
         if(Date.now < this.last_check_properties + 100){
@@ -1274,7 +1274,9 @@
             //console.log("check_properties: on_new_page was true. Attaching listeners.");
         }
         
-        console.log("check_properties: looping over device: " + device_id);
+        if(this.debug){
+            console.log("check_properties: looping over device: " + device_id);
+        }
         API.getThing(device_id).then((thing) => {
             //console.log("check_properties: single thing: ", thing );
             
