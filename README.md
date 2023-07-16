@@ -3,6 +3,9 @@ A theme for the Candle Controller that offers a more 'traditional' square view.
 
 ![Candle theme screenshot](screenshot.png)
 
+Or an even more compact version:
+![Candle theme screenshot](screenshot.jpg)
+
 It also adds some features:
 - Setpoints buttons for thermostats. Allows you to quickly increase of decrease the temperature by one degree.
 - Logs filtering. On the logs page, click on the filter icon in the top right to see a quick list of all your logs. You can then select the logs you want to focus on, and the rest will be hidden. You can also create presets, where you can give a name to a collection of logs, and quickly access it.
