@@ -46,10 +46,10 @@ class CandleThemeAPIHandler(APIHandler):
             
         self.persistent_data = {'background_color':"",'hide_floorplan':False, 'zoom':'100%', 'collections':{}}
             
-        self.exhibit_mode = False
+        self.exhibit_mode = False # hides some settings
         if os.path.isfile('/boot/exhibit_mode.txt'):
             self.exhibit_mode = True
-
+            
         # Paths
         # Get persistent data
         try:
@@ -87,20 +87,23 @@ class CandleThemeAPIHandler(APIHandler):
         if not 'collections' in self.persistent_data:
             self.persistent_data['collections'] = {}
             
+        if not 'compact' in self.persistent_data:
+            self.persistent_data['compact'] = False # show mobile compact things overview on all resolutions
+            
         if not 'zoom' in self.persistent_data:
-            self.persistent_data['zoom'] = '100%'
+            self.persistent_data['zoom'] = '100%' # aids people with poor eye sight
             
         if not 'zoom_everywhere' in self.persistent_data:
-            self.persistent_data['zoom_everywhere'] = False
+            self.persistent_data['zoom_everywhere'] = False # normally zoom factor is only applied to the kiosk mode display, as people with poor eyesight may already have methods to help then in their regular browser
             
         if not 'developer' in self.persistent_data:
-            self.persistent_data['developer'] = False
+            self.persistent_data['developer'] = False # reveals developer features in the UI. Some addons show extra info.
 
         if not 'allow_pinch_to_zoom' in self.persistent_data:
             self.persistent_data['allow_pinch_to_zoom'] = False
             
         if not 'hide_virtual_keyboard' in self.persistent_data:
-            self.persistent_data['hide_virtual_keyboard'] = False     
+            self.persistent_data['hide_virtual_keyboard'] = False # The onscreen keyboard in kiosk-mode is html based, and is part of the DOM, so can be forced hidden.
             
         if not 'menu_list' in self.persistent_data:
             self.persistent_data['menu_list'] = False
@@ -184,6 +187,11 @@ class CandleThemeAPIHandler(APIHandler):
             self.persistent_data['hide_floorplan'] = bool(config['Hide floorplan'])
             if self.DEBUG:
                 print("-Hide floorplan preference was in config: " + str(self.persistent_data['hide_floorplan']))
+        
+        if 'Compact mode' in config:
+            self.persistent_data['compact'] = str(config['Compact mode'])
+            if self.DEBUG:
+                print("-Compact mode preference was in config: " + str(self.persistent_data['compact']))
         
         if 'Zoom' in config:
             self.persistent_data['zoom'] = str(config['Zoom'])
@@ -281,6 +289,7 @@ class CandleThemeAPIHandler(APIHandler):
                                               'background_color':self.persistent_data['background_color'], 
                                               'hide_floorplan':self.persistent_data['hide_floorplan'], 
                                               'exhibit_mode':self.exhibit_mode,
+                                              'compact':self.persistent_data['compact'],
                                               'zoom':self.persistent_data['zoom'], 
                                               'zoom_everywhere':self.persistent_data['zoom_everywhere'], 
                                               'allow_pinch_to_zoom':self.persistent_data['allow_pinch_to_zoom'], 
@@ -290,6 +299,7 @@ class CandleThemeAPIHandler(APIHandler):
                                           }),
                         )
                         
+                    # Log collections feature
                     elif action == 'get_collections':
                         return APIResponse(
                           status=200,
@@ -315,7 +325,7 @@ class CandleThemeAPIHandler(APIHandler):
                           content=json.dumps({'state' : state, 'collections': self.persistent_data['collections']}),
                         )
                         
-                        
+                    # Privacy feature that shows users when the logs page was viewed previously
                     elif action == 'save_last_logs_view_time':
                         
                         current_time = datetime.datetime.now()
@@ -351,10 +361,6 @@ class CandleThemeAPIHandler(APIHandler):
                             print("unsupported ajax action: " + str(action))
                         return APIResponse( status=404 )
                         
-                        
-                    
-                    
-                    
                         
                         
                 except Exception as ex:
@@ -412,11 +418,9 @@ class CandleThemeAPIHandler(APIHandler):
             #        print("Persistence file existed. Will try to save to it.")
 
 
-            with open(self.persistence_file_path) as f:
-                if self.DEBUG:
-                    print("saving persistent data: " + str(self.persistent_data))
-                json.dump( self.persistent_data, open( self.persistence_file_path, 'w+' ) )
-                return True
+            json.dump( self.persistent_data, open( self.persistence_file_path, 'w+' ) )
+            return True
+                
 
         except Exception as ex:
             print("Error: could not store data in persistent store: " + str(ex) )

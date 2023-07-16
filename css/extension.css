@@ -755,11 +755,21 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 	right:auto;
 }
 #things-view .thing-details-link{
-	left:auto;
+	/*
+    left:auto;
 	right:0;
     border-bottom-left-radius:.5rem;
     background-image:url('../images/thing-details-link.svg');
+    */
+    
     opacity:.7;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    height: 100%;
+    background-image:none;
+    width:100%;
 }
 #things-view .thing-details-link:hover{
     opacity:1;
@@ -819,6 +829,7 @@ body #main-menu #things-menu-item{
     padding:1rem 1rem 1rem 1rem;
     border-top: 1px solid rgba(0,0,0,.2);
     font-weight:bold;
+    height:6.5rem;
 }
 
 #groups .thing .component::part(contents),
@@ -894,7 +905,7 @@ body #main-menu #things-menu-item{
 #things.single-thing > .thing > *:not(div){
 	min-height: 140px;
     /*margin-bottom: 0.5rem;*/
-    padding-top: 2rem;
+    padding-top: 1rem;
     /*border-bottom: 1px solid rgba(0,0,0,.1);
     border-radius: 0;
     box-shadow: 0 100px 0 rgb(0 0 0 / 3%);*/
@@ -1007,7 +1018,7 @@ body #main-menu #things-menu-item{
 	border-radius:0;
 	background-color: transparent;
 	/*background-position: center center;*/
-    max-width:10rem;
+    max-width:20rem;
     margin: 0 auto;
     /*fill: white!important;
     stroke: rgba(255,255,255,.3)!important;*/
@@ -1135,12 +1146,12 @@ body #main-menu #things-menu-item{
 
 /*  The light bulb icon is a little off  */
 
-#things:not(.single-thing) webthing-light-capability,
-#groups:not(.single-thing) webthing-light-capability{
+body:not(.compact) #things:not(.single-thing) webthing-light-capability,
+body:not(.compact) #groups:not(.single-thing) webthing-light-capability{
     position:relative;
     top:1.2rem;
-    /*min-height: calc(140px - 1rem)!important;*/
 }
+
 
 #things.single-thing webthing-light-capability{
     padding-top:2rem!important;
@@ -1158,10 +1169,12 @@ webthing-smoke-sensor-capability::part(label){
     padding-top:8.2rem;
 }
 
+/*
 webthing-light-capability::part(label){
     position:relative;
     top:-1rem;
 }
+*/
 
 webthing-level-property.component::part(number){
     margin-bottom:10px;
@@ -1280,7 +1293,7 @@ webthing-pushed-property.component::part(value){
 	
 	#things:not(.single-thing) .thing{
 		/*width:calc(50% - 2rem);*/
-		min-width:145px;
+		min-width:150px;
 		max-width:none;
 		margin:1rem;
 	}
@@ -1305,11 +1318,9 @@ webthing-pushed-property.component::part(value){
         margin: 0.5rem 0;
     }
     
-    
     .component::part(contents){
         zoom:140%;
     }
-    
 	
     /* webthing-string-label-property .component::part(value) */
     #things.single-thing .component::part(value){
@@ -1320,15 +1331,9 @@ webthing-pushed-property.component::part(value){
     webthing-level-property.component::part(slider){
         margin-left: -6rem;
         width: 20rem;
-        /*height: 16px;
-        background: #d3d3d3;*/
         outline: none;
         opacity: 0.7;
         border-radius:12px;
-        /*zoom: 1.6;*/
-        /*border:1px solid red;
-        height:3rem;
-        box-shadow: 2px 2px 20px 10px rgba(0, 0, 0, .5);*/
         transform: none;
     }
     
@@ -1340,23 +1345,6 @@ webthing-pushed-property.component::part(value){
     .component::part(slider-level){
         width: calc(100% - 2rem);
     }
-    
-    /*
-    .component::part(bar-container){
-        /*border-radius:.8rem;
-        width:calc(100% - 2rem);
-        position:relative;
-        overflow:hidden;
-    }
-    .component::part(bar){
-        border:none;
-        /*min-height:2rem;
-        border-bottom-left-radius: .5rem;
-        border-top-left-radius: .5rem;
-        /*margin-bottom:.1rem;
-        margin-top:.1rem;
-    }
-    */
     
     .component::part(text){
         margin: 0 auto;
@@ -1386,11 +1374,185 @@ webthing-pushed-property.component::part(value){
         margin-left:0;
     }
     
+    
+    
+    
+    
+    /*  more space effective things overview on mobile devices */
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing,
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) .thing {
+        max-width: calc(50% - 2rem);
+        margin: 1rem;
+        height: 7rem;
+        display: flex;
+        flex-direction: row-reverse;
+        min-width: 150px;
+    }
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things-view .thing-details-link{
+        left:0;
+        right:auto;
+        bottom:0;
+        top:0;
+        width:50%;
+        height: 100%;
+        background-image:none;
+        opacity:0.8;
+    }
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing > *:not(a):not(span), 
+    /*body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > *:not(div),*/
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) > .thing > *:not(a):not(span){
+        min-height: 7rem;
+        margin-bottom: 0;
+        padding: 1rem 0rem;
+        box-sizing: border-box;
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing .component::part(container),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) .thing .component::part(container){
+        width:100%;
+        height:100%;
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing .component::part(contents),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) .thing .component::part(contents){
+        zoom:initial;
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing .component::part(icon),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) .thing .component::part(icon){
+        width: 100%;
+        height: 3rem!important;
+        background-size: 3rem;
+        /*background-position:center top;*/
+        background-position:center;
+    }
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing .component::part(label),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) .thing .component::part(label){
+        padding-top: 3.5rem;
+        font-size: 1rem;
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing > [data-unit]::part(value), 
+    /*body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > [data-unit]::part(value),*/
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) > .thing > [data-unit]::part(value){
+        font-size: 1.5rem;
+    }
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing .component::part(unit),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) .thing .component::part(unit){
+        font-size:1rem;
+        top: -1rem;
+    }
+    
+
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing .component::part(bar),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) .thing .component::part(bar){
+        height:4rem;
+    }
     /*
-    webthing-on-off-property.component::part(slider){
-        zoom:200%;
+    body:not(.zoom1):not(.zoom2):not(.zoom3) .webthing-multi-level-switch-capability::part(label){
+        padding-top:0;
     }
     */
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing .component::part(label),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) .thing .component::part(icon) > ::part(label){
+        background-color:red;
+        padding-top:0;
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups span.thing-title,
+    body:not(.zoom1):not(.zoom2):not(.zoom3) .thing-title{
+        font-size:1.1rem;
+        height:100%;
+        border:none;
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things-view .thing-ui-link, 
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things-view .thing-details-link{
+        bottom: 0;
+        top: auto;
+        left:0;
+    }
+    
+    webthing-light-capability::part(icon){
+        transform: scale(0.5);
+        overflow: visible;
+        position: relative;
+        /*
+        top: -2rem;
+        left: -0.6rem;
+        */
+        top: -1rem;
+        left: -1rem;
+    }
+    /*
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing webthing-light-capability::part(icon),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) webthing-light-capability::part(label),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing webthing-multi-level-switch-capability::part(icon),
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) webthing-multi-level-switch-capability::part(label),
+    */
+    webthing-light-capability::part(label),
+    webthing-multi-level-switch-capability::part(label){
+        padding-top:0.2rem!important;
+    }
+    
+    body:not(.compact) #things.single-thing webthing-binary-sensor-capability::part(label){
+        /*padding-top:2.5rem!important;*/
+        padding-top:2rem!important;
+    }
+    
+    #thing-title-container{
+        line-height: initial;
+        white-space: normal;
+    }
+    #thing-title-title{
+        font-size:1.5rem;
+    }
+    
+    .group div.bar div.title{
+        font-size:2.2rem;
+    }
+    
+    
+    
+    /*  more compact device detail view on mobile devices  */
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container > *{
+        display: flex;
+        flex-direction: row-reverse;
+        padding: 0;
+        min-height: 10rem;
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(container){
+         background-color: rgba(255,255,255,.02);
+         padding:1rem;
+         box-sizing:border-box;
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(contents){
+        zoom:100%;
+            width: calc(100% - 2rem);
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(name){
+        position:initial;
+        display: flex;
+        align-items: center;
+        padding:1rem;
+        box-sizing:border-box;
+        opacity: .8;
+    }
+    
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(value){
+        font-size: 2rem;
+    }
+
+    #candle-theme-things-search-input{
+        display:none;
+    }
+    
+    
     
 }
 
@@ -1782,13 +1944,6 @@ input[type="range"]::-webkit-slider-runnable-track{
     background-color:#e91919;
     color:inherit;
 }
-/*
-.candle-theme-logs-collection-delete-button{
-    background-color:red;
-    color:white;
-}
-*/
-
 
 #candle-theme-log-collections-container,
 #candle-theme-log-list-container{
@@ -2212,6 +2367,195 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 input[type="time"]::-webkit-calendar-picker-indicator:hover{
     background-color: white;
 }
+
+
+
+
+
+
+
+/*  COMPACT MODE  */
+/*  this is a copy of the mobile compact things overview, but this time triggered by a body class instead of the screen width  */
+
+
+/*  compact things overview  */
+body.compact #groups .thing,
+body.compact #things:not(.single-thing) .thing {
+    margin: 1rem;
+    height: 7rem;
+    display: flex;
+    flex-direction: row-reverse;
+    min-width: 150px;
+    min-height:auto;
+}
+
+
+body.compact #things-view .thing-details-link{
+    left:0;
+    right:auto;
+    bottom:0;
+    top:0;
+    width:50%;
+    height: 100%;
+    background-image:none;
+    opacity:0.8;
+}
+body.compact #groups .thing > *:not(a):not(span), 
+/*body.compact #things.single-thing > .thing > *:not(div),*/
+body.compact #things:not(.single-thing) > .thing > *:not(a):not(span){
+    min-height: 7rem;
+    margin-bottom: 0;
+    padding: 1rem 0rem;
+    box-sizing: border-box;
+}
+
+body.compact #groups .thing .component::part(container),
+body.compact #things:not(.single-thing) .thing .component::part(container){
+    width:100%;
+    height:100%;
+}
+
+body.compact #groups .thing .component::part(contents),
+body.compact #things:not(.single-thing) .thing .component::part(contents){
+    zoom:initial;
+}
+
+body.compact #groups .thing .component::part(icon),
+body.compact #things:not(.single-thing) .thing .component::part(icon){
+    /*width: 4rem!important;*/
+    width: 100%;
+    height: 3rem!important;
+    background-size: 3rem;
+    /*background-position:center top;*/
+    background-position:center;
+}
+body.compact #groups .thing .component::part(label),
+body.compact #things:not(.single-thing) .thing .component::part(label){
+    padding-top: 3.5rem;
+    font-size: 1rem;
+}
+
+body.compact #groups .thing > [data-unit]::part(value),
+body.compact #things:not(.single-thing) > .thing > [data-unit]::part(value){
+    font-size: 1.5rem;
+}
+body.compact #groups .thing .component::part(unit),
+body.compact #things:not(.single-thing) .thing .component::part(unit){
+    font-size:1rem;
+    top: -1rem;
+}
+
+
+body.compact #groups .thing .component::part(bar),
+body.compact #things:not(.single-thing) .thing .component::part(bar){
+    height:4rem;
+}
+body.compact #groups .thing .component::part(label),
+body.compact #things:not(.single-thing) .thing .component::part(icon) > ::part(label){
+    padding-top:0;
+}
+
+body.compact #groups span.thing-title, /* is this correct? */
+body.compact #things:not(.single-thing) .thing span.thing-title{
+    font-size:1.1rem;
+    height:100%;
+    border:none;
+}
+
+body.compact #things-view .thing-ui-link, 
+body.compact #things-view .thing-details-link{
+    left:0;
+    bottom: 0;
+    top: auto;
+}
+body.compact #things-view .thing-ui-link{
+
+    opacity:.7;
+    z-index:11;
+}
+body.compact #things-view .thing-ui-link:hover{
+    opacity:1;
+}
+
+body.compact #groups .thing webthing-light-capability::part(icon),
+body.compact #things:not(.single-thing) webthing-light-capability::part(icon){
+    transform: scale(0.5);
+    overflow: visible;
+    position: relative;
+    /*
+    top: -2rem;
+    left: -0.6rem;
+    */
+    top:-1rem;
+    left:-1rem;
+}
+
+body.compact #groups .thing webthing-light-capability::part(label),
+body.compact #things:not(.single-thing) webthing-light-capability::part(label),
+body.compact #groups .thing webthing-multi-level-switch-capability::part(label),
+body.compact #things:not(.single-thing) webthing-multi-level-switch-capability::part(label){
+    padding-top:0.2rem!important;
+}
+
+body.compact #groups .thing webthing-binary-sensor-capability::part(label),
+body.compact #things:not(.single-thing) webthing-binary-sensor-capability::part(label){
+    padding-top:2rem!important;
+}
+
+body.compact #thing-title-container{
+    line-height: initial;
+    white-space: normal;
+}
+body.compact #thing-title-title{
+    font-size:1.5rem;
+}
+
+body.compact .group div.bar div.title{
+    font-size:2.2rem;
+}
+
+
+
+/*  compact rules overview  */
+
+body.compact #rules-view .rule{
+    height:15rem;
+}
+body.compact #rules-view .rule-edit-overlay{
+    height:100%;
+    width:calc(100% - 10rem);
+    z-index:2;
+}
+body.compact #rules-view .rule-preview{
+    height: 100%;
+    width:4rem;
+    padding: 1.4rem 0 1.4rem 1.4rem;
+    position: absolute;
+    bottom: 0;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+body.compact #rules-view .rule-part-block{
+    margin:0 0 1rem 0;
+    width:3rem;
+    height:3rem;
+    padding:.5rem;
+    box-sizing: border-box;
+}
+body.compact #rules-view .rule-part-icon{
+    width:2rem;
+    height:2rem;
+    margin:0;
+}
+
+body.compact #rules-view .rule-info{
+    height: 100%;
+    padding-left: 6rem;
+    box-sizing: border-box;
+}
+
 
 
 

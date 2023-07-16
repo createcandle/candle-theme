@@ -493,6 +493,12 @@
                 }
             }
             
+            if(typeof body.compact != 'undefined'){
+                if(body.compact){
+                    document.body.classList.add('compact');
+                }
+            }
+            
             if(typeof body.zoom != 'undefined' && typeof body.zoom_everywhere != 'undefined'){
 
                 if(this.kiosk || body.zoom_everywhere){
@@ -1222,6 +1228,9 @@
     // Fixes things detail pages, by showing unknown properties with ...
     // This can be called multiple times when at a page, for example if a property with a known value changes to unknown, this can be reflected.
     checkProperties(device_id, on_new_page){
+        if(this.debug){
+            console.log("in checkProperties. device_id: ", device_id);
+        }
         /*
         if(Date.now < this.last_check_properties + 100){
             // not enough time has passed.
@@ -1236,26 +1245,28 @@
             }
         }
         */
-        
-        
         if(window.location.pathname == '/things'){
             //console.log("check_properties was called on /things, stopping");
             return;
         }
-        if(window.location.pathname.startsWith('/things')){
+        if(!window.location.pathname.startsWith('/things')){
             if(this.debug){
                 console.log("Theme: Error, check_properties was called on page outside of /things/*, stopping");
             }
             return;
         }
         
-        if(typeof device_id == 'undefined'){
+        if(typeof device_id == 'undefined' || device_id == null){
             device_id = this.get_device_id_from_url(device_id);
-            //console.log("checking device properties for: " + device_id );
+            if(this.debug){
+                //console.log("checking device properties for: " + device_id );
+            }
         }
         
         if(typeof device_id == 'undefined'){
-            console.warn("Theme: checkProperties: undefined device id, aborting.");
+            if(this.debug){
+                console.warn("Theme: checkProperties: undefined device id, aborting.");
+            }
             return;
         }
         
@@ -1263,7 +1274,7 @@
             //console.log("check_properties: on_new_page was true. Attaching listeners.");
         }
         
-        //console.log("check_properties: looping over device: " + device_id);
+        console.log("check_properties: looping over device: " + device_id);
         API.getThing(device_id).then((thing) => {
             //console.log("check_properties: single thing: ", thing );
             
@@ -1281,12 +1292,6 @@
                     //console.log("readOnly: " + readOnly);
                     
                     try{
-                        /*
-                        API.getThing(device_id + '/' + property_name).then((prop) => {
-                            //console.log("prop1", prop);
-                        });
-                        */
-                        
                         API.getJson('/things/' + device_id + '/properties/' + property_name)
                         .then((prop2) => {
                             this.last_mutation_activation_time = Date.now();
@@ -1390,7 +1395,7 @@
         
     }
 
-    // helper function for checkProperties that set the target to ...
+    // helper function for checkProperties that set the target to ... if the API returns a 500 error (meaning the value doesn't exist)
     modify_property_ui(property_name, desire=false){
         //console.log("in modify_property_ui. property_name: " + property_name);
         //var bad_element = document.querySelector('[data-name="' + property_name + '"]');
@@ -1404,11 +1409,15 @@
         */
         
         if(bad_element == null){
-            //console.log("ERROR bad element still not spotted..");
+            if(this.debug){
+                //console.log("ERROR modify_property_ui: bad element still not spotted..");
+            }
             //continue;
         }
         else{
-            //console.log("we got em: ", bad_element);
+            if(this.debug){
+                //console.log("modify_property_ui: changing value to ...: ", bad_element);
+            }
             
             const shadow = bad_element.shadowRoot;
             //console.log('shadow: ', shadow);
