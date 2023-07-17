@@ -2588,8 +2588,6 @@
         const things = document.getElementById("things");
         const groups = document.getElementById("groups");
         
-        
-
         const all_things = document.querySelectorAll('#things-view .thing');
         
         if(all_things == null){
@@ -2617,7 +2615,8 @@
                 for (var i = 0; i < things_count; i++) {
                     //const child = all_things[i]; //things.childNodes[i];
                     //child.style.display = "none";
-                    all_things[i].style.display = "none";
+                    //all_things[i].style.display = "none";
+                    all_things[i].classList.add('extension-candle-theme-hidden');
                 }
                 for (var i = 0; i < things_count; i++) {
                     const child = all_things[i]; //things.childNodes[i];
@@ -2626,7 +2625,8 @@
                     thing_title = thing_title.toLowerCase();
                     
                     if(thing_title.indexOf(search_string) !== -1){
-                        child.style.display = "block";
+                        //child.style.display = "block";
+                        child.classList.remove('extension-candle-theme-hidden');
                         shown_count++;
                         if(shown_count == 1){
                             last_element = child.getElementsByClassName('thing-details-link')[0];
@@ -2646,7 +2646,8 @@
             else{
                 for (var i = 0; i < things_count; i++) {
                       //things.childNodes[i].style.display = "block";
-                      all_things[i].style.display = "block";
+                      //all_things[i].style.display = "block";
+                      all_things[i].classList.remove('extension-candle-theme-hidden');
                 }
             }
         }
