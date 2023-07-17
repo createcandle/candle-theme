@@ -189,7 +189,7 @@ class CandleThemeAPIHandler(APIHandler):
                 print("-Hide floorplan preference was in config: " + str(self.persistent_data['hide_floorplan']))
         
         if 'Compact mode' in config:
-            self.persistent_data['compact'] = str(config['Compact mode'])
+            self.persistent_data['compact'] = bool(config['Compact mode'])
             if self.DEBUG:
                 print("-Compact mode preference was in config: " + str(self.persistent_data['compact']))
         
