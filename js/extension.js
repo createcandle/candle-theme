@@ -295,12 +295,16 @@
               }
               
           }
+          
           else if(document.location.href.indexOf('/rules/') !== -1){
               //console.log('keypress at rules:', event);
               const code = event.keyCode || event.charCode;
               this.filter_rule_parts_list(code);
               
           }
+          
+          
+          
           
           
           
@@ -422,7 +426,8 @@
           try{
               if(this.debug){
                   console.log('\n\ncandle theme debug: page history has been modified!: ', event);
-                  //console.log("\n\n NEW PATH: ", event.state.path);
+                  console.log("\n\n NEW PATH: ", event.state.path);
+                  
               }
               this.on_new_page(false,event.state.path);
           }
@@ -493,12 +498,6 @@
                 }
             }
             
-            if(typeof body.compact != 'undefined'){
-                if(body.compact){
-                    document.body.classList.add('compact');
-                }
-            }
-            
             if(typeof body.zoom != 'undefined' && typeof body.zoom_everywhere != 'undefined'){
 
                 if(this.kiosk || body.zoom_everywhere){
@@ -524,6 +523,17 @@
                     }
                 }
                 
+            }
+            
+            if(typeof body.compact != 'undefined'){
+                if(body.compact){
+                    document.body.classList.add('compact');
+                }
+            }
+            
+            if(typeof body.show_groups_first != 'undefined'){
+                this.show_groups_first = body.show_groups_first
+                document.body.classList.add('groups-first');
             }
             
             
@@ -568,16 +578,18 @@
     
     
     
-    // this only works for /things and its sub-pages
+
     on_new_page(just_arrived=false,page_url=null){
-        if(this.debug){
-            console.log("Candle theme: ON NEW PAGE:" + window.location.pathname);
-        }
+        
         
         
         var current_path = window.location.pathname;
         if(page_url != null){
             current_path = page_url;
+        }
+        
+        if(this.debug){
+            console.log("Candle theme: on_new_page:" + current_path);
         }
         
         if( current_path.startsWith('/things') ){
@@ -689,6 +701,39 @@
             }, 10000);
             
         }
+        else if( current_path == '/rules' ){
+            console.log("theme: at rules overview");
+            
+            setTimeout(() => {
+                
+                let ul = document.querySelector("#rules");
+                let li = ul.querySelectorAll(".rule");
+                //console.log("li: ", li);
+
+                let sorted = Array.from(li).sort((a, b) => {
+                    //console.log(a.querySelector('.rule-info h3').innerText," vs ",b.querySelector('.rule-info h3').innerText);
+                    if (a.querySelector('.rule-info h3').innerText.toLowerCase() < b.querySelector('.rule-info h3').innerText.toLowerCase())
+                        return -1;
+                    if (a.querySelector('.rule-info h3').innerText.toLowerCase() > b.querySelector('.rule-info h3').innerText.toLowerCase())
+                        return 1;
+                    return 0;
+                });
+
+                console.log("sorted: ");
+                sorted.forEach(e => console.log(e.querySelector('.rule-info h3').innerText) );
+            
+                ul.innerHTML = "";
+                sorted.forEach(e => ul.appendChild(e));
+                
+            }, "300");
+            
+            
+            
+            
+            
+        }
+        
+        
         else{
             //console.log("ON SOME OTHER PAGE");
             //console.log(document.location.href);

@@ -680,7 +680,13 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 
 
 
-/*  Things general changes*/
+/*  THINGS general changes*/
+
+
+body.groups-first #things-container{
+    flex-direction: column-reverse;
+}
+
 
 #thing-title-title{font-size:2rem;}
 
@@ -742,6 +748,8 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 	display:none !important;
 }
 
+
+
 #things-view .thing-ui-link,
 #things-view .thing-details-link{
 	position:absolute;
@@ -749,10 +757,6 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 	border-radius: 0;
 	/*background-color: #79a6c6;*/
     background-color: rgba(0,0,0,.1);
-}
-.thing-ui-link{
-	left:0;
-	right:auto;
 }
 #things-view .thing-details-link{
 	/*
@@ -770,9 +774,20 @@ body #virtualKeyboardChromeExtension td.kbdS span{
     height: 100%;
     background-image:none;
     width:100%;
+	z-index:0;
+	transition: transform .2s;
 }
 #things-view .thing-details-link:hover{
     opacity:1;
+	transform: scale(1.1);
+}
+
+
+
+
+.thing-ui-link{
+	left:0;
+	right:auto;
 }
 
 body #main-menu #things-menu-item{
@@ -820,17 +835,31 @@ body #main-menu #things-menu-item{
     align-content:center;
 }
 
-
 #groups span.thing-title,
 #things:not(.single-thing) .thing span.thing-title{
 	/*width:calc(100% - 2rem);*/
     width:100%;
     box-sizing:border-box;
     padding:1rem 1rem 1rem 1rem;
-    border-top: 1px solid rgba(0,0,0,.2);
+    border-top: 1px solid rgba(0,0,0,.1);
     font-weight:bold;
     height:6.5rem;
+	background-color:rgba(0,0,0,.1);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 }
+
+#groups span.thing-title:hover,
+#things:not(.single-thing) .thing span.thing-title:hover{
+	background-color:rgba(255,255,255,.5);
+}
+
+.thing-title:hover{
+	background-color:rgba(255,255,255,.5);
+}
+
 
 #groups .thing .component::part(contents),
 #things:not(.single-thing) .thing .component::part(contents){
@@ -2171,7 +2200,7 @@ body.zoom3 #logs-view .arrow-select{
 }
 
 .logs-graph-progress{
-    animation: pulsate 2s ease-out infinite;
+    animation: pulsate .6s ease-out infinite;
 }
 
 /*  X-axis ticks and labels in the log graphs */
@@ -2311,6 +2340,8 @@ body.zoom3 #logs-view .arrow-select{
 
 #rule-view .rule-info h1 .rule-name{
     padding:.5rem 1rem;
+    width:50%;
+    min-width:15rem;
 }
 
 .rule{

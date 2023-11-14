@@ -32,7 +32,8 @@
 	  "Show main menu as a list": false,
 	  "Zoom": "100%",
 	  "Use zoom everywhere": false,
-	  "Compact mode":false,
+	  "Compact mode": false,
+	  "Show groups first": true,
 	  "Allow pinch-to-zoom": false,
 	  "Hide virtual keyboard": false,
       "Debugging": false
@@ -69,6 +70,10 @@
           "type": "boolean",
           "description": "This forces the very compact view that is normally reserved for on mobile phones to be used on all screen sizes. This is useful if you have a lot of devices."
         },
+		"Show groups first": {
+          "type": "boolean",
+          "description": "On the things overview you can choose if you want to see your groups first, or the general list of ungrouped things. The default is to show groups first."
+        },
         "Allow pinch-to-zoom": {
           "type": "boolean",
           "description": "If you're using a touch screen, then you may want to be able to zoom in and out using a pinch gesture. By default this is disabled to avoid accidental zooming in, which for some people can cause confusion when the menu buttons disappear from view."
@@ -87,7 +92,7 @@
     }
   },
   "short_name": "ctheme",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "web_accessible_resources": [
     "css/*.css",
     "js/*.js",
