@@ -99,6 +99,9 @@ class CandleThemeAPIHandler(APIHandler):
         if not 'developer' in self.persistent_data:
             self.persistent_data['developer'] = False # reveals developer features in the UI. Some addons show extra info.
 
+        if not 'show_groups_first' in self.persistent_data:
+            self.persistent_data['show_groups_first'] = True # Show groups at the top of the things overview page
+
         if not 'allow_pinch_to_zoom' in self.persistent_data:
             self.persistent_data['allow_pinch_to_zoom'] = False
             
@@ -203,6 +206,11 @@ class CandleThemeAPIHandler(APIHandler):
             if self.DEBUG:
                 print("-Use zoom everywhere preference was in config: " + str(self.persistent_data['zoom_everywhere']))
         
+        if 'Show groups first' in config:
+            self.persistent_data['show_groups_first'] = bool(config['Show groups first'])
+            if self.DEBUG:
+                print("-Show groups first preference was in config: " + str(self.persistent_data['show_groups_first']))
+        
         if 'Allow pinch-to-zoom' in config:
             self.persistent_data['allow_pinch_to_zoom'] = bool(config['Allow pinch-to-zoom'])
             if self.DEBUG:
@@ -289,9 +297,10 @@ class CandleThemeAPIHandler(APIHandler):
                                               'background_color':self.persistent_data['background_color'], 
                                               'hide_floorplan':self.persistent_data['hide_floorplan'], 
                                               'exhibit_mode':self.exhibit_mode,
-                                              'compact':self.persistent_data['compact'],
                                               'zoom':self.persistent_data['zoom'], 
                                               'zoom_everywhere':self.persistent_data['zoom_everywhere'], 
+                                              'compact':self.persistent_data['compact'],
+                                              'show_groups_first':self.persistent_data['show_groups_first'],
                                               'allow_pinch_to_zoom':self.persistent_data['allow_pinch_to_zoom'], 
                                               'hide_virtual_keyboard':self.persistent_data['hide_virtual_keyboard'],
                                               'developer':self.persistent_data['developer'],

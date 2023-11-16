@@ -568,7 +568,45 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 }
 
 .group.open .bar{
-    border-bottom:1px solid rgba(255,255,255,.2);
+	border-bottom:1px solid transparent;
+    margin-bottom:2rem;
+}
+.group.open .bar:hover{
+	border-bottom:1px solid rgba(255,255,255,.2);
+}
+
+.group .bar:active {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+}
+
+.group:not(.open) .bar:hover:before{
+	background-color:rgba(255,255,255,.04);
+}
+
+.group .bar:hover:before {
+	content: '.';
+	position: absolute;
+	left:0;
+	height: 0rem;
+	width: 0rem;
+	padding: 2rem 2.5rem 3rem 2.5rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: 2rem;
+    line-height: 0rem;
+    color: #ddd;
+    /*text-shadow: 0 5px #ddd, 0 10px #ddd, 5px 0 #ddd, 5px 5px #ddd, 5px 10px #ddd, 10px 0 #ddd, 10px 5px #ddd, 10px 10px #ddd;*/
+    text-shadow: -.7rem -.7rem #ddd, 0 -.7rem #ddd, -.7rem 0 #ddd, .7rem .7rem #ddd, -.7rem .7rem #ddd, .7rem -.7rem #ddd, 0 .7rem #ddd, .7rem 0 #ddd;
+}
+
+
+.group div.bar .leftcontainer{
+	display: flex;
+	justify-content: center;
+	width: calc(100% - 12rem);
 }
 
 /*
@@ -606,6 +644,7 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 
 .group div.bar{
     padding:0;
+	justify-content: space-around;
 }
 
 .group div.bar button.edit{
@@ -642,10 +681,11 @@ body #virtualKeyboardChromeExtension td.kbdS span{
     position:absolute;
     opacity:0;
     /*width: calc(100% - 6rem);*/
-    width: calc(50% - 3rem);
+    width: calc(100% - 10rem);
     transform:none;
     cursor:s-resize;
     height:5rem;
+	margin-right:0;
 }
 .group.open div.bar button.foldIn{
     cursor:n-resize;
@@ -1178,7 +1218,7 @@ body #main-menu #things-menu-item{
 body:not(.compact) #things:not(.single-thing) webthing-light-capability,
 body:not(.compact) #groups:not(.single-thing) webthing-light-capability{
     position:relative;
-    top:1.2rem;
+    top:.5rem;
 }
 
 
@@ -1435,6 +1475,7 @@ webthing-pushed-property.component::part(value){
         margin-bottom: 0;
         padding: 1rem 0rem;
         box-sizing: border-box;
+		transform: scale(.9);
     }
     
     body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing .component::part(container),
@@ -1494,6 +1535,7 @@ webthing-pushed-property.component::part(value){
         font-size:1.1rem;
         height:100%;
         border:none;
+		font-weight: 100;
     }
     
     body:not(.zoom1):not(.zoom2):not(.zoom3) #things-view .thing-ui-link, 
@@ -2673,6 +2715,7 @@ body.exhibit-mode .localization-item
         width:2.8rem;
         height:2.8rem;
     }
+	
 }
 
 
