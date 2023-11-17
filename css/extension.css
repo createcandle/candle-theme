@@ -250,8 +250,7 @@ body #back-button{
 body #create-rule-button,
 body .create-log-button,
 body #add-button{
-    background-position: top left;
-    background: no-repeat url(/images/add.svg);
+    background: top left no-repeat url(/images/add.svg);
     bottom: 0rem;
     right: 0rem;
     padding-right: 2rem;
@@ -315,11 +314,6 @@ button:focus {
 #settings-view.dark{
     background-color:rgba(0,0,0,.1);
 }
-#settings-view > section{
-    
-}
-
-
 
 
 #logs-view,
@@ -553,7 +547,6 @@ body #virtualKeyboardChromeExtension td.kbdS span{
     padding-bottom:0;
     /*box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(255 255 255 / 30%) 0px 30px 60px -30px, rgb(187 192 197 / 35%) 0px -2px 6px 0px inset;*/
     /*box-shadow: rgb(50 50 93 / 35%) 0px 50px 100px -20px, rgb(0 0 0 / 40%) 0px 30px 60px -30px, rgb(10 37 64 / 45%) 0px -2px 6px 0px inset;*/
-    background-color:rgba(255,255,255,.1);
     border-radius:.5rem;
     padding-left:0;
     padding-right:0;
@@ -695,9 +688,6 @@ body #virtualKeyboardChromeExtension td.kbdS span{
     transform:none;
 }
 
-.group .foldIn{
-    
-}
 
 
 .group div.bar div.title{
@@ -747,7 +737,7 @@ body.groups-first #things-container{
     display:flex;
 	text-align:left;
 	flex-flow: wrap;
-    width: calc(100% - 19.2rem);
+    width: calc(100% - 17.2rem);
     margin-left: 8.6rem;
 	/*height: calc(100vh - 7.6rem);*/
 	transform:none;
@@ -762,7 +752,7 @@ body.groups-first #things-container{
 
 
 #things-view.candle-theme-things-mutated #things{
-    display: flex!important;
+    /*display: flex!important;*/
     opacity:1;
     transition: opacity .2s;
 }
@@ -816,12 +806,17 @@ body.groups-first #things-container{
     width:100%;
 	z-index:0;
 	transition: transform .2s;
+	border-radius:.5rem;
 }
 #things-view .thing-details-link:hover{
     opacity:1;
-	transform: scale(1.1);
+	
 }
 
+#things-view .thing-details-link:hover ~ span{
+	background-color:rgba(0,0,0,.4);
+	pointer-events:none;
+}
 
 
 
@@ -851,6 +846,10 @@ body #main-menu #things-menu-item{
 	position: inherit;
 	margin:0;
 	display: inline-block;
+}
+
+#groups:empty{
+	display:none;
 }
 
 #groups .thing,
@@ -1043,7 +1042,7 @@ body #main-menu #things-menu-item{
 #things.single-thing > .thing > div.thing-detail-container [data-name="Thermostat"]::part(contents){
     position:initial;
     transform:none;
-    margin:bottom:.2rem;
+    margin-bottom:.2rem;
 }
 
 
@@ -1064,9 +1063,14 @@ body #main-menu #things-menu-item{
 	animation: extension-candle-theme-fadeIn 1s linear;
 }
 
-
- 
-#things:not(.single-thing) .thing webthing-on-off-switch-capability.component::part(icon){
+.thing webthing-smart-plug-capability,
+.thing webthing-on-off-switch-capability
+/*
+#groups .thing webthing-smart-plug-capability,
+#things:not(.single-thing) .thing webthing-smart-plug-capability.component::part(icon)
+#groups .thing webthing-on-off-switch-capability,
+#things:not(.single-thing) .thing webthing-on-off-switch-capability.component::part(icon)*/
+{
     cursor:pointer;
 }
 
@@ -1256,7 +1260,6 @@ webthing-level-property.component::part(number){
 
 /*-webkit-appearance: none;*/
 
-/**/
 webthing-level-property.component::part(slider)::-webkit-slider-runnable-track{
     width: 11rem;
     min-width: 11rem;
@@ -1676,9 +1679,6 @@ input[type="range"] {
     }
 }
 */
-.webthing-level-property-slider{
-    
-}
 /* The thumb styling doesn't seem to work */
 /*
 webthing-level-property.component::part(slider)::-webkit-slider-thumb {
@@ -1693,10 +1693,6 @@ webthing-level-property.component::part(slider)::-webkit-slider-thumb {
     box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 }
 */
-
-input[type="range"]::-webkit-slider-runnable-track{
-    
-}
 
 
 /*  Thermostat setpoint  */
@@ -1737,7 +1733,6 @@ input[type="range"]::-webkit-slider-runnable-track{
     box-sizing: border-box;
     font-size: 2rem;
     background-color: rgba(0,0,0,.1);
-    margin-bottom: .2rem;	
     cursor: pointer;
     /*margin: 1rem .8rem 0 .8rem;*/
     margin:0;
@@ -1790,7 +1785,6 @@ input[type="range"]::-webkit-slider-runnable-track{
 	flex-direction: column;
     align-items: center;
     justify-content: center;
-	flex-direction: column;
 	overflow: scroll;
     position: relative;
     text-align: left;
@@ -2303,11 +2297,10 @@ body.zoom3 #logs-view .arrow-select{
 }
 
 #extension-candle-theme-collection-input-popup-container{
-    display:none;
+    display:flex;
     width:100%;
     height:100%;
     z-index:9999;
-    display:flex;
     justify-content:center;
     align-items:center;
     background-color:rgba(0,0,0,.8);
@@ -2364,8 +2357,6 @@ body.zoom3 #logs-view .arrow-select{
     display:inline-block;
 }
 
-.candle-theme-message-device{
-}
 .candle-theme-message-message{
     font-size:125%;
     display:block;
@@ -2715,11 +2706,6 @@ body.exhibit-mode .localization-item
         width:2.8rem;
         height:2.8rem;
     }
-	
-}
-
-
-@media only screen and (max-width: 640px) {
 
     #groups{
         margin:1rem;
@@ -2787,10 +2773,6 @@ body.exhibit-mode .localization-item
     	height:40%;
     }
 
-    #rule-parts-list-container{
-        width:100%;
-    }
-
     .rule-part-container.open .property-select-option select{
         max-width:50%;
     }
@@ -2802,6 +2784,7 @@ body.exhibit-mode .localization-item
     
     
     #rule-parts-list-container{
+		width:100%;
         position:absolute;
         bottom:0;
         height:20%;
@@ -2853,7 +2836,7 @@ body.exhibit-mode .localization-item
 	*/
     
     #groups{
-        width: calc(100% - 19.2rem);
+        width: calc(100% - 17.2rem);
         margin-left: 8.6rem;
         padding-bottom:12rem;
     }
@@ -3123,14 +3106,14 @@ body.exhibit-mode .localization-item
     
     
     #rule-area{
-        background-image:none;
+        
 
     	background:
     		linear-gradient(90deg, rgba(0,0,0,.03) 37px, transparent 1%) center,
     		linear-gradient(rgba(0,0,0,.03) 37px, transparent 1%) center,
     		rgba(255,255,255,.1);
     	background-size: 40px 40px;
-        
+        background-image:none;
         
     }
     
@@ -3169,4 +3152,121 @@ body.exhibit-mode .localization-item
         background-color:transparent;
     }
     */
+}
+
+
+
+
+/*  GRIDS  */
+
+@media only screen and (min-width: 641px) and (max-width: 2000px){
+
+	#things,
+	.group.open,
+	body .group.open,
+	body .group{
+		display:grid;
+	    justify-items: stretch;
+	}
+	
+	#groups .thing, 
+	#things:not(.single-thing) .thing{
+		width:auto;
+		max-width:250px;
+	}
+	
+}
+
+
+@media only screen and (min-width: 641px) and (max-width: 699px){
+	
+	#things,
+	body .group{
+	    grid-template-columns:  repeat(2,50%);
+	}
+
+	.group .bar{
+		grid-column-start: span 2;
+	}
+
+}
+
+
+@media only screen and (min-width: 700px) and (max-width: 839px){
+	
+	#things,
+	body .group{
+	    grid-template-columns: repeat(3,33.333333%);
+	}
+
+	.group .bar{
+		grid-column-start: span 3;
+	}
+
+}
+
+
+@media only screen and (min-width: 840px) and (max-width: 1099px){
+	
+	#things,
+	body .group{
+	    /*grid-template-columns: 25%;*/
+		grid-template-columns: repeat(4, 25%);
+	}
+
+	.group .bar{
+		grid-column-start: span 4;
+	}
+}
+
+
+@media only screen and (min-width: 1100px) and (max-width: 1299px){
+	
+	#things,
+	body .group{
+	    grid-template-columns: repeat(5,20%);
+	}
+
+	.group .bar{
+		grid-column-start: span 5;
+	}
+}
+
+
+@media only screen and (min-width: 1300px) and (max-width: 1499px){
+	
+	#things,
+	body .group{
+	    grid-template-columns: repeat(6,16.66666%);
+	}
+
+	.group .bar{
+		grid-column-start: span 6;
+	}
+}
+
+
+@media only screen and (min-width: 1500px) and (max-width: 1699px){
+	
+	#things,
+	body .group{
+	    grid-template-columns: repeat(7,14.2857%);
+	}
+
+	.group .bar{
+		grid-column-start: span 7;
+	}
+}
+
+
+@media only screen and (min-width: 1700px) and (max-width: 2000px){
+	
+	#things,
+	body .group{
+	    grid-template-columns: repeat(8,12.5%);
+	}
+
+	.group .bar{
+		grid-column-start: span 8;
+	}
 }
