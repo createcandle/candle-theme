@@ -3178,7 +3178,7 @@ body.exhibit-mode .localization-item
 }
 
 
-@media only screen and (min-width: 641px) and (max-width: 699px){
+@media only screen and (min-width: 641px) and (max-width: 719px){
 	
 	#things:not(.single-thing),
 	body .group{
@@ -3192,7 +3192,7 @@ body.exhibit-mode .localization-item
 }
 
 
-@media only screen and (min-width: 700px) and (max-width: 839px){
+@media only screen and (min-width: 720px) and (max-width: 899px){
 	
 	#things:not(.single-thing),
 	body .group{
@@ -3206,7 +3206,7 @@ body.exhibit-mode .localization-item
 }
 
 
-@media only screen and (min-width: 840px) and (max-width: 1099px){
+@media only screen and (min-width: 900px) and (max-width: 1099px){
 	
 	#things:not(.single-thing),
 	body .group{
