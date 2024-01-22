@@ -156,6 +156,12 @@ body.hide-virtual-keyboard > .ha{
 
 .developer .extension-zigbee2mqtt-adapter-zigbee-id{display:block;}
 
+.developer #settings-menu > .section-title .section-title-icon{
+	filter: sepia(10) hue-rotate(301deg) brightness(.5) contrast(200);
+}
+.developer #settings-menu > .section-title .section-title-name:before{
+	content:"Developer ";
+}
 
 
 body:not(.developer) #domain-settings > ul > .domain-item:last-child{
@@ -501,7 +507,9 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 }
 
 
-
+body.kiosk .settings-section{
+	padding-bottom:0;
+}
 
 
 
@@ -572,6 +580,11 @@ body #virtualKeyboardChromeExtension td.kbdS span{
   cursor: move;
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
+}
+
+.group:not(.open) .bar{
+	background-color:rgba(255,255,255,.1);
+	border-radius:.5rem;
 }
 
 .group:not(.open) .bar:hover:before{
@@ -1927,11 +1940,11 @@ webthing-level-property.component::part(slider)::-webkit-slider-thumb {
 }
 
 @keyframes wiggler {
-  0%   {top: 0px; left:1;}
+  0%   {top: 0px; left:1px;}
   25%  {top: -1px; left:0px;}
-  50%  {top: 0px; left:1;}
+  50%  {top: 0px; left:1px;}
   75%  {top: 1px; left:0px;}
-  100% {top: 0px;left:1;}
+  100% {top: 0px;left:1px;}
 }
 /*
 @keyframes wiggle-old {

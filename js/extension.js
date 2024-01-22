@@ -20,7 +20,35 @@
       })(window.history);
       */
       
+	  (() => {
+	      let oldPushState = history.pushState;
+	      history.pushState = function pushState() {
+	          let ret = oldPushState.apply(this, arguments);
+	          window.dispatchEvent(new Event('pushstate'));
+	          window.dispatchEvent(new Event('locationchange'));
+	          return ret;
+	      };
+
+	      let oldReplaceState = history.replaceState;
+	      history.replaceState = function replaceState() {
+	          let ret = oldReplaceState.apply(this, arguments);
+	          window.dispatchEvent(new Event('replacestate'));
+	          window.dispatchEvent(new Event('locationchange'));
+	          return ret;
+	      };
+
+	      window.addEventListener('popstate', () => {
+	          window.dispatchEvent(new Event('locationchange'));
+	      });
+	  })();
+	  
+	  window.addEventListener('locationchange', function (event) {
+	      console.log('Candle theme: location changed!', event);
+	  });
+	  
+	  
       // Useed to detect URL changes
+	  /*
       var pushState = history.pushState;
       history.pushState = function(state) {
           if (typeof history.onpushstate == "function") 
@@ -31,7 +59,7 @@
           }
           return pushState.apply(history, arguments);
       }
-      
+      */
       
       //console.log("window: ", window);
       //console.log("API: ", API);
@@ -303,9 +331,13 @@
               
           }
           
-          
-          
-          
+          else if(document.location.href.endsWith('/rules')){
+              //console.log('keypress at rules:', event);
+              const code = event.keyCode || event.charCode;
+			  //console.log("code: ", code);
+              this.filter_rules_overview(code);
+              
+          }
           
           
           
@@ -369,7 +401,7 @@
 
       // This is for the virtual keyboard
       document.getElementById('network-settings-wifi-password').addEventListener('keyup', () => {
-          console.log("document.getElementById('network-settings-wifi-password').value.length: ", document.getElementById('network-settings-wifi-password').value.length);
+          //console.log("document.getElementById('network-settings-wifi-password').value.length: ", document.getElementById('network-settings-wifi-password').value.length);
           if(document.getElementById('network-settings-wifi-password').value.length > 7){
               document.getElementById('network-settings-wifi-connect').disabled = false;
           }
@@ -420,7 +452,7 @@
 
       
       
-      
+      /*
       window.onpopstate = history.onpushstate = (event) => {
           
           try{
@@ -436,7 +468,24 @@
           }
           
       };
-      
+      */
+	  
+	window.addEventListener('locationchange', () => {
+	    console.log('candle theme: location changed!');
+		this.on_new_page(false);
+	});
+	  
+	/*
+	window.addEventListener("popstate", (event) => {
+	  console.error(
+	    `location: ${document.location}, state: ${JSON.stringify(event.state)}`,
+	  );
+	  
+	  console.log("\n\n NEW PATH: ", event.state.path);
+	  this.on_new_page(false,event.state.path);
+	});
+	*/
+	  
       
       
         
@@ -702,7 +751,7 @@
             
         }
         else if( current_path == '/rules' ){
-            console.log("theme: at rules overview");
+            //console.log("theme: at rules overview");
             
             setTimeout(() => {
                 
@@ -719,8 +768,8 @@
                     return 0;
                 });
 
-                console.log("sorted: ");
-                sorted.forEach(e => console.log(e.querySelector('.rule-info h3').innerText) );
+                //console.log("sorted: ");
+                //sorted.forEach(e => console.log(e.querySelector('.rule-info h3').innerText) );
             
                 ul.innerHTML = "";
                 sorted.forEach(e => ul.appendChild(e));
@@ -1239,10 +1288,259 @@
             console.error("theme: error in create_quick_log_filter_buttons: ", e);
         }
         
-		
-        
     }
     
+
+
+
+
+
+
+	//
+	//  THINGS FILTER
+	//
+	
+
+    create_quick_thing_filter_buttons(logs,things){
+        if(this.debug){
+            console.log("in create_quick_thing_filter_buttons");
+        }
+        try{
+            
+            if(typeof things == 'undefined'){
+                if(this.debug){
+                    console.log("theme: create_quick_log_filter_buttons: things was not yet defined? Aborting");
+                }
+                return;
+            }
+            
+            if(logs.length > 5){
+                //console.log("enough logs to show filter buttons");
+                var buttons_data = {
+                            'All':[{'thing':'fake1','property':'fake1'},{'thing':'fake2','property':'fake2'}],
+                            'Temperature':[],
+                            'Humidity':[],
+                            'Moisture':[],
+                            'Air':[],
+                            'Lux':[],
+                            'Watt':[],
+                            'kWh':[],
+                            'Battery':[]
+                            };
+            
+                // Create quick filter buttons container if it doesn't exist yet.
+        		var quick_log_filter_container = document.getElementById("candle-theme-quick-log-filter-container");
+        		if(quick_log_filter_container == null){
+        			if(this.debug){
+                        console.log("creating quick logs filter container");            
+        			}
+                    //const logs_view = document.getElementById("logs-view");
+                
+        			var quick_log_filter_container_el = document.createElement("div");
+        			quick_log_filter_container_el.setAttribute("id", "candle-theme-quick-log-filter-container");
+                    document.querySelector('#logs-view .logs').prepend(quick_log_filter_container_el);
+                    quick_log_filter_container = document.getElementById("candle-theme-quick-log-filter-container");
+                    if(this.debug){
+                        //console.log("quick_log_filter_container is now: ", quick_log_filter_container);
+                    }
+                }
+            
+                for(let l = 0; l < logs.length; l++){
+                    //console.log("log", l);
+                    //console.log("q log: ", logs[l] );
+                    //const log = logs[l];
+                    // selectedCapability
+                
+                    try{
+                    
+                        for(let t = 0; t < things.length; t++){
+                            //console.log("thing: ", things[t]);
+                            
+                            /*
+                            var forms_type = "forms";
+                            if( typeof things[t].links != 'undefined' ){
+                                forms_type = "links";
+                            }
+                            */
+                            /*
+                            var forms_type = "links";
+                            if( typeof things[t].forms != 'undefined' ){
+                                forms_type = "forms";
+                            }
+                            console.log("forms_type: ", forms_type);
+                            */
+                            
+                            //console.log("things[t][forms_type][0]['href']: ", things[t][forms_type][0]['href']);
+                            if( things[t]['href'].endsWith("/" + logs[l]['thing']) ){
+                                
+                                const thing_title = things[t].title;
+                                //console.log("found matching log thing");
+                                const property_keys = Object.keys(things[t]['properties']);
+                                for(let p = 0; p < property_keys.length; p++){
+                                    const prop = things[t]['properties'][ property_keys[p] ];
+                                    
+                                    var forms_type = "links";
+                                    if( typeof prop.forms != 'undefined' ){
+                                        forms_type = "forms";
+                                    }
+                                    
+                                    if( prop[forms_type][0]['href'].endsWith("/" + logs[l]['property']) ){
+                                        
+                                        if(this.debug){
+                                            //console.log("quick logs filter: found property");
+                                            console.log("prop.title: ", prop.title);
+                                            console.log("prop.unit: ", prop.unit);
+                                        }
+                                        
+                                        var button_type = null;
+                                        
+                                        if(typeof prop.unit != 'undefined'){
+                                            
+                                            //console.log("prop.unit.toLowerCase(): ", prop.unit.toLowerCase());
+                                            if(prop.unit.toLowerCase() == 'kwh'){
+                                                button_type = 'kWh';
+                                            }
+                                            else if(prop.unit.toLowerCase() == 'w'){
+                                                button_type = 'Watt';
+                                            }
+                                            else if(prop.unit.toLowerCase().startsWith('degree') ){
+                                                button_type = 'Temperature';
+                                            }
+                                            else if(prop.unit.toLowerCase().startsWith('µg/m') || prop.unit.toLowerCase() == 'ppm'){
+                                                button_type = 'Air';
+                                            }
+                                            else if(prop.unit.toLowerCase() == 'lx' || prop.unit.toLowerCase() == 'lux'){
+                                                button_type = 'Lux'; //buttons_data['Lux'].push( logs[l] );
+                                            }
+                                            // Percentage
+                                            else if(prop.unit.toLowerCase().startsWith('percent')){
+                                                if(prop.title.toLowerCase().startsWith('battery')){
+                                                    button_type = 'Battery';
+                                                
+                                                }
+                                                else if(prop.title.toLowerCase().indexOf('humidity') != -1){
+                                                    button_type = 'Humidity';
+                                                }
+                                                else if(prop.title.toLowerCase().indexOf('moisture') != -1){
+                                                    button_type = 'Moisture';
+                                                }
+                                            }
+                                        }
+                                        else{
+                                            if(prop.title.toLowerCase().startsWith('voc')){
+                                                console.log("FOUND VOC");
+                                                button_type = 'Air';
+                                            }
+                                        }
+                                        
+                                        //console.log("button_type: ", button_type);
+                                        
+                                        if(button_type != null){
+                                            if(typeof thing_title != 'undefined' && typeof prop.title != 'undefined'){
+                                                //console.log("adding to quick filter buttons data");
+                                                // Add the thing and property of the log that should be shown when this filter button is pressed
+                                                var push_me = logs[l];
+                                                push_me['thing_title'] = thing_title;
+                                                push_me['property_title'] = prop.title;
+                                                buttons_data[button_type].push( push_me );
+                                            }
+                                            else{
+                                                // In theory some very old addons used "name" instead of title... they are skipped here.
+                                                if(this.debug){
+                                                    console.warn("weird, could not add log to quick list. Title attribute of thing or property missing? Ancient addon?");
+                                                }
+                                            }
+                                        }
+                                        
+                                    }
+                                
+                                    
+                                
+                                }
+                            }
+                    
+                        }
+                    
+                    }
+                    catch(e){
+                        console.error("Error looping over logs while making quick filter buttons: ", e);
+                    }
+                
+                } // end of looping over logs
+                if(this.debug){
+                    console.log("quick buttons_data: ", buttons_data);
+                }
+                
+                // Find out if it's useful to show buttons
+                const buttons_keys = Object.keys(buttons_data);
+                var buttons_with_multiple_logs_count = 0;
+                for(let b = 0; b < buttons_keys.length; b++){
+                    if( buttons_data[buttons_keys[b]].length > 1 ){
+                        buttons_with_multiple_logs_count++;
+                    }
+                }
+                if(this.debug){
+                    console.log("buttons_with_multiple_logs_count: ", buttons_with_multiple_logs_count);
+                }
+                
+            
+                // Clear the quick buttons container
+                quick_log_filter_container.innerHTML = "";
+                
+                // Actually add the quick filter buttons
+                if(buttons_with_multiple_logs_count > 1){
+                    for(let b = 0; b < buttons_keys.length; b++){
+                        
+                        if( buttons_data[buttons_keys[b]].length > 0 ){
+                            var button_el = document.createElement('button');
+                            button_el.classList.add('candle-theme-quick-log-filter-button');
+                            button_el.classList.add('text-button');
+                            button_el.innerText = buttons_keys[b];
+                            button_el.onclick = (event) => {
+                                if(this.debug){
+                                    console.log("quick log button clicked. data: ", b, buttons_data[buttons_keys[b]]);
+                                }
+                                var logs_to_show = [];
+                                for(let d = 0; d < buttons_data[buttons_keys[b]].length; d++){
+                                    if(this.debug){
+                                        console.log("d: ", d, buttons_data[buttons_keys[b]][d]);
+                                    }
+                                    
+                                    //var log_name = buttons_data[buttons_keys[b]][d]['thing_title'] + "-" + buttons_data[buttons_keys[b]][d]['property_title'];
+                                    //log_name = log_name.replace(/\s/g , "-");
+                                    //logs_to_show.push(log_name);
+                                    logs_to_show.push({'thing': buttons_data[buttons_keys[b]][d]['thing'],'property':buttons_data[buttons_keys[b]][d]['property']});
+                                }
+                                this.filter_these_logs(logs_to_show);
+                            
+                            };
+                            quick_log_filter_container.appendChild(button_el);
+                            //console.log("should be appended");
+                        }
+                        
+                    }
+                    /*
+                    setTimeout(() => {
+                        if(document.getElementById('candle-theme-quick-log-filter-container') != null){
+                            document.getElementById('candle-theme-quick-log-filter-container').style.display = 'block';
+                        }
+                    }, 1000);
+                    */
+                    
+                    
+                }
+                
+                
+            
+            }
+            
+        }catch(e){
+            console.error("theme: error in create_quick_log_filter_buttons: ", e);
+        }
+        
+    }
+
+
 
 
 
@@ -1546,7 +1844,7 @@
                     }
                     
                     //if( document.body.classList.contains('developer') ){
-                    upgraded_message = '<span class="candle-theme-message-addon">' + message_array[0] + '</span>';
+                    upgraded_message = '<span class="candle-theme-message-addon">' + message_array[0].replace('Adapter','') + '</span>';
                     //}
                     upgraded_message += '<span class="candle-theme-message-device">' + message_array[1] + '</span>';
                     upgraded_message += '<span class="candle-theme-message-message">' + message_array[2] + '</span>';
@@ -1912,7 +2210,9 @@
         }
         
         if(typeof this.things == 'undefined'){
-            console.warn("ids_to_log_name: too early, this.things was still undefined");
+            if(this.debug){
+				console.warn("ids_to_log_name: too early, this.things was still undefined");
+			}
             return null;
         }
         
@@ -2175,7 +2475,7 @@
         }
         
 
-        console.log("UPGRADED new_collections_data: ", new_collections_data, "\n");
+        //console.log("UPGRADED new_collections_data: ", new_collections_data, "\n");
         
         this.log_collections = new_collections_data;
         // Also save the upgraded collections data
@@ -2699,13 +2999,28 @@
            
     }
     
+	
+	filter_rules_overview(code){
+		if( (code >= 48 && code <= 57) || (code >= 65 && code <= 90) ){ // a-z and 0-9 // technically there are no buttons between 57 and 65
+			let rule_items = document.querySelectorAll("#rules > .rule");
+		    for (var i = 0; i < rule_items.length; ++i) {
+		    	const rule_title = rule_items[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+				
+				if( event.key == rule_title.charAt(0) ){
+					//console.log("rule_title: ", rule_title);
+					rule_items[i].scrollIntoView();
+					break;
+				}
+			}
+		}
+	}
     
     
     // Press letter on the keyboard and it will filter the rule parts
     filter_rule_parts_list(code){
         
         //console.log("in filter_rule_parts_list. key code: ", code);
-        console.log('document.activeElement.tagName: ', document.activeElement.tagName);
+        //console.log('document.activeElement.tagName: ', document.activeElement.tagName);
         if (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "SPAN"){
             //console.log("An input is already focused");
             code = 27;
