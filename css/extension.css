@@ -513,6 +513,37 @@ body.kiosk .settings-section{
 
 
 
+/*  Things quick filter buttons  */
+
+#candle-theme-things-filter-buttons-container{
+    /*top: 3.5rem;
+	left: 10rem;
+    right: 10rem;*/
+	padding: 2rem 2rem 0 2rem;
+    z-index: 9;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:center;
+	align-items: center;
+	pointer-events:none;
+}
+#candle-theme-things-filter-buttons-container > button{
+	font-size:150%;
+	letter-spacing: 0.1rem;
+	text-transform: capitalize;
+	pointer-events:auto;
+	padding: 1rem;
+	border-radius: 1rem;
+	margin: 1rem;
+}
+
+#things-view:not(.candle-theme-showing-things-overview) #candle-theme-things-filter-buttons-container,
+#things-view:not(.candle-theme-showing-things-overview) #candle-theme-things-search-input{
+	display:none;
+}
+
+
+
 /*  Things search field  */
 
 #candle-theme-things-search-container{
@@ -3281,5 +3312,24 @@ body.exhibit-mode .localization-item
 
 	.group .bar{
 		grid-column-start: span 8;
+	}
+}
+
+@media only screen and (min-width: 1000px) {
+	#candle-theme-things-filter-buttons-container{
+		padding: 0 10rem;
+	}
+}
+
+
+
+@media only screen and (min-width: 1000px) and (min-height: 700px){
+	#candle-theme-things-filter-buttons-container{
+		position:fixed;
+		top: 0rem;
+		left: 10rem;
+		right: 10rem;
+		align-items:center;
+		min-height:10rem;
 	}
 }

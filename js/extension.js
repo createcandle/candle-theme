@@ -127,6 +127,10 @@
 	  this.devices_with_logs = [];
       this.api_logs; // later becomes array
       this.log_collections = {};
+	  
+	  // things overview quick filter buttons
+	  this.things_tags = {};
+	  
       this.kiosk = false; // If running on the built-in kiosk browser (indicated by the virtual keyboard existing)
       this.exhibit_mode = false;
       
@@ -649,6 +653,8 @@
             if(current_path == '/things'){
                 //console.log("at /things");
                 
+				document.getElementById('things-view').classList.add('candle-theme-showing-things-overview');
+				
                 // hide link to logs
                 if(document.getElementById('candle-theme-link-to-logs-container') != null){
                     document.getElementById('candle-theme-link-to-logs-container').style.display = 'none';
@@ -657,15 +663,22 @@
                 // show search input
                 if(document.getElementById('candle-theme-things-search-container') != null){
                     document.getElementById('candle-theme-things-search-input').value = '';
-                    document.getElementById('candle-theme-things-search-container').style.display = 'block';
+                    //document.getElementById('candle-theme-things-search-container').style.display = 'block';
                 }
                 else if(document.getElementById("things").children.length > 10){
                     this.addThingsSearch();
                 }
+				
+				
+				
+				
+				
                 
             }
             else{
                 //console.log("ON A THING DETAIL PAGE");
+
+				document.getElementById('things-view').classList.remove('candle-theme-showing-things-overview');
 
                 this.checkProperties(null, true);
                 this.addThermostatButtons();
@@ -681,11 +694,12 @@
                     //console.log("no promise");
                     this.add_link_to_logs();
                 }
-                
+                /*
                 if(document.getElementById('candle-theme-things-search-container') != null){
                     //console.log("hiding search container");
                     document.getElementById('candle-theme-things-search-container').style.display = 'none';
                 }
+				*/
             }
             
         }
@@ -913,7 +927,9 @@
         }
         device_id = this.get_device_id_from_url(device_id);
         if( this.devices_with_logs.includes(device_id)){
-            //console.log(device_id + " has logs, adding direct link to them");
+            if(this.debug){
+				console.log(device_id + " has logs, adding direct link to them");
+			}
             if(document.getElementById('candle-theme-link-to-logs-container') == null){
     			const thing_view = document.getElementById("thing-view");
             
@@ -1144,26 +1160,28 @@
                                         
                                         var button_type = null;
                                         
-                                        if(typeof prop.unit != 'undefined'){
-                                            
-                                            //console.log("prop.unit.toLowerCase(): ", prop.unit.toLowerCase());
-                                            if(prop.unit.toLowerCase() == 'kwh'){
+                                        if(typeof prop.unit == 'string'){
+											
+											const prop_unit_lower = prop.unit.toLowerCase()
+											
+                                            //console.log("prop_unit_lower: ", prop_unit_lower);
+                                            if(prop_unit_lower == 'kwh'){
                                                 button_type = 'kWh';
                                             }
-                                            else if(prop.unit.toLowerCase() == 'w'){
+                                            else if(prop_unit_lower == 'w'){
                                                 button_type = 'Watt';
                                             }
-                                            else if(prop.unit.toLowerCase().startsWith('degree') ){
+                                            else if(prop_unit_lower.startsWith('degree') ){
                                                 button_type = 'Temperature';
                                             }
-                                            else if(prop.unit.toLowerCase().startsWith('µg/m') || prop.unit.toLowerCase() == 'ppm'){
+                                            else if(prop_unit_lower.startsWith('µg/m') || prop_unit_lower == 'ppm'){
                                                 button_type = 'Air';
                                             }
-                                            else if(prop.unit.toLowerCase() == 'lx' || prop.unit.toLowerCase() == 'lux'){
+                                            else if(prop_unit_lower == 'lx' || prop_unit_lower == 'lux'){
                                                 button_type = 'Lux'; //buttons_data['Lux'].push( logs[l] );
                                             }
                                             // Percentage
-                                            else if(prop.unit.toLowerCase().startsWith('percent')){
+                                            else if(prop_unit_lower.startsWith('percent')){
                                                 if(prop.title.toLowerCase().startsWith('battery')){
                                                     button_type = 'Battery';
                                                 
@@ -1396,24 +1414,24 @@
                                         
                                         if(typeof prop.unit != 'undefined'){
                                             
-                                            //console.log("prop.unit.toLowerCase(): ", prop.unit.toLowerCase());
-                                            if(prop.unit.toLowerCase() == 'kwh'){
+                                            //console.log("prop_unit_lower: ", prop_unit_lower);
+                                            if(prop_unit_lower == 'kwh'){
                                                 button_type = 'kWh';
                                             }
-                                            else if(prop.unit.toLowerCase() == 'w'){
+                                            else if(prop_unit_lower == 'w'){
                                                 button_type = 'Watt';
                                             }
-                                            else if(prop.unit.toLowerCase().startsWith('degree') ){
+                                            else if(prop_unit_lower.startsWith('degree') ){
                                                 button_type = 'Temperature';
                                             }
-                                            else if(prop.unit.toLowerCase().startsWith('µg/m') || prop.unit.toLowerCase() == 'ppm'){
+                                            else if(prop_unit_lower.startsWith('µg/m') || prop_unit_lower == 'ppm'){
                                                 button_type = 'Air';
                                             }
-                                            else if(prop.unit.toLowerCase() == 'lx' || prop.unit.toLowerCase() == 'lux'){
+                                            else if(prop_unit_lower == 'lx' || prop_unit_lower == 'lux'){
                                                 button_type = 'Lux'; //buttons_data['Lux'].push( logs[l] );
                                             }
                                             // Percentage
-                                            else if(prop.unit.toLowerCase().startsWith('percent')){
+                                            else if(prop_unit_lower.startsWith('percent')){
                                                 if(prop.title.toLowerCase().startsWith('battery')){
                                                     button_type = 'Battery';
                                                 
@@ -1885,6 +1903,7 @@
     }
     
 
+	// Add CSS classes to shadowRoot items so they can be styled
     addParts() {
       const items = [
         '#groups .thing > *:not(a):not(span):not(.component)',
@@ -2884,6 +2903,16 @@
     addThingsSearch() {
         //console.log("in addThingsSearch");
         
+		const tags_tree = {
+			"light":['light','lamp'],
+			"switch":['switch','button'],
+			"sensor":['sensor'],
+			"climate":['climate','purifier','air'],
+			"energy":['energy','power','electric','electricity','consumption','motor','charger'],
+			"security":['secur','tamper','safety','smoke','alarm'],
+			"health":['health','toothbrush','scale','wellness']
+		}
+		
         if(document.getElementById('candle-theme-things-search-container') == null){
             let search_container = document.createElement('div');
             search_container.setAttribute("id", "candle-theme-things-search-container");
@@ -2895,6 +2924,286 @@
 
             search_container.appendChild(search_input);
             document.getElementById("things-view").appendChild(search_container);
+			
+			
+			
+			//
+			// ALSO ADD THINGS QUICK FILTER BUTTONS
+			//
+			
+            var things_filter_buttons_data = {
+                        'All':[{'thing':'fake1','property':'fake1'},{'thing':'fake2','property':'fake2'}],
+                        'Lights':[],
+                        'Switches':[],
+                        'Sensors':[],
+                        'Energy':[],
+						'Presence':[],
+						'Climate':[],
+						'Health':[],
+						'Security':[],
+						'Media':[]
+                        };
+						
+            let things_filter_buttons_container = document.createElement('div');
+            things_filter_buttons_container.setAttribute("id", "candle-theme-things-filter-buttons-container");
+			
+	        API.getThings().then((things) => {
+	            console.log('API gave list of things, will scan through them to add quick filter buttons: ', things);
+				
+                try{
+                
+                    for(let t = 0; t < things.length; t++){
+                        console.log("thing: ", things[t]);
+                        
+                        /*
+                        var forms_type = "forms";
+                        if( typeof things[t].links != 'undefined' ){
+                            forms_type = "links";
+                        }
+                        */
+                        /*
+                        var forms_type = "links";
+                        if( typeof things[t].forms != 'undefined' ){
+                            forms_type = "forms";
+                        }
+                        console.log("forms_type: ", forms_type);
+                        */
+                        
+                        //console.log("things[t][forms_type][0]['href']: ", things[t][forms_type][0]['href']);
+                        
+						const thing_id = things[t]['href'].substring(things[t]['href'].lastIndexOf('/') + 1);
+                            
+						if(typeof this.things_tags[thing_id] == 'undefined'){
+							this.things_tags[thing_id] = {'tags':[],'href':things[t]['href']};
+						}
+				
+                        
+                        console.log("-- thing_id: ", thing_id);
+						const thing_id_lower = thing_id.toLowerCase();
+						
+						
+						
+						for (const [key, tags_array] of Object.entries(tags_tree)) {
+							console.log(`${key}: ${tags_array}`);
+							for(let ct = 0; ct < tags_tree[key].length; ct++){
+								if(thing_id_lower.indexOf(tags_tree[key][ct] + ' ') != -1 || thing_id_lower.indexOf(' ' + tags_tree[ct]) != -1){ // if the tag is in the title, with either a space before or after it
+									this.things_tags[thing_id]['tags'].push(key);
+								}
+							}
+						}
+						
+						
+						
+						// Look at a thing's '@type list of declared capabilities
+						
+						if( typeof things[t]['@type'] != 'undefined' && Array.isArray(things[t]['@type']) ){
+							for(let at=0; at < things[t]['@type'].length; at++){
+								
+								// light
+								if(things[t]['@type'][at] == 'Light'){
+									if(this.things_tags[thing_id]['tags'].indexOf('light') == -1){
+										this.things_tags[thing_id]['tags'].push('light');
+									}
+								}
+								// switch
+								if(things[t]['@type'][at].indexOf('Switch') != -1 || things[t]['@type'][at].indexOf('Plug') != -1 || things[t]['@type'][at].indexOf('Button') != -1 || things[t]['@type'][at] == 'Lock'){
+									if(this.things_tags[thing_id]['tags'].indexOf('switch') == -1){
+										this.things_tags[thing_id]['tags'].push('switch');
+									}
+								}
+								// sensor
+								if(things[t]['@type'][at].indexOf('Sensor') != -1){
+									if(this.things_tags[thing_id]['tags'].indexOf('sensor') == -1){
+										this.things_tags[thing_id]['tags'].push('sensor');
+									}
+								}
+								// energy
+								if(things[t]['@type'][at] == 'SmartPlug'){
+									if(this.things_tags[thing_id]['tags'].indexOf('energy') == -1){
+										this.things_tags[thing_id]['tags'].push('energy');
+									}
+								}
+								// security
+								if(things[t]['@type'][at].indexOf('Camera') != -1 || things[t]['@type'][at] == 'DoorSensor' || things[t]['@type'][at] == 'SmokeSensor' || things[t]['@type'][at] == 'Lock' || things[t]['@type'][at] == 'Alarm'){
+									if(this.things_tags[thing_id]['tags'].indexOf('security') == -1){
+										this.things_tags[thing_id]['tags'].push('security');
+									}
+								}
+							}
+						}
+                        
+						// Loop over properties
+						const property_keys = Object.keys(things[t]['properties']);
+                        for(let p = 0; p < property_keys.length; p++){
+                            const prop = things[t]['properties'][ property_keys[p] ];
+                            
+                            var forms_type = "links";
+                            if( typeof prop.forms != 'undefined' ){
+                                forms_type = "forms";
+                            }
+                            
+                            if(this.debug){
+                                //console.log("quick logs filter: found property");
+                                console.log("prop.title: ", prop.title);
+                                console.log("prop.unit: ", prop.unit);
+                            }
+                            
+                            var button_type = null;
+                            
+                            if(typeof prop.unit == 'string'){
+                                
+								const prop_unit_lower = prop.unit.toLowerCase()
+                                console.log("prop_unit_lower: ", prop_unit_lower);
+								
+                                if(prop_unit_lower == 'kwh' || prop_unit_lower == 'w'){
+									if(this.things_tags[thing_id]['tags'].indexOf('energy') == -1){
+										this.things_tags[thing_id]['tags'].push('energy');
+									}
+                                }
+                                if(prop_unit_lower.startsWith('degree') ){
+									if(this.things_tags[thing_id]['tags'].indexOf('climate') == -1){
+										this.things_tags[thing_id]['tags'].push('climate');
+									}
+                                }
+                                if(prop_unit_lower.startsWith('µg/m') || prop_unit_lower == 'ppm'){
+									if(this.things_tags[thing_id]['tags'].indexOf('sensor') == -1){
+										this.things_tags[thing_id]['tags'].push('sensor');
+									}
+									if(this.things_tags[thing_id]['tags'].indexOf('climate') == -1){
+										this.things_tags[thing_id]['tags'].push('climate');
+									}
+                                }
+                                if(prop_unit_lower == 'lx' || prop_unit_lower == 'lux'){
+									if(this.things_tags[thing_id]['tags'].indexOf('sensor') == -1){
+										this.things_tags[thing_id]['tags'].push('sensor');
+									}
+									if(this.things_tags[thing_id]['tags'].indexOf('climate') == -1){
+										this.things_tags[thing_id]['tags'].push('climate');
+									}
+                                }
+								
+                                // Percentage
+                                else if(prop_unit_lower.startsWith('percent')){
+                                    if(prop.title.toLowerCase().indexOf('humidity') != -1){
+										if(this.things_tags[thing_id]['tags'].indexOf('sensor') == -1){
+											this.things_tags[thing_id]['tags'].push('sensor');
+										}
+										if(this.things_tags[thing_id]['tags'].indexOf('climate') == -1){
+											this.things_tags[thing_id]['tags'].push('climate');
+										}
+                                    }
+                                    else if(prop.title.toLowerCase().indexOf('moisture') != -1){
+										if(this.things_tags[thing_id]['tags'].indexOf('sensor') == -1){
+											this.things_tags[thing_id]['tags'].push('sensor');
+										}
+                                    }
+                                }
+                            }
+                            
+							// Look at property title
+                            if(prop.title.toLowerCase().startsWith('voc ')){
+                                console.log("FOUND VOC");
+								if(this.things_tags[thing_id]['tags'].indexOf('sensor') == -1){
+									this.things_tags[thing_id]['tags'].push('sensor');
+								}
+								if(this.things_tags[thing_id]['tags'].indexOf('climate') == -1){
+									this.things_tags[thing_id]['tags'].push('climate');
+								}
+                            }
+							
+							// TODO: look at property @type?
+                            
+                            
+						}
+                
+                    }
+					
+					
+					console.warn("\n\n\nTHING TAGS:");
+					console.warn(this.things_tags);
+					console.warn('\n\n\n');
+					
+					
+					
+					let filter_buttons_to_create = ['all'].concat(Object.keys(tags_tree));
+					
+					for(let fb = 0; fb < filter_buttons_to_create.length; fb++){
+						const tag = filter_buttons_to_create[fb];
+						for (const [thing_href, thing_details] of Object.entries(this.things_tags)) {
+							if(tag == 'all' || thing_details['tags'].indexOf(tag) != -1){
+		                        
+								var button_el = document.createElement('button');
+		                        button_el.classList.add('candle-theme-things-filter-button');
+		                        button_el.classList.add('text-button');
+								button_el.classList.add('candle-theme-things-filter-button-' + tag);
+		                        button_el.innerText = tag;
+		                        button_el.onclick = (event) => {
+		                            if(this.debug){
+		                                console.log("quick things filter button clicked. tag: ", tag);
+		                            }
+		                            this.filter_things_overview(tag);
+									
+									
+                        
+		                        };
+		                        things_filter_buttons_container.appendChild(button_el);
+		                        //console.log("should be appended");
+								break
+							}
+							
+						}
+						
+					}
+					
+					// Create the Things overview quick filter buttons
+					
+					/*
+		            // Actually add the quick filter buttons
+		            if(buttons_with_multiple_logs_count > 1){
+		                for(let b = 0; b < buttons_keys.length; b++){
+                    
+		                    if( buttons_data[buttons_keys[b]].length > 0 ){
+		                        var button_el = document.createElement('button');
+		                        button_el.classList.add('candle-theme-quick-log-filter-button');
+		                        button_el.classList.add('text-button');
+		                        button_el.innerText = buttons_keys[b];
+		                        button_el.onclick = (event) => {
+		                            if(this.debug){
+		                                console.log("quick log button clicked. data: ", b, buttons_data[buttons_keys[b]]);
+		                            }
+		                            var logs_to_show = [];
+		                            for(let d = 0; d < buttons_data[buttons_keys[b]].length; d++){
+		                                if(this.debug){
+		                                    console.log("d: ", d, buttons_data[buttons_keys[b]][d]);
+		                                }
+                                
+		                                //var log_name = buttons_data[buttons_keys[b]][d]['thing_title'] + "-" + buttons_data[buttons_keys[b]][d]['property_title'];
+		                                //log_name = log_name.replace(/\s/g , "-");
+		                                //logs_to_show.push(log_name);
+		                                logs_to_show.push({'thing': buttons_data[buttons_keys[b]][d]['thing'],'property':buttons_data[buttons_keys[b]][d]['property']});
+		                            }
+		                            this.filter_these_logs(logs_to_show);
+                        
+		                        };
+		                        quick_log_filter_container.appendChild(button_el);
+		                        //console.log("should be appended");
+		                    }
+                    
+		                }
+                	
+		            }
+					*/
+						
+            
+					document.getElementById("things-view").prepend(things_filter_buttons_container);
+                
+                }
+                catch(e){
+                    console.error("Error looping over logs while making quick filter buttons: ", e);
+                }
+				
+	        });
+			
         }
         
         const search_input = document.getElementById('candle-theme-things-search-input');
@@ -2998,6 +3307,45 @@
         }
            
     }
+	
+	
+	filter_things_overview(tag){
+		console.log("in filter_things_overview. tag to show: ", tag);
+		
+		let things_els = document.querySelectorAll('#things-container .thing');
+		
+		
+		for(let w = 0; w < things_els.length; w++){
+			
+			if(tag == 'all'){
+				things_els[w].classList.remove('extension-candle-theme-hidden');
+			}
+			else{
+				const thing_id = things_els[w].getAttribute('id').substring(6);
+				console.log("filter_things_overview:  thing_id: ", thing_id);
+				if(typeof this.things_tags[thing_id] != 'undefined' && this.things_tags[thing_id]['tags'].indexOf(tag) != -1){
+					things_els[w].classList.remove('extension-candle-theme-hidden');
+				}
+				else{
+					things_els[w].classList.add('extension-candle-theme-hidden');
+				}
+			}
+			
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     
 	
 	filter_rules_overview(code){
