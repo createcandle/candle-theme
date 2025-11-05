@@ -42,13 +42,14 @@
 	      });
 	  })();
 	  
+	  /*
 	  window.addEventListener('locationchange', function (event) {
 	      console.log('Candle theme: location changed!', event);
 	  });
+	  */
 	  
 	  
-	  
-	  
+	  /*
 	  document.addEventListener(`click`, e => {
 	    
 		  console.log("document.activeElement: ", document.activeElement);
@@ -56,7 +57,15 @@
 		  console.log("e.target.nodeName: ", e.target.nodeName);
 
 	  });
+	  */
 	  
+	  var last_active_tag_type = null;
+	  setTimeout(() => {
+		  if(document.activeElement != last_active_tag_type){
+			  last_active_tag_type = document.activeElement;
+			  console.log("document.activeElement changed to: ", document.activeElement);
+		  }
+	  },1000);
 	  
 	  
 	  
@@ -390,32 +399,32 @@
       
       
       document.querySelector('#settings-menu .section-title-icon').addEventListener('click', () => {
-                    		//console.log("clicked on link to logs button. This:", this);
-                            this.developer_clicks++;
-                            /*
-                            if(this.developer_clicks > 7){
-                                document.body.classList.remove('developer');
-                                this.developer_clicks = 0;
-                            }
-                            else 
-                            */
-                            if(this.developer_clicks > 3){
-                                this.developer_clicks = 0;
-                                if( document.body.classList.contains('developer') ){
-                                    document.body.classList.remove('developer');
-                                }
-                                else{
-                                    if(!this.exhibit_mode){
-                                        document.body.classList.add('developer');
-                                    }
-                                    else{
-                                        console.warn("Candle theme: cannot enable developer mode with 4 gear clicks: exhibit mode active");
-                                    }
-                                    
-                                }
-                                
-                            }
-                        });
+		  //console.log("clicked on link to logs button. This:", this);
+          this.developer_clicks++;
+          /*
+          if(this.developer_clicks > 7){
+              document.body.classList.remove('developer');
+              this.developer_clicks = 0;
+          }
+          else 
+          */
+          if(this.developer_clicks > 3){
+              this.developer_clicks = 0;
+              if( document.body.classList.contains('developer') ){
+                  document.body.classList.remove('developer');
+              }
+              else{
+                  if(!this.exhibit_mode){
+                      document.body.classList.add('developer');
+                  }
+                  else{
+                      console.warn("Candle theme: cannot enable developer mode with 4 gear clicks: exhibit mode active");
+                  }
+                  
+              }
+          }
+		  
+      });
       
 
       // This is for the virtual keyboard
@@ -489,154 +498,138 @@
       };
       */
 	  
-	window.addEventListener('locationchange', () => {
-	    console.log('candle theme: location changed!');
-		this.on_new_page(false);
-	});
-	  
-	/*
-	window.addEventListener("popstate", (event) => {
-	  console.error(
-	    `location: ${document.location}, state: ${JSON.stringify(event.state)}`,
-	  );
-	  
-	  console.log("\n\n NEW PATH: ", event.state.path);
-	  this.on_new_page(false,event.state.path);
-	});
-	*/
-	  
+	  window.addEventListener('locationchange', () => {
+		  console.log('candle theme: location changed!');
+		  this.on_new_page(false);
+	  });
+	 
+
+        
+	  this.on_new_page(true);
       
-      
-        
-        this.on_new_page(true);
-        
-        
-  		// /init
-        window.API.postJson(
-          `/extensions/${this.id}/api/ajax`,
-            {'action':'init'}
+		// /init
+      window.API.postJson(
+        `/extensions/${this.id}/api/ajax`,
+          {'action':'init'}
 
-        ).then((body) => {
-			//console.log("Candle theme Init API result: ", body);
-            
-            if(typeof body.debug != 'undefined'){
-                this.debug = body.debug;
-                if(this.debug){
-                    console.log("Candle theme: debug: /init response: ", body);
-                }
-            }
-            
-            if(typeof body.exhibit_mode != 'undefined'){
-                this.exhibit_mode = body.exhibit_mode;
-            }
-            
-            if(typeof body.background_color != 'undefined'){
-                if(body.background_color == ""){
-                    body.background_color = 'transparent';
-                    document.querySelector ("html").style.backgroundColor = 'transparent';
-                    //document.querySelector ("#main-menu").style.backgroundColor = 'transparent';
-                    try{
-                        localStorage.removeItem('background_color');
-                    }
-                    catch(e){
-                        console.log("Error while removing background color from local storage: ", e);
-                    }
-                    
-                }
-                else{
-                    document.body.style.backgroundColor = body.background_color;
-                    document.querySelector("html").style.backgroundColor = body.background_color;
-                    document.querySelector("#main-menu").style.backgroundColor = body.background_color;
-                    localStorage.setItem('background_color', body.background_color);
-                }
-                
-            }
-            else{
-                try{
-                    localStorage.removeItem('background_color');
-                }
-                catch(e){
-                    //console.log("background color was not set in local storage, so won't be removed from it: ", e);
-                }
-            }
-            
-            if(typeof body.hide_floorplan != 'undefined'){
-                if(body.hide_floorplan){
-                    document.getElementById('floorplan-menu-item').style.display = 'none';
-                }
-            }
-            
-            if(typeof body.zoom != 'undefined' && typeof body.zoom_everywhere != 'undefined'){
+      ).then((body) => {
+		//console.log("Candle theme Init API result: ", body);
+          
+          if(typeof body.debug != 'undefined'){
+              this.debug = body.debug;
+              if(this.debug){
+                  console.log("Candle theme: debug: /init response: ", body);
+              }
+          }
+          
+          if(typeof body.exhibit_mode != 'undefined'){
+              this.exhibit_mode = body.exhibit_mode;
+          }
+          
+          if(typeof body.background_color != 'undefined'){
+              if(body.background_color == ""){
+                  body.background_color = 'transparent';
+                  document.querySelector ("html").style.backgroundColor = 'transparent';
+                  //document.querySelector ("#main-menu").style.backgroundColor = 'transparent';
+                  try{
+                      localStorage.removeItem('background_color');
+                  }
+                  catch(e){
+                      console.log("Error while removing background color from local storage: ", e);
+                  }
+                  
+              }
+              else{
+                  document.body.style.backgroundColor = body.background_color;
+                  document.querySelector("html").style.backgroundColor = body.background_color;
+                  document.querySelector("#main-menu").style.backgroundColor = body.background_color;
+                  localStorage.setItem('background_color', body.background_color);
+              }
+              
+          }
+          else{
+              try{
+                  localStorage.removeItem('background_color');
+              }
+              catch(e){
+                  //console.log("background color was not set in local storage, so won't be removed from it: ", e);
+              }
+          }
+          
+          if(typeof body.hide_floorplan != 'undefined'){
+              if(body.hide_floorplan){
+                  document.getElementById('floorplan-menu-item').style.display = 'none';
+              }
+          }
+          
+          if(typeof body.zoom != 'undefined' && typeof body.zoom_everywhere != 'undefined'){
 
-                if(this.kiosk || body.zoom_everywhere){
-                    if(body.zoom == '100%'){
-                        document.body.classList.remove('zoom1');
-                        document.body.classList.remove('zoom2');
-                        document.body.classList.remove('zoom3');
-                    }
-                    else if(body.zoom == '120%'){
-                        document.body.classList.remove('zoom2');
-                        document.body.classList.remove('zoom3');
-                        document.body.classList.add('zoom1');
-                    }
-                    else if(body.zoom == '140%'){
-                        document.body.classList.remove('zoom1');
-                        document.body.classList.remove('zoom3');
-                        document.body.classList.add('zoom2');
-                    }
-                    else if(body.zoom == '160%'){
-                        document.body.classList.remove('zoom1');
-                        document.body.classList.remove('zoom2');
-                        document.body.classList.add('zoom3');
-                    }
-                }
-                
-            }
-            
-            if(typeof body.compact != 'undefined'){
-                if(body.compact){
-                    document.body.classList.add('compact');
-                }
-            }
-            
-            if(typeof body.show_groups_first != 'undefined'){
-                this.show_groups_first = body.show_groups_first
-                document.body.classList.add('groups-first');
-            }
-            
-            
-            if(typeof body.allow_pinch_to_zoom != 'undefined'){
-                if(body.allow_pinch_to_zoom == false){
-                    const viewport = document.querySelector("meta[name=viewport]");
-                    if(viewport != null){
-                        //console.log('disabling pinch-to-zoom');
-                        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-                    }
-                }
-            }
-            
-            if(typeof body.hide_virtual_keyboard != 'undefined'){
-                if(body.hide_virtual_keyboard == true){
-                    document.body.classList.add('hide-virtual-keyboard');
-                }
-            }
-            
-            if(typeof body.menu_list != 'undefined'){
-                if(body.menu_list == true){
-                    document.body.classList.add('menu-list');
-                }
-            }
-            
-		
-        }).catch((e) => {
-  			console.log("Error getting Candle theme init data: ", e);
-        });	
+              if(this.kiosk || body.zoom_everywhere){
+                  if(body.zoom == '100%'){
+                      document.body.classList.remove('zoom1');
+                      document.body.classList.remove('zoom2');
+                      document.body.classList.remove('zoom3');
+                  }
+                  else if(body.zoom == '120%'){
+                      document.body.classList.remove('zoom2');
+                      document.body.classList.remove('zoom3');
+                      document.body.classList.add('zoom1');
+                  }
+                  else if(body.zoom == '140%'){
+                      document.body.classList.remove('zoom1');
+                      document.body.classList.remove('zoom3');
+                      document.body.classList.add('zoom2');
+                  }
+                  else if(body.zoom == '160%'){
+                      document.body.classList.remove('zoom1');
+                      document.body.classList.remove('zoom2');
+                      document.body.classList.add('zoom3');
+                  }
+              }
+              
+          }
+          
+          if(typeof body.compact != 'undefined'){
+              if(body.compact){
+                  document.body.classList.add('compact');
+              }
+          }
+          
+          if(typeof body.show_groups_first != 'undefined'){
+              this.show_groups_first = body.show_groups_first
+              document.body.classList.add('groups-first');
+          }
+          
+          
+          if(typeof body.allow_pinch_to_zoom != 'undefined'){
+              if(body.allow_pinch_to_zoom == false){
+                  const viewport = document.querySelector("meta[name=viewport]");
+                  if(viewport != null){
+                      //console.log('disabling pinch-to-zoom');
+                      viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                  }
+              }
+          }
+          
+          if(typeof body.hide_virtual_keyboard != 'undefined'){
+              if(body.hide_virtual_keyboard == true){
+                  document.body.classList.add('hide-virtual-keyboard');
+              }
+          }
+          
+          if(typeof body.menu_list != 'undefined'){
+              if(body.menu_list == true){
+                  document.body.classList.add('menu-list');
+              }
+          }
+          
+	}).catch((e) => {
+		console.log("Error getting Candle theme init data: ", e);
+	});	
+	  
+      //console.log("this.id: ", this.id);
         
-        
-
-        //console.log("this.id: ", this.id);
-        
-    }
+  }
     
     
     
@@ -655,60 +648,74 @@
         }
         
         if(this.debug){
-            console.log("Candle theme: on_new_page:" + current_path);
+            console.log("Candle theme debug: on_new_page: " + current_path);
         }
         
         if( current_path.startsWith('/things') ){
             //console.log("at /things or a sub-page" );
             
-            this.addParts();
+			console.log("things els count: ", document.getElementById("things").children.length);
+			
+			let things_delay = 1;
+			
+			if(document.getElementById("things").children.length == 0){
+				things_delay = 100;
+			}
+			setTimeout(() => {
+				
+				console.log("things_delay, things els count: ", things_delay,  document.getElementById("things").children.length);
+				
+	            this.addParts();
             
-            if(current_path == '/things'){
-                //console.log("at /things");
-                
-				document.getElementById('things-view').classList.add('candle-theme-showing-things-overview');
+	            if(current_path == '/things'){
+	                if(this.debug){
+						console.log("Candle theme debug: at /things");
+	                }
+					document.getElementById('things-view').classList.add('candle-theme-showing-things-overview');
 				
-                // hide link to logs
-                if(document.getElementById('candle-theme-link-to-logs-container') != null){
-                    document.getElementById('candle-theme-link-to-logs-container').style.display = 'none';
-                }
+	                // hide link to logs
+	                if(document.getElementById('candle-theme-link-to-logs-container') != null){
+	                    document.getElementById('candle-theme-link-to-logs-container').style.display = 'none';
+	                }
                 
-                // show search input
-                if(document.getElementById('candle-theme-things-search-container') != null){
-                    document.getElementById('candle-theme-things-search-input').value = '';
-                    //document.getElementById('candle-theme-things-search-container').style.display = 'block';
-                }
-                else if(document.getElementById("things").children.length > 10){
-                    this.addThingsSearch();
-                }
+	                // show search input
+	                if(document.getElementById('candle-theme-things-search-container') != null){
+	                    document.getElementById('candle-theme-things-search-input').value = '';
+	                    //document.getElementById('candle-theme-things-search-container').style.display = 'block';
+	                }
+	                else if(document.getElementById("things").children.length > 10){
+	                    this.addThingsSearch();
+	                }
 				
-            }
-            else{
-                //console.log("ON A THING DETAIL PAGE");
+	            }
+	            else{
+	                //console.log("ON A THING DETAIL PAGE");
 
-				document.getElementById('things-view').classList.remove('candle-theme-showing-things-overview');
+					document.getElementById('things-view').classList.remove('candle-theme-showing-things-overview');
 
-                this.checkProperties(null, true);
-                this.addThermostatButtons();
-                //this.addShadowMutationsListener();
-                if(just_arrived){
-                    //console.log("using promise");
-                    this.update_logs_list().then(() => {
-                        //console.log("then add links to logs:");
-                        this.add_link_to_logs();
-                    });
-                }
-                else{
-                    //console.log("no promise");
-                    this.add_link_to_logs();
-                }
-                /*
-                if(document.getElementById('candle-theme-things-search-container') != null){
-                    //console.log("hiding search container");
-                    document.getElementById('candle-theme-things-search-container').style.display = 'none';
-                }
-				*/
-            }
+	                this.checkProperties(null, true);
+	                this.addThermostatButtons();
+	                //this.addShadowMutationsListener();
+	                if(just_arrived){
+	                    //console.log("using promise");
+	                    this.update_logs_list().then(() => {
+	                        //console.log("then add links to logs:");
+	                        this.add_link_to_logs();
+	                    });
+	                }
+	                else{
+	                    //console.log("no promise");
+	                    this.add_link_to_logs();
+	                }
+	                /*
+	                if(document.getElementById('candle-theme-things-search-container') != null){
+	                    //console.log("hiding search container");
+	                    document.getElementById('candle-theme-things-search-container').style.display = 'none';
+	                }
+					*/
+	            }
+			},things_delay);
+            
             
         }
         
@@ -737,7 +744,6 @@
     
                 });
             });
-            
             
             
             window.setTimeout(() => {
@@ -1843,6 +1849,7 @@
 
     }
     
+	
     // Mutation callback. Upgrades the pop-up messages that are normally related to pairing messages.
     messageAreaCallback(mutations) {        
         
@@ -1886,41 +1893,41 @@
                 }
             }
           
-          }
+		}
     }
     
     
 
     updateInputValue(id, adjustment) {
-      const target = document.getElementById(id);
-      const value = Number(target.value);
-      target.value = value + adjustment;
-      target.dispatchEvent(new Event('change'));
+		const target = document.getElementById(id);
+		const value = Number(target.value);
+		target.value = value + adjustment;
+		target.dispatchEvent(new Event('change'));
     }
     
 
 	// Add CSS classes to shadowRoot items so they can be styled
     addParts() {
-      const items = [
-        '#groups .thing > *:not(a):not(span):not(.component)',
-        '#things:not(.single-thing) > .thing > *:not(a):not(span):not(.component)',
-        '#things:not(.single-thing) > .thing > *:not(div):not(.component)',
-        '#things.single-thing > .thing > *:not(div)',
-        '#things.single-thing > .thing > div.thing-detail-container > *:not(.component)',
-      ].join(', ');
-      const listItems = document.querySelectorAll(items);
+        const items = [
+			'#groups .thing > *:not(a):not(span):not(.component)',
+			'#things:not(.single-thing) > .thing > *:not(a):not(span):not(.component)',
+			'#things:not(.single-thing) > .thing > *:not(div):not(.component)',
+			'#things.single-thing > .thing > *:not(div)',
+			'#things.single-thing > .thing > div.thing-detail-container > *:not(.component)',
+        ].join(', ');
+        const listItems = document.querySelectorAll(items);
 
-      for (const item of listItems) {
-        if (item.shadowRoot){
-          item.classList.add('component');
-          this.updateStyle(item);
+        for (const item of listItems) {
+            if (item.shadowRoot){
+				item.classList.add('component');
+				this.updateStyle(item);
+            }
         }
-      }
-      //console.log("listItems.length in addParts: " + listItems.length);
-      if(listItems.length){
-          //console.log("adding mutation indicator class");
-          document.getElementById('things-view').classList.add("candle-theme-things-mutated");
-      }
+        //console.log("listItems.length in addParts: " + listItems.length);
+        if(listItems.length){
+            //console.log("adding mutation indicator class");
+            document.getElementById('things-view').classList.add("candle-theme-things-mutated");
+        }
     }
 
     
@@ -2209,7 +2216,6 @@
                 else{
                     log_container.style.display = 'block';
                 }
-                
             }
             
 			log_counter++;
@@ -3156,15 +3162,14 @@
 							
 							// TODO: look at property @type?
                             
-                            
 						}
                 
                     }
 					
-					
-					console.warn("\n\n\nTHING TAGS:");
-					console.warn(this.things_tags);
-					
+					if(this.debug){
+						console.warn("\n\n\nTHING TAGS:");
+						console.warn(this.things_tags);
+					}
 					
 					
 					let filter_buttons_to_create = ['all'].concat(Object.keys(tags_tree));
@@ -3311,10 +3316,9 @@
 	
 	
 	filter_things_overview(tag){
-		console.log("in filter_things_overview. tag to show: ", tag);
+		//console.log("in filter_things_overview. tag to show: ", tag);
 		
 		let things_els = document.querySelectorAll('#things-container .thing');
-		
 		
 		for(let w = 0; w < things_els.length; w++){
 			
@@ -3323,7 +3327,7 @@
 			}
 			else{
 				const thing_id = things_els[w].getAttribute('id').substring(6);
-				console.log("filter_things_overview:  thing_id: ", thing_id);
+				//console.log("filter_things_overview:  thing_id: ", thing_id);
 				if(typeof this.things_tags[thing_id] != 'undefined' && this.things_tags[thing_id]['tags'].indexOf(tag) != -1){
 					things_els[w].classList.remove('extension-candle-theme-hidden');
 				}
@@ -3331,10 +3335,7 @@
 					things_els[w].classList.add('extension-candle-theme-hidden');
 				}
 			}
-			
 		}
-		
-		
 		
 	}
 	
@@ -3396,8 +3397,7 @@
                 }
             }
         }
-            
-        
+	
     }
     
     
