@@ -47,6 +47,21 @@
 	  });
 	  
 	  
+	  
+	  
+	  document.addEventListener(`click`, e => {
+	    
+		  console.log("document.activeElement: ", document.activeElement);
+		  
+		  console.log("e.target.nodeName: ", e.target.nodeName);
+
+	  });
+	  
+	  
+	  
+	  
+	  
+	  
       // Useed to detect URL changes
 	  /*
       var pushState = history.pushState;
@@ -634,8 +649,6 @@
 
     on_new_page(just_arrived=false,page_url=null){
         
-        
-        
         var current_path = window.location.pathname;
         if(page_url != null){
             current_path = page_url;
@@ -669,11 +682,6 @@
                     this.addThingsSearch();
                 }
 				
-				
-				
-				
-				
-                
             }
             else{
                 //console.log("ON A THING DETAIL PAGE");
@@ -707,7 +715,6 @@
         else if( current_path.startsWith('/logs') ){
             //console.log("on /logs (or sub-page)");
             
-            
             API.getThings().then((things) => {
                 //console.log('Theme:API: things: ', things);
                 this.things = things; // needed to figure out what type the various logs are
@@ -733,14 +740,11 @@
             
             
             
-
-            
             window.setTimeout(() => {
                 if(window.location.pathname == '/logs'){
                     if(this.debug){
                         console.log("theme: still on the log page 10 seconds later. Saving last log view time.");
                     }
-                    
                     
                     window.API.postJson(
                       `/extensions/${this.id}/api/ajax`,
@@ -790,19 +794,11 @@
                 
             }, "300");
             
-            
-            
-            
-            
         }
-        
-        
         else{
             //console.log("ON SOME OTHER PAGE");
             //console.log(document.location.href);
-            
         }
-        
         
     }
     
@@ -2905,13 +2901,17 @@
         
 		const tags_tree = {
 			"light":['light','lamp'],
-			"switch":['switch','button'],
+			"switch":['switch','button','remote control'],
 			"sensor":['sensor'],
 			"climate":['climate','purifier','air'],
 			"energy":['energy','power','electric','electricity','consumption','motor','charger'],
 			"security":['secur','tamper','safety','smoke','alarm'],
-			"health":['health','toothbrush','scale','wellness']
+			"health":['health','toothbrush','scale','wellness'],
+			//"outside":['outside','garden','balcony','doorbell','porch','street','terrace']
 		}
+		
+		let things_filter_buttons_container = document.getElementById('candle-theme-things-filter-buttons-container');
+		
 		
         if(document.getElementById('candle-theme-things-search-container') == null){
             let search_container = document.createElement('div');
@@ -2924,13 +2924,48 @@
 
             search_container.appendChild(search_input);
             document.getElementById("things-view").appendChild(search_container);
+		
+		
+		}
+		
+        const search_input = document.getElementById('candle-theme-things-search-input');
+        if(search_input != null){
+            /*
+            if(document.activeElement !== search_input){
+                //console.log("giving focus");
+                search_input.focus();
+            }
+            */
+            
+            // This listener seems to sometimes disappear...
+            search_input.onsearch = () => {
+                //console.log("on-search");
+                this.things_overview_search(8); // simulate backspace
+            };
+        }
+        /*
+        else{
+            setTimeout(() => {
+                if(search_input != null){
+                    if(document.activeElement !== search_input){
+                        //console.log("giving focus");
+                        search_input.focus();
+                    }
+                }
+            }, 100);
+        }
+        */
+		
+		
+		
+		
+		//
+		// ADD THINGS QUICK FILTER BUTTONS TOO
+		//
+		
+		if(things_filter_buttons_container == null){
 			
-			
-			
-			//
-			// ALSO ADD THINGS QUICK FILTER BUTTONS
-			//
-			
+			/*
             var things_filter_buttons_data = {
                         'All':[{'thing':'fake1','property':'fake1'},{'thing':'fake2','property':'fake2'}],
                         'Lights':[],
@@ -2943,17 +2978,18 @@
 						'Security':[],
 						'Media':[]
                         };
-						
-            let things_filter_buttons_container = document.createElement('div');
+			*/
+			
+            things_filter_buttons_container = document.createElement('div');
             things_filter_buttons_container.setAttribute("id", "candle-theme-things-filter-buttons-container");
 			
 	        API.getThings().then((things) => {
-	            console.log('API gave list of things, will scan through them to add quick filter buttons: ', things);
+	            //console.log('API gave list of things, will scan through them to add quick filter buttons: ', things);
 				
                 try{
                 
                     for(let t = 0; t < things.length; t++){
-                        console.log("thing: ", things[t]);
+                        //console.log("thing: ", things[t]);
                         
                         /*
                         var forms_type = "forms";
@@ -2972,22 +3008,29 @@
                         //console.log("things[t][forms_type][0]['href']: ", things[t][forms_type][0]['href']);
                         
 						const thing_id = things[t]['href'].substring(things[t]['href'].lastIndexOf('/') + 1);
-                            
+                        let thing_title = '';
+						if(typeof things[t]['title'] == 'string'){
+							thing_title = things[t]['title'].toLowerCase();
+							//console.log("thing_title: ", thing_title);
+						}
+						   
 						if(typeof this.things_tags[thing_id] == 'undefined'){
 							this.things_tags[thing_id] = {'tags':[],'href':things[t]['href']};
 						}
 				
                         
-                        console.log("-- thing_id: ", thing_id);
+                        //console.log("-- thing_id: ", thing_id);
 						const thing_id_lower = thing_id.toLowerCase();
 						
 						
-						
-						for (const [key, tags_array] of Object.entries(tags_tree)) {
-							console.log(`${key}: ${tags_array}`);
-							for(let ct = 0; ct < tags_tree[key].length; ct++){
-								if(thing_id_lower.indexOf(tags_tree[key][ct] + ' ') != -1 || thing_id_lower.indexOf(' ' + tags_tree[ct]) != -1){ // if the tag is in the title, with either a space before or after it
-									this.things_tags[thing_id]['tags'].push(key);
+						if(thing_title == 'balcony light'){
+							for (const [key, tags_array] of Object.entries(tags_tree)) {
+								//console.log(`tags_tree: ${key}: ${tags_array}`);
+								for(let ct = 0; ct < tags_tree[key].length; ct++){
+									if(thing_title.indexOf(tags_tree[key][ct] + ' ') != -1 || thing_title.indexOf(' ' + tags_tree[key][ct]) != -1){ // if the tag is in the title, with either a space before or after it
+										console.warn("adding tag based on thing_title: ", key, tags_tree[key][ct], thing_title);
+										this.things_tags[thing_id]['tags'].push(key);
+									}
 								}
 							}
 						}
@@ -3044,8 +3087,8 @@
                             
                             if(this.debug){
                                 //console.log("quick logs filter: found property");
-                                console.log("prop.title: ", prop.title);
-                                console.log("prop.unit: ", prop.unit);
+                                //console.log("prop.title: ", prop.title);
+                                //console.log("prop.unit: ", prop.unit);
                             }
                             
                             var button_type = null;
@@ -3053,7 +3096,7 @@
                             if(typeof prop.unit == 'string'){
                                 
 								const prop_unit_lower = prop.unit.toLowerCase()
-                                console.log("prop_unit_lower: ", prop_unit_lower);
+                                //console.log("prop_unit_lower: ", prop_unit_lower);
 								
                                 if(prop_unit_lower == 'kwh' || prop_unit_lower == 'w'){
 									if(this.things_tags[thing_id]['tags'].indexOf('energy') == -1){
@@ -3102,7 +3145,7 @@
                             
 							// Look at property title
                             if(prop.title.toLowerCase().startsWith('voc ')){
-                                console.log("FOUND VOC");
+                                //console.log("FOUND VOC");
 								if(this.things_tags[thing_id]['tags'].indexOf('sensor') == -1){
 									this.things_tags[thing_id]['tags'].push('sensor');
 								}
@@ -3121,7 +3164,6 @@
 					
 					console.warn("\n\n\nTHING TAGS:");
 					console.warn(this.things_tags);
-					console.warn('\n\n\n');
 					
 					
 					
@@ -3136,6 +3178,9 @@
 		                        button_el.classList.add('candle-theme-things-filter-button');
 		                        button_el.classList.add('text-button');
 								button_el.classList.add('candle-theme-things-filter-button-' + tag);
+								if(tag == 'all'){
+									button_el.classList.add('candle-theme-things-filter-button-active');
+								}
 		                        button_el.innerText = tag;
 		                        button_el.onclick = (event) => {
 		                            if(this.debug){
@@ -3143,7 +3188,11 @@
 		                            }
 		                            this.filter_things_overview(tag);
 									
-									
+									const all_things_filter_button_els = things_filter_buttons_container.children;
+									for (var ix=0; ix < all_things_filter_button_els.length; ix++) {
+									    all_things_filter_button_els[ix].classList.remove('candle-theme-things-filter-button-active');
+									}
+									event.target.classList.add('candle-theme-things-filter-button-active');
                         
 		                        };
 		                        things_filter_buttons_container.appendChild(button_el);
@@ -3155,46 +3204,6 @@
 						
 					}
 					
-					// Create the Things overview quick filter buttons
-					
-					/*
-		            // Actually add the quick filter buttons
-		            if(buttons_with_multiple_logs_count > 1){
-		                for(let b = 0; b < buttons_keys.length; b++){
-                    
-		                    if( buttons_data[buttons_keys[b]].length > 0 ){
-		                        var button_el = document.createElement('button');
-		                        button_el.classList.add('candle-theme-quick-log-filter-button');
-		                        button_el.classList.add('text-button');
-		                        button_el.innerText = buttons_keys[b];
-		                        button_el.onclick = (event) => {
-		                            if(this.debug){
-		                                console.log("quick log button clicked. data: ", b, buttons_data[buttons_keys[b]]);
-		                            }
-		                            var logs_to_show = [];
-		                            for(let d = 0; d < buttons_data[buttons_keys[b]].length; d++){
-		                                if(this.debug){
-		                                    console.log("d: ", d, buttons_data[buttons_keys[b]][d]);
-		                                }
-                                
-		                                //var log_name = buttons_data[buttons_keys[b]][d]['thing_title'] + "-" + buttons_data[buttons_keys[b]][d]['property_title'];
-		                                //log_name = log_name.replace(/\s/g , "-");
-		                                //logs_to_show.push(log_name);
-		                                logs_to_show.push({'thing': buttons_data[buttons_keys[b]][d]['thing'],'property':buttons_data[buttons_keys[b]][d]['property']});
-		                            }
-		                            this.filter_these_logs(logs_to_show);
-                        
-		                        };
-		                        quick_log_filter_container.appendChild(button_el);
-		                        //console.log("should be appended");
-		                    }
-                    
-		                }
-                	
-		            }
-					*/
-						
-            
 					document.getElementById("things-view").prepend(things_filter_buttons_container);
                 
                 }
@@ -3205,35 +3214,27 @@
 	        });
 			
         }
-        
-        const search_input = document.getElementById('candle-theme-things-search-input');
-        if(search_input != null){
-            /*
-            if(document.activeElement !== search_input){
-                //console.log("giving focus");
-                search_input.focus();
-            }
-            */
-            
-            // This listener seems to sometimes disappear...
-            search_input.onsearch = () => {
-                //console.log("on-search");
-                this.things_overview_search(8); // simulate backspace
-            };
-        }
-        /*
         else{
-            setTimeout(() => {
-                if(search_input != null){
-                    if(document.activeElement !== search_input){
-                        //console.log("giving focus");
-                        search_input.focus();
-                    }
-                }
-            }, 100);
+			// Reset which button is highlighted
+			const all_things_filter_button_els = things_filter_buttons_container.children;
+			for (var ix=0; ix < all_things_filter_button_els.length; ix++) {
+				if(all_things_filter_button_els.textContent == 'all'){
+					all_things_filter_button_els[ix].classList.add('candle-theme-things-filter-button-active');
+				}
+				else{
+					all_things_filter_button_els[ix].classList.remove('candle-theme-things-filter-button-active');
+				}
+			    
+			}
         }
-        */
+		
+		
         
+        
+		
+		
+		
+		
     }
     
     

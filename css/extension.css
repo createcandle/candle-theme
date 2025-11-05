@@ -535,6 +535,13 @@ body.kiosk .settings-section{
 	padding: 1rem;
 	border-radius: 1rem;
 	margin: 1rem;
+	background-color: #030C4D;
+}
+
+#candle-theme-things-filter-buttons-container > button:hover,
+#candle-theme-things-filter-buttons-container > button.candle-theme-things-filter-button-active{
+	/*background-color: #041166;*/
+	background-color: #000;
 }
 
 #things-view:not(.candle-theme-showing-things-overview) #candle-theme-things-filter-buttons-container,
@@ -3332,4 +3339,9 @@ body.exhibit-mode .localization-item
 		align-items:center;
 		min-height:10rem;
 	}
+	#candle-theme-things-filter-buttons-container > button{
+		box-shadow: 0rem .1rem .5rem rgba(255, 255, 255, .05);
+		padding: 1rem 1.5rem;
+	}
+	
 }
