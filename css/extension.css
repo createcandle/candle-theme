@@ -2423,6 +2423,8 @@ body.zoom3 #logs-view .arrow-select{
 
 #rules{
 	display: flex;
+	flex-direction:column;
+	padding: 2rem;
 }
 
 
@@ -2437,7 +2439,7 @@ body.zoom3 #logs-view .arrow-select{
 	box-sizing: border-box;
     display: flex;
 	height: auto;
-	width: calc(100% - 4rem);
+	width:100%;
 }
 .drag-hint-container{
     background-color:rgba(255,255,255,.4);
