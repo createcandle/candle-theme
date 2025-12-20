@@ -63,7 +63,7 @@
 	  setTimeout(() => {
 		  if(document.activeElement != last_active_tag_type){
 			  last_active_tag_type = document.activeElement;
-			  console.log("document.activeElement changed to: ", document.activeElement);
+			  //console.log("document.activeElement changed to: ", document.activeElement);
 		  }
 	  },1000);
 	  
@@ -654,7 +654,7 @@
         if( current_path.startsWith('/things') ){
             //console.log("at /things or a sub-page" );
             
-			console.log("things els count: ", document.getElementById("things").children.length);
+			//console.log("things els count: ", document.getElementById("things").children.length);
 			
 			let things_delay = 1;
 			
@@ -663,7 +663,7 @@
 			}
 			setTimeout(() => {
 				
-				console.log("things_delay, things els count: ", things_delay,  document.getElementById("things").children.length);
+				//console.log("things_delay, things els count: ", things_delay,  document.getElementById("things").children.length);
 				
 	            this.addParts();
             
