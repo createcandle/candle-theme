@@ -377,6 +377,16 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
     background-color:rgba(0,0,0,.4);
 }
 
+#network-settings-wifi-password{
+	width:100%;
+}
+
+#network-settings-wifi-show-password + label + span{
+	white-space:nowrap
+}
+
+
+	
 
 
 /*  VIRTUAL KEYBOARD  */
