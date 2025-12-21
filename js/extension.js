@@ -499,7 +499,9 @@
       */
 	  
 	  window.addEventListener('locationchange', () => {
-		  console.log('candle theme: location changed!');
+		  if(this.debug){
+			  console.log('candle theme debug: location changed!');
+		  }
 		  this.on_new_page(false);
 	  });
 	 
