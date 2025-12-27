@@ -3252,13 +3252,14 @@ body.exhibit-mode .localization-item
     
     
     #rule-area{
-        
-
+		/*
     	background:
     		linear-gradient(90deg, rgba(0,0,0,.03) 37px, transparent 1%) center,
     		linear-gradient(rgba(0,0,0,.03) 37px, transparent 1%) center,
     		rgba(255,255,255,.1);
+		
     	background-size: 40px 40px;
+		*/
         background-image:none;
         
     }
