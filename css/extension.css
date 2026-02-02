@@ -484,10 +484,6 @@ body #virtualKeyboardChromeExtension td.kbdS span{
 }
 */
 
-.kiosk #network-settings-wifi-wrap{
-    margin-top:-20%;
-}
-
 .kiosk .new-thing-custom-icon-label.text-button,
 .kiosk #edit-thing-custom-icon-label{
     display:none;
