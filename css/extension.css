@@ -2536,6 +2536,8 @@ body.zoom3 #logs-view .arrow-select{
     display: inline-block;
     height: auto;
     flex-grow: 1;
+    z-index: 1;
+    background-color: #3f6a8c;
 }
 
 #rules-view p{
