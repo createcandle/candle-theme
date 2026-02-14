@@ -168,8 +168,8 @@ body:not(.developer) #domain-settings > ul > .domain-item:last-child{
     display:none;
 } 
 
-body:not(.developer) #domain-settings-local-checkbox:checked,
-body:not(.developer) #domain-settings-local-checkbox:checked + #domain-settings-local-label{
+#domain-settings-local-checkbox:checked,
+#domain-settings-local-checkbox:checked + #domain-settings-local-label{
     display:none;
 }
 
@@ -267,7 +267,9 @@ body #add-button{
     background-size: 5.6rem;
 }
 
-
+#remove-thing-button{
+	cursor:pointer;
+}
 
 #floorplan-back-button,
 #rule-view > .back-button,
@@ -541,13 +543,16 @@ body.kiosk .settings-section{
 	padding: 1rem;
 	border-radius: 1rem;
 	margin: 1rem;
-	background-color: #030C4D;
+	background-color: #192e93; /*#030C4D*/
+	
 }
 
 #candle-theme-things-filter-buttons-container > button:hover,
 #candle-theme-things-filter-buttons-container > button.candle-theme-things-filter-button-active{
-	/*background-color: #041166;*/
-	background-color: #000;
+	/*background-color: #041166;
+	background-color: #011063;*/
+	background-color:transparent;
+	box-shadow: inset 0 0 0px 2px #192e93;
 }
 
 #things-view:not(.candle-theme-showing-things-overview) #candle-theme-things-filter-buttons-container,
@@ -1207,15 +1212,12 @@ body #main-menu #things-menu-item{
 }
 
 #things.single-thing .component::part(value){
-	font-size:2.4rem;
+	font-size:2.2rem;
     margin-right:.2rem;
-    /*
-    -webkit-animation: hideThenFadeIn 1s ease-out;
-    -moz-animation: hideThenFadeIn 1s ease-out;
-    -o-animation: hideThenFadeIn 1s ease-out;
-    animation: hideThenFadeIn 1s ease-out;*/
     animation: extension-candle-theme-fadeIn 1s linear;
+    overflow-wrap: break-word;
 }
+
 
 #things.single-thing .component::part(button){
     width:auto;
@@ -1272,6 +1274,10 @@ body #main-menu #things-menu-item{
 .component::part(button),
 .component::part(select){
     cursor:pointer;
+}
+
+.component::part(webthing-boolean-property-label){
+	transform: scale(1.5);
 }
 
 /*  The light bulb icon is a little off  */
@@ -1862,6 +1868,10 @@ webthing-level-property.component::part(slider)::-webkit-slider-thumb {
 
 
 
+/*  Do not allow opening external links while in kiosk mode  */
+body.kiosk a[target="_blank"]{
+	pointer-events:none!important;
+}
 
 
 
