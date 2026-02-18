@@ -380,7 +380,8 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 }
 
 #network-settings-wifi-password{
-	width:100%;
+	width:calc(100% - 2rem);
+	max-width:calc(100% - 2rem);
 }
 
 #network-settings-wifi-show-password + label + span{
