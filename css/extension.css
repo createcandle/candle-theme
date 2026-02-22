@@ -194,6 +194,7 @@ body:not(.developer) #domain-settings ul li.domain-item:last-of-type{
     width: 19rem;
     top: 2.5rem;
     left: 9rem;
+	user-select:none;
 }
 
 /*
@@ -528,7 +529,7 @@ body.kiosk .settings-section{
     /*top: 3.5rem;
 	left: 10rem;
     right: 10rem;*/
-	padding: 2rem 2rem 0 2rem;
+	padding: 2rem;
     z-index: 9;
 	display: flex;
 	flex-wrap: wrap;
@@ -541,10 +542,10 @@ body.kiosk .settings-section{
 	letter-spacing: 0.1rem;
 	text-transform: capitalize;
 	pointer-events:auto;
-	padding: 1rem;
-	border-radius: 1rem;
+	padding: 1rem 1.5rem;
+	border-radius: 3rem;
 	margin: 1rem;
-	background-color: #192e93; /*#030C4D*/
+	background-color: rgba(255,255,255,.1); /*#192e93; #030C4D*/
 	
 }
 
@@ -553,7 +554,7 @@ body.kiosk .settings-section{
 	/*background-color: #041166;
 	background-color: #011063;*/
 	background-color:transparent;
-	box-shadow: inset 0 0 0px 2px #192e93;
+	box-shadow: inset 0 0 0px 2px rgba(255,255,255,.1); /*#192e93;*/
 }
 
 #things-view:not(.candle-theme-showing-things-overview) #candle-theme-things-filter-buttons-container,
@@ -3089,7 +3090,7 @@ body.exhibit-mode .localization-item
     body:not(.menu-list) #main-menu a.selected{
         background-color:rgba(0,0,0,.15);
     }
-    body:not(.menu-list) #main-menu li:not(:last-of-type) > a:hover{
+    body:not(.menu-list) #main-menu ul > li:not(:last-of-type) > a:hover{
         background-color:rgba(0,0,0,.15);
     }
     
@@ -3098,7 +3099,7 @@ body.exhibit-mode .localization-item
     }
     
     body:not(.menu-list) #main-menu .log-out-button,
-    body:not(.menu-list) #main-menu li > a{
+    body:not(.menu-list) #main-menu ul > li > a{
         /*
         display:flex;
         flex-direction:column;
@@ -3120,7 +3121,7 @@ body.exhibit-mode .localization-item
         background-size:4rem;
     }
     
-    body:not(.menu-list) #main-menu li > a{
+    body:not(.menu-list) #main-menu ul > li > a{
         width: 100%;
         /*font-weight: bold;*/
     }
@@ -3129,7 +3130,7 @@ body.exhibit-mode .localization-item
     body:not(.menu-list) #main-menu .log-out-button{
         position: fixed;
         right: 0;
-        bottom: 0;
+        top: -1.3rem;
         width:auto;
         height: auto;
         opacity:.6;

@@ -625,8 +625,8 @@
               }
           }
           
-	}).catch((e) => {
-		console.log("Error getting Candle theme init data: ", e);
+	}).catch((err) => {
+		console.log("Candle theme: error getting api init data: ", err);
 	});	
 	  
       //console.log("this.id: ", this.id);
@@ -3169,7 +3169,7 @@
                     }
 					
 					if(this.debug){
-						console.warn("\n\n\nTHING TAGS:");
+						console.warn("\n\n\nCandle theme debug: THING TAGS:");
 						console.warn(this.things_tags);
 					}
 					
@@ -3191,7 +3191,7 @@
 		                        button_el.innerText = tag;
 		                        button_el.onclick = (event) => {
 		                            if(this.debug){
-		                                console.log("quick things filter button clicked. tag: ", tag);
+		                                console.log("Candle theme: quick things filter button clicked. tag: ", tag);
 		                            }
 		                            this.filter_things_overview(tag);
 									
@@ -3211,11 +3211,14 @@
 						
 					}
 					
-					document.getElementById("things-view").prepend(things_filter_buttons_container);
+					if(document.getElementById('candle-theme-things-filter-buttons-container') == null){
+						document.getElementById("things-view").prepend(things_filter_buttons_container);
+					}
+					
                 
                 }
                 catch(e){
-                    console.error("Error looping over logs while making quick filter buttons: ", e);
+                    console.error("Candle theme: error looping over logs while making quick filter buttons: ", e);
                 }
 				
 	        });
