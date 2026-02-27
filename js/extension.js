@@ -653,6 +653,9 @@
             console.log("Candle theme debug: on_new_page: " + current_path);
         }
         
+		// update body path ID
+		document.body.setAttribute('id','path' + current_path.replaceAll('/','-'));
+
         if( current_path.startsWith('/things') ){
             //console.log("at /things or a sub-page" );
             

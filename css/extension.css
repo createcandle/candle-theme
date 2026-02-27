@@ -2489,6 +2489,8 @@ body.zoom3 #logs-view .arrow-select{
 	width: calc(100% - 10rem);
 	height: 100%;
 	left: 10rem;
+	border-radius: initial;
+	z-index:2;
 }
 
 #rules-view .rule-preview{
@@ -2558,10 +2560,11 @@ body.zoom3 #logs-view .arrow-select{
 	line-height: 150%;
 }
 
+/*
 #rules-view .rule-edit-overlay{
 	border-radius: initial;
 }
-
+*/
 /* remove  'Title' from Voco notifier.. might interfere with other addons, so disabled.
 .property-select-option.open-button + .property-select-option .property-select-name[title="Title"],
 .property-select-option.open-button + .property-select-option .property-select-name[title="Title"] + .value-input{
