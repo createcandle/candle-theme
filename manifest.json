@@ -92,7 +92,7 @@
     }
   },
   "short_name": "ctheme",
-  "version": "2.6.20",
+  "version": "2.6.21",
   "web_accessible_resources": [
     "css/*.css",
     "js/*.js",
