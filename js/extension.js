@@ -3040,7 +3040,12 @@
 								for(let ct = 0; ct < tags_tree[key].length; ct++){
 									if(thing_title.indexOf(tags_tree[key][ct] + ' ') != -1 || thing_title.indexOf(' ' + tags_tree[key][ct]) != -1){ // if the tag is in the title, with either a space before or after it
 										console.warn("adding tag based on thing_title: ", key, tags_tree[key][ct], thing_title);
-										this.things_tags[thing_id]['tags'].push(key);
+										if(typeof this.things_tags[thing_id]['tags'] == 'undefined'){
+											this.things_tags[thing_id]['tags'] = [];
+										}
+										if(this.things_tags[thing_id]['tags'].indexOf(key) == -1){
+											this.things_tags[thing_id]['tags'].push(key);
+										}
 									}
 								}
 							}
@@ -3172,8 +3177,7 @@
                     }
 					
 					if(this.debug){
-						console.warn("\n\n\nCandle theme debug: THING TAGS:");
-						console.warn(this.things_tags);
+						console.warn("\n\n\nCandle theme debug: THING TAGS:", this.things_tags);
 					}
 					
 					

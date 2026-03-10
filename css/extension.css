@@ -286,6 +286,17 @@ body #add-button{
 }
 
 
+#back-button::after{
+    content: '';
+    display: block;
+    position: relative;
+    width: 5.6rem;
+    height: 5.6rem;
+    border-radius: 2.8rem;
+    background: #7dafd2 no-repeat 100% 100% url(/images/back.png);
+    background-size: 5.6rem;
+}
+
 
 .icon-button{
     cursor:pointer;
