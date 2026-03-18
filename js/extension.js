@@ -68,7 +68,7 @@
 	  },1000);
 	  
 	  
-	  
+	  document.body.classList.add(location.protocol.replace(':',''));
 	  
 	  
       // Useed to detect URL changes
@@ -2911,7 +2911,7 @@
         //console.log("in addThingsSearch");
         
 		const tags_tree = {
-			"light":['light','lamp'],
+			"light":['light','lamp','bulb','LED','string'],
 			"switch":['switch','button','remote control'],
 			"sensor":['sensor'],
 			"climate":['climate','purifier','air'],
@@ -3034,18 +3034,16 @@
 						const thing_id_lower = thing_id.toLowerCase();
 						
 						
-						if(thing_title == 'balcony light'){
-							for (const [key, tags_array] of Object.entries(tags_tree)) {
-								//console.log(`tags_tree: ${key}: ${tags_array}`);
-								for(let ct = 0; ct < tags_tree[key].length; ct++){
-									if(thing_title.indexOf(tags_tree[key][ct] + ' ') != -1 || thing_title.indexOf(' ' + tags_tree[key][ct]) != -1){ // if the tag is in the title, with either a space before or after it
-										console.warn("adding tag based on thing_title: ", key, tags_tree[key][ct], thing_title);
-										if(typeof this.things_tags[thing_id]['tags'] == 'undefined'){
-											this.things_tags[thing_id]['tags'] = [];
-										}
-										if(this.things_tags[thing_id]['tags'].indexOf(key) == -1){
-											this.things_tags[thing_id]['tags'].push(key);
-										}
+						for (const [key, tags_array] of Object.entries(tags_tree)) {
+							//console.log(`tags_tree: ${key}: ${tags_array}`);
+							for(let ct = 0; ct < tags_tree[key].length; ct++){
+								if(thing_title.indexOf(tags_tree[key][ct] + ' ') != -1 || thing_title.indexOf(' ' + tags_tree[key][ct]) != -1){ // if the tag is in the title, with either a space before or after it
+									console.warn("adding tag based on thing_title: ", key, tags_tree[key][ct], thing_title);
+									if(typeof this.things_tags[thing_id]['tags'] == 'undefined'){
+										this.things_tags[thing_id]['tags'] = [];
+									}
+									if(this.things_tags[thing_id]['tags'].indexOf(key) == -1){
+										this.things_tags[thing_id]['tags'].push(key);
 									}
 								}
 							}
@@ -3256,6 +3254,9 @@
     
     
     things_overview_search(code){
+		if(this.debug){
+			console.log("things_overview_search:  code: ", code);
+		}
         const search_input_element = document.getElementById("candle-theme-things-search-input");
         const things = document.getElementById("things");
         const groups = document.getElementById("groups");
@@ -3328,7 +3329,11 @@
 	
 	
 	filter_things_overview(tag){
-		//console.log("in filter_things_overview. tag to show: ", tag);
+		if(this.debug){
+			console.log("in filter_things_overview. tag to show: ", tag);
+			console.log("- this.things_tags: ", this.things_tags);
+		}
+		
 		
 		let things_els = document.querySelectorAll('#things-container .thing');
 		
