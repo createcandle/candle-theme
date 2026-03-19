@@ -3038,13 +3038,17 @@
 							//console.log(`tags_tree: ${key}: ${tags_array}`);
 							for(let ct = 0; ct < tags_tree[key].length; ct++){
 								if(thing_title.indexOf(tags_tree[key][ct] + ' ') != -1 || thing_title.indexOf(' ' + tags_tree[key][ct]) != -1){ // if the tag is in the title, with either a space before or after it
-									console.warn("adding tag based on thing_title: ", key, tags_tree[key][ct], thing_title);
+									if(this.debug){
+										//console.warn("candle theme debug: adding filter tag based on thing_title.  thing_title: ", thing_title, ", keyword: ", key, ", was in tree: ", tags_tree[key]);
+									}
 									if(typeof this.things_tags[thing_id]['tags'] == 'undefined'){
 										this.things_tags[thing_id]['tags'] = [];
 									}
+									
 									if(this.things_tags[thing_id]['tags'].indexOf(key) == -1){
 										this.things_tags[thing_id]['tags'].push(key);
 									}
+									
 								}
 							}
 						}
@@ -3057,13 +3061,13 @@
 							for(let at=0; at < things[t]['@type'].length; at++){
 								
 								// light
-								if(things[t]['@type'][at] == 'Light'){
+								if(things[t]['@type'][at].indexOf('Light') != -1){
 									if(this.things_tags[thing_id]['tags'].indexOf('light') == -1){
 										this.things_tags[thing_id]['tags'].push('light');
 									}
 								}
 								// switch
-								if(things[t]['@type'][at].indexOf('Switch') != -1 || things[t]['@type'][at].indexOf('Plug') != -1 || things[t]['@type'][at].indexOf('Button') != -1 || things[t]['@type'][at] == 'Lock'){
+								if(this.things_tags[thing_id]['tags'].indexOf('light') == -1 && (things[t]['@type'][at].indexOf('Switch') != -1 || things[t]['@type'][at].indexOf('Plug') != -1 || things[t]['@type'][at].indexOf('Button') != -1 || things[t]['@type'][at] == 'Lock')){
 									if(this.things_tags[thing_id]['tags'].indexOf('switch') == -1){
 										this.things_tags[thing_id]['tags'].push('switch');
 									}
@@ -3075,7 +3079,7 @@
 									}
 								}
 								// energy
-								if(things[t]['@type'][at] == 'SmartPlug'){
+								if(things[t]['@type'][at].indexOf('Light') == -1 && things[t]['@type'][at] == 'SmartPlug'){
 									if(this.things_tags[thing_id]['tags'].indexOf('energy') == -1){
 										this.things_tags[thing_id]['tags'].push('energy');
 									}
@@ -3088,7 +3092,8 @@
 								}
 							}
 						}
-                        
+						
+						
 						// Loop over properties
 						const property_keys = Object.keys(things[t]['properties']);
                         for(let p = 0; p < property_keys.length; p++){
