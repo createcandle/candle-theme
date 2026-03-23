@@ -384,6 +384,7 @@ input[type='number'], input[type='text'], input[type='password'], input[type='em
 .text-button, .text-button:active{
     background-color:rgba(255,255,255,.2);
     background-color:rgba(0,0,0,.2);
+	text-decoration:none;
     cursor:pointer;
 }
 
@@ -763,6 +764,23 @@ body.kiosk .settings-section{
     transform:none;
 }
 
+.group.open div.bar:last-child{
+	margin-bottom:6rem;
+}
+.group.open:not(.drag-target) div.bar:last-child::after{
+	content:'Empty';
+	display: block;
+    width: 100%;
+    position: absolute;
+    top: 5rem;
+    width: 100%;
+	opacity:.5;
+    border: 1px dashed rgba(255, 255, 255, .4);
+    border-top: none;
+    padding: 1rem;
+    box-sizing: border-box;
+    pointer-events: none;
+}
 
 
 .group div.bar div.title{
@@ -771,6 +789,8 @@ body.kiosk .settings-section{
     padding:0.5rem 1rem;
     line-height: 4rem;
 }
+
+
 
 
 #candle-theme-remove-group-question{
