@@ -1726,6 +1726,7 @@ webthing-pushed-property.component::part(value){
     
 }
 
+/*
 input[type="range"] {
   -webkit-appearance: none;
   background-color: gray;
@@ -1737,6 +1738,7 @@ input[type="range"]::-webkit-slider-thumb {
   width: 1rem;
   height: 1rem;
 }
+*/
 
 /*
 input[type="range"]::-webkit-slider-thumb {
@@ -1758,14 +1760,11 @@ input.resize[type="range"]:active::-webkit-slider-thumb {
   width: 24px;
   margin-top: -10px;
 }
-*/
-
-
 
 input[type="range"] {
   -webkit-appearance: slider-horizontal!important;
 }
-
+*/
 
 /* Firefox and Safari */
 /*
