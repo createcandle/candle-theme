@@ -1225,6 +1225,7 @@ body #main-menu #things-menu-item{
 .component::part(bar){
     border-bottom-left-radius: .4rem;
     border-top-left-radius: .4rem;
+	border-color:#e7e9eb;
 }
 
 .component::part(unit){
@@ -1283,6 +1284,10 @@ webthing-numeric-label-property.component::part(container){
     white-space:normal;
 	padding: 2rem 1.5rem;
 }
+#things.single-thing webthing-action.component::part(button){
+	width:calc(100% - 2rem);
+}
+
 
 #things.single-thing > .thing > .component:not(div)::part(value){
 	font-size: 4rem;
@@ -3085,6 +3090,11 @@ body.exhibit-mode .localization-item
     }
 	*/
 	
+	.component::part(select){
+		padding: 3.5rem 3rem 3.5rem 1rem;
+		text-align:right;
+	}
+	
 	.component::part(input){
 		padding-left:0;
 	}
@@ -3142,8 +3152,11 @@ body.exhibit-mode .localization-item
     .component::part(text){
         margin: 0 auto;
     }
-    .component::part(unit){
-        margin: 0 auto 1rem auto;
+	.component::part(unit){
+		margin: 0 auto 1rem auto;
+	}
+    #things.single-thing .component::part(unit){
+		margin: 0 2rem 0 0.5rem;
     }
     
     webthing-brightness-property.component::part(contents),
@@ -3333,8 +3346,24 @@ body.exhibit-mode .localization-item
     
     body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(contents){
         zoom:100%;
-		width: calc(100% - 2rem);
+		width:100%;
+		/*width: calc(100% - 2rem);*/
     }
+	body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container webthing-instantaneous-power-property.component::part(contents){
+		flex-direction:row;
+	}
+	
+	
+	/*webthing-number-property*/
+	#things.single-thing webthing-leak-property.component::part(container),
+	#things.single-thing webthing-instantaneous-power-property.component::part(container),
+	#things.single-thing webthing-string-label-property.component::part(container),
+	#things.single-thing webthing-voltage-property.component::part(container),
+	#things.single-thing webthing-current-property.component::part(container),
+	#things.single-thing webthing-numeric-label-property.component::part(container){
+		box-shadow: rgba(0, 0, 0, 0.35) 0px -15px 36px -28px inset;
+	}
+	
     
     body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(name){
         position:initial;
@@ -3359,6 +3388,13 @@ body.exhibit-mode .localization-item
 	:not([data-read-only="true"]).component::part(webthing-boolean-property-label)::before{
 		min-height:7rem;
 		max-height:8rem;
+	}
+	
+	webthing-color-property.component::part(contents){
+	    display: flex;
+	    justify-content: flex-end;
+	    align-items: flex-end;
+	    padding-right: 2rem;
 	}
 
 
