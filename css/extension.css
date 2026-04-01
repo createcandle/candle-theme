@@ -3548,10 +3548,7 @@ body.exhibit-mode .localization-item
 		margin: 0 20px 20px 0;
 	}
 	
-	#things.single-thing > .thing > div.thing-detail-container > *{
-		background-color: rgba(0, 0, 0, .1);
-		box-shadow: rgba(0, 0, 0, 0.15) 0px -50px 36px -28px inset;
-	}
+	
 }
 
 
@@ -3583,8 +3580,10 @@ body.exhibit-mode .localization-item
 		max-width:267px; /* was 263 */
 	}
 
-
-
+	#things.single-thing > .thing > div.thing-detail-container > *{
+		background-color: rgba(0, 0, 0, .1);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px -50px 36px -28px inset;
+	}
 
 }
 

@@ -277,8 +277,8 @@
 			// upgrade the style of messages that can show up in the bottom of the window
 			this.message_area_observer = new MutationObserver(this.messageAreaCallback.bind(this));
 			this.message_area_observer.observe(
-			document.getElementById('message-area'),
-			{childList: true}
+				document.getElementById('message-area'),
+				{childList: true}
 			);
 
 			this.last_mutation_activation_time = 0;
@@ -1872,15 +1872,15 @@
 	            //setTimeout(function(){ 
 	            window.setTimeout(() => { 
 	                const message_array = document.getElementById('message-area').innerText.split(":", 3);
-	                //console.log(message_array);
+	                console.log("candle theme: message-area changed: innerText as split array: ", message_array);
 	                if(message_array.length > 2){
 	                    var upgraded_message = "";
 	                    if(message_array[0].endsWith('Adapter')){
-	                        message_array[0].replace("Adapter", "");
+	                        message_array[0] = message_array[0].replace("Adapter", "");
 	                    }
                     
 	                    //if( document.body.classList.contains('developer') ){
-	                    upgraded_message = '<span class="candle-theme-message-addon">' + message_array[0].replace('Adapter','') + '</span>';
+	                    upgraded_message = '<span class="candle-theme-message-addon">' + message_array[0] + '</span>';
 	                    //}
 	                    upgraded_message += '<span class="candle-theme-message-device">' + message_array[1] + '</span>';
 	                    upgraded_message += '<span class="candle-theme-message-message">' + message_array[2] + '</span>';
@@ -2242,12 +2242,12 @@
 	    // Transforms a thing-property combo into a single string name (concatenated titles)
 	    ids_to_log_name(combo){
 	        if(this.debug){
-	            console.log("in log_name_to_ids with combo: ", combo);
+	            //console.log("in log_name_to_ids with combo: ", combo);
 	        }
         
 	        if(typeof this.things == 'undefined'){
 	            if(this.debug){
-					console.warn("ids_to_log_name: too early, this.things was still undefined");
+					//console.warn("ids_to_log_name: too early, this.things was still undefined");
 				}
 	            return null;
 	        }
