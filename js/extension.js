@@ -1653,7 +1653,7 @@
 	        }
         
 	        if(this.debug){
-	            console.log("check_properties: looping over device: " + device_id);
+	            console.log("candle theme debud: check_properties: looping over device: " + device_id);
 	        }
 	        API.getThing(device_id).then((thing) => {
 	            //console.log("check_properties: single thing: ", thing );

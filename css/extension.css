@@ -1469,7 +1469,7 @@ webthing-brightness-property.component::part(form){
 .component::part(slider){
     transform:none!important;
     margin: 0 auto;
-	margin-top: 2.4rem;
+	/*margin-top: 2.4rem;*/
     cursor:pointer;
 	min-height: 4rem;
 	border-radius: 2rem;
