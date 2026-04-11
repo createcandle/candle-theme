@@ -3,7 +3,7 @@
 		constructor() {
 			super('candle-theme');
       
-      
+      	  	
 			/*
 			(function(history) {
 			  var pushState = history.pushState;
@@ -518,6 +518,8 @@
 	  
 			//console.log("this.id: ", this.id);
         
+			document.body.classList.add('candle-theme');
+		
 		}
     
     
@@ -643,6 +645,9 @@
 	        if(page_url != null){
 	            current_path = page_url;
 	        }
+			if(current_path.endsWith('/')){
+				current_path = current_path.slice(0, -1);
+			}
         
 	        if(this.debug){
 	            console.log("Candle theme debug: on_new_page: " + current_path);
@@ -1872,7 +1877,7 @@
 	            //setTimeout(function(){ 
 	            window.setTimeout(() => { 
 	                const message_array = document.getElementById('message-area').innerText.split(":", 3);
-	                console.log("candle theme: message-area changed: innerText as split array: ", message_array);
+	                //console.log("candle theme: message-area changed: innerText as split array: ", message_array);
 	                if(message_array.length > 2){
 	                    var upgraded_message = "";
 	                    if(message_array[0].endsWith('Adapter')){
