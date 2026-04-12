@@ -1174,14 +1174,14 @@ body #main-menu #things-menu-item{
 	animation: extension-candle-theme-fadeIn 1s linear;
 }
 
-.thing webthing-smart-plug-capability,
-.thing webthing-on-off-switch-capability
+
 /*
 #groups .thing webthing-smart-plug-capability,
 #things:not(.single-thing) .thing webthing-smart-plug-capability.component::part(icon)
 #groups .thing webthing-on-off-switch-capability,
-#things:not(.single-thing) .thing webthing-on-off-switch-capability.component::part(icon)*/
-{
+#things:not(.single-thing) .thing webthing-on-off-switch-capability.component::part(icon),*/
+.thing webthing-smart-plug-capability,
+.thing webthing-on-off-switch-capability{
     cursor:pointer;
 }
 
