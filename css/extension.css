@@ -4022,8 +4022,9 @@ body.exhibit-mode .localization-item
 }
 
 @media only screen and (min-width: 1000px) {
+	
 	#candle-theme-things-filter-buttons-container{
-		padding: 0 10rem;
+		padding: 0;
 	}
 }
 

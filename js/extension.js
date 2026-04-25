@@ -513,7 +513,7 @@
 				this.parse_body(body)
 			})
 			.catch((err) => {
-				console.error("candle theme: cught error getting api init data: ", err);
+				console.error("candle theme: caught error getting api init data: ", err);
 			});	
 	  
 			//console.log("this.id: ", this.id);
