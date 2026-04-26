@@ -3341,16 +3341,17 @@ body.exhibit-mode .localization-item
         flex-direction: row-reverse;
         padding: 0;
         min-height: 10rem;
+		align-items:center;
     }
     
-    body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(container){
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(container) {
          /*background-color: rgba(255,255,255,.02);*/
 		 background-color: transparent;
          padding:1rem;
          box-sizing:border-box;
     }
     
-    body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(contents){
+    body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > div.thing-detail-container .component::part(contents) {
         zoom:100%;
 		width:100%;
 		/*width: calc(100% - 2rem);*/
