@@ -1324,7 +1324,7 @@ webthing-numeric-label-property.component::part(container){
 .component::part(select){
 	/*padding:1.5rem .5rem 1.5rem 1rem;*/
 	padding: 3.5rem 2.5rem 3.5rem 1rem;
-	background-color: transparent;
+	background-color: var(--extension-dashboard-widget-background-color);
 	color:white;
 	background-image: url(/images/select-arrow.svg);
 	font-size:2rem;
