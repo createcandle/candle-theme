@@ -1,7 +1,10 @@
 /*  candle theme CSS  */
 
 
-
+:root {
+	--extension-candle-theme-slider-background-color: #cfdde6;
+	--extension-candle-theme-slider-foreground-color: #3089bf;
+}
 
 body{
     color:white;
@@ -1567,8 +1570,8 @@ webthing-brightness-property.component::part(slider),
     --light: color-mix(in sRGB, var(--base) 85%, #fff);
     --lighter: color-mix(in sRGB, var(--base) 30%, #fff);
     --dark: color-mix(in sRGB, var(--base) 95%, #000);
-    --widget-lighter: color-mix(in sRGB, var(--extension-dashboard-widget-background-color) 50%, #fff);
-    --transparent: color-mix(in sRGB, var(--extension-dashboard-widget-editable-text-color) 0%, #0000);
+    --widget-lighter: color-mix(in sRGB, var(--extension-candle-theme-slider-background-color) 50%, #fff);
+    --transparent: color-mix(in sRGB, var(--extension-candle-theme-slider-foreground-color) 0%, #0000);
     appearance: none;
     width: calc(100% - 3rem);
     height: 4rem;
@@ -1578,7 +1581,7 @@ webthing-brightness-property.component::part(slider),
 	box-shadow: 1px 0 10px 10px rgba(0, 0, 0, 0.04);
 	*/
 	/*
-	box-shadow: 0 0 0px .5px var(--extension-dashboard-widget-editable-text-color);
+	box-shadow: 0 0 0px .5px var(--extension-candle-theme-slider-foreground-color);
 	
 	box-shadow: 1px 0 5px 5px rgba(0, 0, 0, 0.01);
 	box-shadow: 1px 0 10px 10px rgba(0, 0, 0, 0.04);
@@ -1624,18 +1627,18 @@ webthing-brightness-property.component::part(slider)::-webkit-slider-thumb,
     width: 3em;
     height: 3em;
     margin: 0;
-    background: var(--extension-dashboard-widget-editable-text-color); 
+    background: var(--extension-candle-theme-slider-foreground-color); 
     border-radius: 100%;
     cursor: pointer;
 	/*
     background:
 		radial-gradient(circle at 0.75em 0.6em, var(--light) calc(0.2em - 1px), #0000 0.2em),
-		linear-gradient(90deg, #0000 0.75em, var(--extension-dashboard-widget-editable-text-color) 0) 0 0 / 100% 50% no-repeat;
+		linear-gradient(90deg, #0000 0.75em, var(--extension-candle-theme-slider-foreground-color) 0) 0 0 / 100% 50% no-repeat;
 	*/
     
 	box-shadow: 
 	inset .8em .8em 5px -8px rgba(255, 255, 255, .1),
-      inset -1.5em 0 0.5em -0.25em var(--extension-dashboard-widget-editable-text-color),
+      inset -1.5em 0 0.5em -0.25em var(--extension-candle-theme-slider-foreground-color),
        1em 0 0 0.25em var(--widget-lighter),
        2em 0 0 0.25em var(--widget-lighter),
        3em 0 0 0.25em var(--widget-lighter),
@@ -1809,19 +1812,19 @@ webthing-brightness-property.component::part(slider)::-moz-range-thumb,
     width: 3em;
     height: 3em;
     margin: 0;
-    background: var(--extension-dashboard-widget-editable-text-color); 
+    background: var(--extension-candle-theme-slider-foreground-color); 
     border-radius: 100%;
     cursor: pointer;
 	
     background:
 		radial-gradient(circle at 0.75em 0.6em, var(--light) calc(0.2em - 1px), #0000 0.2em),
-		linear-gradient(90deg, #0000 0.75em, var(--extension-dashboard-widget-editable-text-color) 0) 0 0 / 100% 50% no-repeat;
+		linear-gradient(90deg, #0000 0.75em, var(--extension-candle-theme-slider-foreground-color) 0) 0 0 / 100% 50% no-repeat;
 	
-	background:  var(--extension-dashboard-widget-editable-text-color);
+	background:  var(--extension-candle-theme-slider-foreground-color);
     
 	box-shadow: 
 	inset .8em .8em 5px -8px rgba(255, 255, 255, .1),
-      inset -1.5em 0 0.5em -0.25em var(--extension-dashboard-widget-editable-text-color),
+      inset -1.5em 0 0.5em -0.25em var(--extension-candle-theme-slider-foreground-color),
        1em 0 0 0.25em var(--widget-lighter),
        2em 0 0 0.25em var(--widget-lighter),
        3em 0 0 0.25em var(--widget-lighter),
