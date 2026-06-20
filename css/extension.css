@@ -1019,6 +1019,10 @@ body #main-menu #things-menu-item{
     top: .7rem;
     right: calc(50% - 6rem);
 }
+.thing webthing-level-property[data-read-only="true"].component::part(unit){
+    top: 0;
+    right: calc(50% - 3rem);
+}
 
 #groups .thing webthing-thermostat-capability.component::part(unit),
 #things:not(.single-thing) .thing webthing-thermostat-capability.component::part(unit){
@@ -1250,6 +1254,10 @@ webthing-numeric-label-property.component::part(container){
 }
 */
 
+
+
+
+
 .component::part(name){
     max-width: 100%;
     position: absolute;
@@ -1474,12 +1482,15 @@ webthing-brightness-property.component::part(form){
     transform:none!important;
     margin: 0 auto;
 	/*margin-top: 2.4rem;*/
-    cursor:pointer;
 	min-height: 4rem;
 	border-radius: 2rem;
 	min-width: 7.4rem;
 	background-color:#d2d9de;/*#e7eef3*/
 }
+:not([data-read-only="true"]).component::part(slider){
+    cursor:pointer;
+}
+
 .component::part(slider)::after{
 	width: 3.3rem;
 	height: 3.3rem;
@@ -3594,7 +3605,15 @@ body.exhibit-mode .localization-item
 		box-shadow: rgba(0, 0, 0, 0.15) 0px -50px 36px -28px inset;
 	}
 
+    #things.single-thing webthing-numeric-label-property[data-unit="%"].component::part(value){
+        font-size: 4rem;
+    }
+    #things.single-thing webthing-numeric-label-property[data-unit="%"].component::part(unit){
+        font-size: 3rem;
+    }
+
 }
+
 
 
 
@@ -3631,6 +3650,12 @@ body.exhibit-mode .localization-item
 }
 
 
+@media only screen and (min-width: 841px) {
+    #rules-view .rule-edit-overlay{
+        width: calc(100% - 30rem);
+        left: 30rem;
+    }
+}
 
 
 /*  APP DRAWER  */
@@ -3944,6 +3969,7 @@ body.exhibit-mode .localization-item
 	}
 
 }
+
 
 
 @media only screen and (min-width: 900px) and (max-width: 1099px){
