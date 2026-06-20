@@ -1223,13 +1223,28 @@ body #main-menu #things-menu-item{
     margin-top:1rem;
     margin-bottom:1rem;
     box-sizing:border-box;
-    height:1.4rem;
     overflow:hidden;
 }
+#things.single-thing :not(webthing-multi-level-switch-capability)[data-read-only="true"].component::part(bar-container){
+    height:4rem;
+    border-radius:2rem;
+    position:relative;
+    max-width: calc(100% - 3rem);
+    display: flex;
+    align-items: center;
+}
+
 .component::part(bar){
     border-bottom-left-radius: .4rem;
     border-top-left-radius: .4rem;
 	border-color:#e7e9eb;
+}
+
+#things.single-thing :not(webthing-multi-level-switch-capability).component::part(bar){
+    height:3.4rem;
+    border-radius:2rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .component::part(unit){
@@ -2823,11 +2838,13 @@ body.compact #things-view .thing-details-link{
     width:50%;
     height: 100%;
     background-image:none;
+    background-color:transparent;
     opacity:0.8;
 }
 body.compact #groups .thing > *:not(a):not(span), 
 /*body.compact #things.single-thing > .thing > *:not(div),*/
 body.compact #things:not(.single-thing) > .thing > *:not(a):not(span){
+    width:75%;
     min-height: 7rem;
     margin-bottom: 0;
     padding: 1rem 0rem;
@@ -2902,19 +2919,16 @@ body.compact #things-view .thing-ui-link{
 body.compact #things-view .thing-ui-link:hover{
     opacity:1;
 }
-
+/*
 body.compact #groups .thing webthing-light-capability::part(icon),
 body.compact #things:not(.single-thing) webthing-light-capability::part(icon){
     transform: scale(0.5);
     overflow: visible;
     position: relative;
-    /*
-    top: -2rem;
-    left: -0.6rem;
-    */
     top:-1rem;
     left:-1rem;
 }
+*/
 
 body.compact #groups .thing webthing-light-capability::part(label),
 body.compact #things:not(.single-thing) webthing-light-capability::part(label),
@@ -3268,7 +3282,7 @@ body.exhibit-mode .localization-item
     body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing > [data-unit]::part(value), 
     /*body:not(.zoom1):not(.zoom2):not(.zoom3) #things.single-thing > .thing > [data-unit]::part(value),*/
     body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) > .thing > [data-unit]::part(value){
-        font-size: 1.5rem;
+        font-size: 1.7rem;
     }
     body:not(.zoom1):not(.zoom2):not(.zoom3) #groups .thing .component::part(unit),
     body:not(.zoom1):not(.zoom2):not(.zoom3) #things:not(.single-thing) .thing .component::part(unit){
