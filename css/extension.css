@@ -1232,6 +1232,7 @@ body #main-menu #things-menu-item{
     max-width: calc(100% - 3rem);
     display: flex;
     align-items: center;
+    margin-bottom:3rem;
 }
 
 .component::part(bar){
@@ -1329,6 +1330,8 @@ webthing-numeric-label-property.component::part(container){
     width:100%;
     max-width:100%;
 }
+
+
 /*
 .component::part(contents) > form{
 	display:inline-block;
@@ -3620,12 +3623,15 @@ body.exhibit-mode .localization-item
 	}
 
     #things.single-thing webthing-numeric-label-property[data-unit="%"].component::part(value){
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
     #things.single-thing webthing-numeric-label-property[data-unit="%"].component::part(unit){
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
 
+    webthing-on-off-property.component::part(contents){
+        top: 62%;
+    }
 }
 
 

@@ -2854,25 +2854,27 @@
 	      const items = shadow.querySelectorAll('*');
 
 	      for (const item of items) {
-	        let part = item.getAttribute('id');
-	        if (part !== null) {
-	          if (part.indexOf('-') != -1) {
+			if(!item.hasAttribute("part")){
+	          let part = item.getAttribute('id');
+	          if (part !== null) {
+				if (part.indexOf('-') != -1) {
 	              //part = part.substr(0, part.indexOf('-'));
 	              part = part.substring(0, part.lastIndexOf('-'));
-	          }
-	          item.setAttribute('part', part);
+				}
+				item.setAttribute('part', part);
+			  }
 	        }
 	      }
       
 	      // if using the ID didn't add a part attribute, try again, but this time with class.
 	      for (const item of items) {
-	        let part = item.getAttribute('class');
-	        if (part !== null) {
-	          if(!item.hasAttribute("part")){
-	              if (part .indexOf(' ') != -1) {
-	    			  part = part.substr(0, part.indexOf(' '));
-	              }
-	              item.setAttribute('part', part);
+			if(!item.hasAttribute("part")){
+	          let part = item.getAttribute('class');
+	          if (part !== null) {
+	            if (part .indexOf(' ') != -1) {
+	    		  part = part.substr(0, part.indexOf(' '));
+	            }
+	            item.setAttribute('part', part);
 	          }
 	        }
 	      }
